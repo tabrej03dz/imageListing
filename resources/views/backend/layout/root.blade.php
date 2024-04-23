@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>{{ $title ?? 'Admin Dashboard' }}</title>
     <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
 
@@ -35,28 +36,31 @@
             Admin Dashboard
         </div>
         <ul>
-            <li class="py-2 px-6 hover:bg-gray-700">
-                <a href="{{route('dashboard')}}" class="block">Dashboard</a>
+            <li class="py-2 px-6 hover:bg-gray-700 {{ request()->routeIs('dashboard') ? 'bg-red-700' : '' }}">
+                <a href="{{ route('dashboard') }}" class="block">Dashboard</a>
             </li>
+
+            <li class="py-2 px-6 hover:bg-gray-700 {{ request()->routeIs('image.index') ? 'bg-red-700' : '' }}">
+                <a href="{{ route('image.index') }}" class="block">Images</a>
+            </li>
+
             @if(auth()->user()->role == 'admin')
-                <li class="py-2 px-6 hover:bg-gray-700">
-                    <a href="{{route('image.upload')}}" class="block">Upload Image</a>
+                <li class="py-2 px-6 hover:bg-gray-700 {{ request()->routeIs('images.upload') ? 'bg-red-700' : '' }}">
+                    <a href="{{ route('images.upload') }}" class="block">Upload Image</a>
+                </li>
+                <li class="py-2 px-6 hover:bg-gray-700 {{ request()->routeIs('customer.index') ? 'bg-red-700' : '' }}">
+                    <a href="{{ route('customer.index') }}" class="block">Customer</a>
+                </li>
+                <li class="py-2 px-6 hover:bg-gray-700 {{ request()->routeIs('clearOldImage') ? 'bg-red-700' : '' }}">
+                    <a href="{{ route('clearOldImage') }}" class="block">Clear Old Images</a>
                 </li>
             @endif
-            <li class="py-2 px-6 hover:bg-gray-700">
-                <a href="{{route('image.index')}}" class="block">Images</a>
-            </li>
 
-            <li class="py-2 px-6 hover:bg-gray-700">
-                <a href="{{route('clearOldImage')}}" class="block">Clear Old Images</a>
+            <li class="py-2 px-6 hover:bg-gray-700 {{ request()->routeIs('logout') ? 'bg-red-700' : '' }}">
+                <a href="{{ route('logout') }}" class="block">Logout</a>
             </li>
-
-            <li class="py-2 px-6 hover:bg-gray-700">
-                <a href="{{route('logout')}}" class="block">Logout</a>
-            </li>
-
-            <!-- Add more sidebar links as needed -->
         </ul>
+
     </aside>
 
     <!-- Main content -->

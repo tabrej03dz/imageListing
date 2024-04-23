@@ -10,10 +10,22 @@
 </head>
 
 <body class="bg-gray-100">
+
 <div class="min-h-screen flex items-center justify-center">
     <div class="bg-white p-8 rounded shadow-md w-96">
         <h2 class="text-2xl font-bold mb-4">Login</h2>
-        <form action="{{route('login')}}" method="POST">
+        @if(session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
+        @if(session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <form action="{{ route('login') }}" method="POST" class="max-w-md mx-auto">
             @csrf
             <div class="mb-4">
                 <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
@@ -36,7 +48,8 @@
                 <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700">Login</button>
             </div>
         </form>
-        <p class="mt-4 text-sm text-gray-600">Don't have an account? <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Register here</a>.</p>
+
+        <p class="mt-4 text-sm text-gray-600">Don't have an account? <a href="{{route('register')}}" class="font-medium text-indigo-600 hover:text-indigo-500">Register here</a>.</p>
     </div>
 </div>
 </body>

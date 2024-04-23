@@ -12,6 +12,8 @@ class Authenticate extends Middleware
      */
     protected function redirectTo(Request $request): ?string
     {
+        $request->session()->flash('error', 'You are not authorized to access this page.');
+
         return $request->expectsJson() ? null : route('login');
     }
 }

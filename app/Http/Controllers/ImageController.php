@@ -14,12 +14,12 @@ class ImageController extends Controller
     public function index(Request $request, $number = null){
         if ($request->phone){
             $user = User::where('phone', $request->phone)->first();
-            $images = Image::where('user_id', $user->id)->get();
+            $images = Image::where('user_id', $user->id)->paginate(5);
         }else{
             if(auth()->user()->role == 'admin'){
-                $images = Image::all();
+                $images = Image::paginate(5);
             }else{
-                $images = Image::where('user_id', auth()->user()->id)->get();
+                $images = Image::where('user_id', auth()->user()->id)->paginate(5);
             }
         }
         $users = User::all();
@@ -42,8 +42,13 @@ class ImageController extends Controller
             $image->title = $request->title;
             if ($media){
                 $fileName = Str::limit(pathinfo($media->getClientOriginalName(), PATHINFO_FILENAME), 10, '') ;
+                $user = User::where('phone', $fileName)->first();
+                if ($user){
+                    $image->user_id = $user->id;
+                }else{
+                    return redirect()->back()->with('error', 'user not found for '. $fileName);
+                }
 //            dd($fileName);
-                $image->user_id = User::where('phone', $fileName)->first()->id;
                 $file = $media->store('public/images');
                 $image->media = str_replace('public/', '', $file);
             }
@@ -54,6 +59,12 @@ class ImageController extends Controller
     }
 
     public function destroy(Image $image){
+        if($image->media){
+            $filePath = public_path('storage/'. $image->media);
+            if(file_exists($filePath)){
+                unlink($filePath);
+            }
+        }
         $image->delete();
         return redirect()->back();
     }

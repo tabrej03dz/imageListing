@@ -1,4 +1,4 @@
-@extends('backend.layout.root')
+@extends('backend.layout.root', ['title' => 'Upload Images'])
 @section('content')
 
     <style>
@@ -22,6 +22,19 @@
         </ul>
     @endif
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">Upload Image</h2>
+
+    @if(session('error'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            {{ session('error') }}
+        </div>
+    @endif
+    @if(session('success'))
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
+
+
         @if($errors->any())
             <div>
                 <ul>
@@ -39,7 +52,7 @@
             </div>
             <div class="mb-4">
                 <label for="media" class="block text-gray-700 text-sm font-bold mb-2">Choose Image:</label>
-                <input type="file" id="media" name="media[]" multiple accept="media/*" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500">
+                <input type="file" id="media" name="media[]" multiple accept="media/*" required class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500">
             </div>
             <div id="imagePreview" class="preview">
 

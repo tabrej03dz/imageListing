@@ -22,7 +22,18 @@ class HomeController extends Controller
     }
 
     public function clearOldImage(){
-        Image::whereDate('created_at', '<', Carbon::now()->subDay(3))->delete();
+        $images = Image::whereDate('created_at', '<', Carbon::now()->subDay(3))->get();
+
+        foreach ($images as $image){
+            if($image->media){
+                $filePath = public_path('storage/' . $image->media);
+                if(file_exists($filePath)){
+                    unlink($filePath);
+                }
+            }
+            $image->delete();
+        }
+
         return redirect('dashboard');
 
     }

@@ -19,15 +19,23 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
+            'phone' => 'required|numeric',
             'confirm_password' => 'required|same:password',
         ]);
+
+        // Create a new user
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->role = 'user';
         $user->password = Hash::make($request->password);
         $user->save();
+
+        // Log in the user
+        Auth::login($user);
 //         You may add additional logic like sending verification email or logging in the user here.
-        return redirect('/')->with('success', 'Registration successful! Please login.');
+        return redirect('dashboard')->with('success', 'Registration successful! Please login.');
     }
 
     public function loginForm(){
