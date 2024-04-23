@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CustomerRequest;
+use App\Imports\CustomerImport;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Testing\Fluent\Concerns\Has;
+use Maatwebsite\Excel\Excel;
+
 
 class CustomerController extends Controller
 {
@@ -47,6 +49,51 @@ class CustomerController extends Controller
                 ]
         );
         return redirect('customer');
+    }
+
+    public function customerUpload(){
+        return view('backend.customer.upload');
+    }
+
+    public function customerImport(Request $request){
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls|max:2048',
+        ]);
+
+        // Process the uploaded file
+        $file = $request->file('file');
+
+        // Resolve an instance of the Excel facade
+        $excel = app()->make('excel');
+
+        try {
+            // Import customers from the uploaded Excel file
+            $result = $excel->import(new CustomerImport, $file);
+
+            // Check if the import was successful
+            if ($result) {
+                return redirect('customer')->with('success', 'Customers Imported Successfully');
+            } else {
+                return redirect('customer')->with('error', 'Failed to import customers. Please try again.');
+            }
+        } catch (ValidationException $e) {
+            $failures = $e->failures();
+            return redirect('customer')->with('error', 'Validation failed. Please check your Excel file and try again.');
+        }
+    }
+
+    public function destroy(User $customer){
+        foreach ($customer->images as $image){
+            if($image->media){
+                $filePath = public_path('storage/' . $image->media);
+                if(file_exists($filePath)){
+                    unlink($filePath);
+                }
+            }
+            $image->delete();
+        }
+        $customer->delete();
+        return redirect('customer')->with('success', 'User deleted successfully');
     }
 
 }

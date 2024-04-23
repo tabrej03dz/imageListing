@@ -24,7 +24,7 @@ class CustomerRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email',
-            'phone' => 'required|numeric',
+            'phone' => 'required',
             'password' => 'string|min:8',
             'confirm_password' => 'same:password',
 

@@ -3,6 +3,7 @@
     <div class="flex items-center justify-between mb-8">
         <h2 class="text-3xl font-bold text-gray-800">Customers</h2>
         <a href="{{route('customer.create')}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Customer</a>
+        <a href="{{route('customer.upload')}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Customer Upload</a>
     </div>
 
     @if($customers->count() > 0)
