@@ -15,6 +15,7 @@
             <table class="min-w-full table-auto">
                 <thead>
                 <tr>
+                    <th class="px-4 py-2 text-left">Image</th>
                     <th class="px-4 py-2 text-left">Title</th>
                     <th class="px-4 py-2 text-left">Date</th>
                     <th class="px-4 py-2 text-left">Actions</th>
@@ -24,7 +25,16 @@
                 @foreach($images as $image)
                     <tr>
                         <td class="border px-4 py-2">
-                            {{$image->title}}
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 h-12 w-12">
+                                    <img class="h-12 w-12 rounded-full" src="{{ asset('storage/'. $image->media) }}" alt="Image">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="border px-4 py-2">
+                            <div class="ml-4">
+                                <div class="text-sm leading-5 font-medium text-gray-900">{{ $image->title }}</div>
+                            </div>
                         </td>
                         <td class="border px-4 py-2">
                             {{$image->date}}

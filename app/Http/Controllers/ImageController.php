@@ -42,7 +42,7 @@ class ImageController extends Controller
             $image->title = $request->title;
             if ($media){
                 $fileName = Str::limit(pathinfo($media->getClientOriginalName(), PATHINFO_FILENAME), 10, '') ;
-                $user = User::where('phone', $fileName)->first();
+                $user = User::where('phone', 'like', '%'.$fileName.'%')->first();
                 if ($user){
                     $image->user_id = $user->id;
                 }else{

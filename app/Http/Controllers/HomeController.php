@@ -8,6 +8,12 @@ use Illuminate\Support\Carbon;
 
 class HomeController extends Controller
 {
+    public function dashboard(){
+        $customers = User::where('role', '!=', 'admin')->get();
+        $images = Image::all();
+        return view('backend.dashboard', compact('customers', 'images'));
+    }
+
     public function index($number = null){
         if($number){
             $user = User::where('phone', $number)->first();

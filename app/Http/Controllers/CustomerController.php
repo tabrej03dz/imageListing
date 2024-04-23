@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Excel;
 class CustomerController extends Controller
 {
     public function index(){
-        $customers = User::where('role', '!=', 'admin')->get();
+        $customers = User::where('role', '!=', 'admin')->paginate(5);
 //        dd($customers);
         return view('backend.customer.index', compact('customers'));
     }

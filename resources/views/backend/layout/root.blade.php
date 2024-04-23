@@ -7,6 +7,7 @@
     <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
@@ -67,9 +68,9 @@
                 <li class="py-2 px-6 hover:bg-gray-700 {{ request()->routeIs('customer.index') ? 'bg-red-700' : '' }}">
                     <a href="{{ route('customer.index') }}" class="block">Customer</a>
                 </li>
-                <li class="py-2 px-6 hover:bg-gray-700 {{ request()->routeIs('clearOldImage') ? 'bg-red-700' : '' }}">
-                    <a href="{{ route('clearOldImage') }}" class="block">Clear Old Images</a>
-                </li>
+{{--                <li class="py-2 px-6 hover:bg-gray-700 {{ request()->routeIs('clearOldImage') ? 'bg-red-700' : '' }}">--}}
+{{--                    <a href="{{ route('clearOldImage') }}" class="block">Clear Old Images</a>--}}
+{{--                </li>--}}
             @endif
 
             <li class="py-2 px-6 hover:bg-gray-700 {{ request()->routeIs('logout') ? 'bg-red-700' : '' }}">

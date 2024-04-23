@@ -30,9 +30,7 @@ Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function(){
-    Route::get('dashboard', function (){
-        return view('backend.dashboard');
-    })->name('dashboard');
+    Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
     Route::prefix('image')->name('image.')->group(function(){
         Route::get('/', [ImageController::class, 'index'])->name('index');
         Route::get('upload', [ImageController::class, 'uploadImage'])->name('upload');

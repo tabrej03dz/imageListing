@@ -27,14 +27,14 @@
                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
                         {{-- Edit and Delete buttons --}}
                         {{-- You can uncomment and modify these links as needed --}}
-                         <a href="{{ route('customer.edit', ['customer' => $customer]) }}" class="inline-block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2">Edit</a>
+                         <a href="{{ route('customer.edit', ['customer' => $customer]) }}" class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2">Edit</a>
                          <a href="{{ route('customer.destroy', ['customer' => $customer]) }}" class="inline-block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2">Delete</a>
                     </td>
                 </tr>
             @endforeach
             </tbody>
         </table>
-
+{{$customers->links()}}
     @else
         <p>No customers found.</p>
     @endif
