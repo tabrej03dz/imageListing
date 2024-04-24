@@ -32,13 +32,14 @@ class ImageController extends Controller
     public function store(Request $request){
         $request->validate([
             'title' => 'required',
+            'date' => 'date|nullable',
             'media.*' => 'required|mimes:jpg,png,jpeg',
         ]);
 
         foreach ($request->file('media') as $media){
 
             $image = new Image();
-            $image->date = Carbon::today();
+            $image->date = $request->date ?? Carbon::today();
             $image->title = $request->title;
             if ($media){
                 $fileName = Str::limit(pathinfo($media->getClientOriginalName(), PATHINFO_FILENAME), 10, '') ;
@@ -70,15 +71,15 @@ class ImageController extends Controller
     }
 
 
-    public function downloadImage(Image $image){
-
-        try {
-            $path = storage_path( 'images\PQeLveFCxaZB0IRmVmBgGfWKlEtHv1Omad3rmipO.jpg');
-        dd($path);
-            return response()->download($path);
-        }catch (\Exception $e){
-            abort(404);
-        }
-
-    }
+//    public function downloadImage(Image $image){
+//
+//        try {
+//            $path = storage_path( 'images\PQeLveFCxaZB0IRmVmBgGfWKlEtHv1Omad3rmipO.jpg');
+//        dd($path);
+//            return response()->download($path);
+//        }catch (\Exception $e){
+//            abort(404);
+//        }
+//
+//    }
 }

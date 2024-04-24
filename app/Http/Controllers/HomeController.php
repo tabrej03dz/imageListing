@@ -20,7 +20,7 @@ class HomeController extends Controller
             if (!$user){
                 return view('welcome');
             }
-            $images = Image::where('user_id', $user->id)->whereDate('created_at', '>=', Carbon::now()->subDay(2))->get();
+            $images = Image::where('user_id', $user->id)->whereDate('date', '>=', Carbon::now()->subDay(2))->get();
             return view('user_image', compact('images'));
         }else{
             return view('welcome');
@@ -28,7 +28,7 @@ class HomeController extends Controller
     }
 
     public function clearOldImage(){
-        $images = Image::whereDate('created_at', '<', Carbon::now()->subDay(3))->get();
+        $images = Image::whereDate('date', '<', Carbon::now()->subDay(3))->get();
 
         foreach ($images as $image){
             if($image->media){

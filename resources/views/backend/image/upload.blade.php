@@ -1,6 +1,6 @@
 @extends('backend.layout.root', ['title' => 'Upload Images'])
-@section('content')
 
+@section('content')
     <style>
         .preview {
             display: flex;
@@ -14,112 +14,95 @@
             box-sizing: border-box; /* Include padding and border in the width calculation */
         }
     </style>
+
     @if($errors->any())
-        <ul>
-            @foreach($errors->all() as $error)
-                <li>{{$error}}</li>
-            @endforeach
-        </ul>
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     @endif
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Upload Image</h2>
+
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Upload Image</h2>
 
     @if(session('error'))
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <div class="alert alert-danger">
             {{ session('error') }}
         </div>
     @endif
+
     @if(session('success'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+        <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
 
+    <form action="{{ route('image.upload') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="mb-3">
+            <label for="title" class="form-label">Image Title:</label>
+            <input type="text" id="title" name="title" class="form-control">
+        </div>
 
-        @if($errors->any())
-            <div>
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li>{{$error}}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        <form action="{{route('image.upload')}}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="mb-4">
-                <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Image Title:</label>
-                <input type="text" id="title" name="title"  class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500">
-            </div>
-            <div class="mb-4">
-                <label for="media" class="block text-gray-700 text-sm font-bold mb-2">Choose Image:</label>
-                <input type="file" id="media" name="media[]" multiple accept="media/*" required class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500">
-            </div>
-            <div id="imagePreview" class="preview">
+        <div class="mb-3">
+            <label for="date" class="form-label">Date:</label>
+            <input type="date" id="date" name="date" class="form-control">
+        </div>
 
-            </div>
-            <div class="flex justify-center">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Upload</button>
-            </div>
-        </form>
-
+        <div class="mb-3">
+            <label for="media" class="form-label">Choose Image:</label>
+            <input type="file" id="media" name="media[]" multiple accept="media/*" required class="form-control">
+        </div>
+        <div id="imagePreview" class="preview"></div>
+        <div class="">
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </div>
+    </form>
 
     <script>
-        var uploadedFiles = []; // Array to store uploaded files and their corresponding preview elements
+        var uploadedFiles = [];
 
         document.getElementById('media').addEventListener('change', function(event) {
-            var files = event.target.files; // Get the selected files
-
-            // Clear previous previews
+            var files = event.target.files;
             document.getElementById('imagePreview').innerHTML = '';
-            uploadedFiles = []; // Clear the array when new files are selected
+            uploadedFiles = [];
 
-            // Loop through the selected files
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
                 var reader = new FileReader();
 
-                // Closure to capture the file information
                 reader.onload = (function(file) {
                     return function(e) {
-                        // Create an image element
                         var img = document.createElement('img');
                         img.className = 'preview-image';
-                        img.src = e.target.result; // Set the source of the image to the data URL
-                        img.width = 150; // Set width for the preview image
-                        document.getElementById('imagePreview').appendChild(img); // Append the image to the preview div
+                        img.src = e.target.result;
+                        img.width = 150;
+                        document.getElementById('imagePreview').appendChild(img);
 
-                        // Push the file and its corresponding preview element to the uploadedFiles array
                         uploadedFiles.push({ file: file, preview: img });
 
-                        // Add a click event listener to each preview image for removal
                         img.addEventListener('click', function() {
                             removeImage(img);
                         });
                     };
                 })(file);
 
-                // Read in the image file as a data URL
                 reader.readAsDataURL(file);
             }
         });
 
-        // Function to remove an image and its corresponding input
         function removeImage(imgElement) {
-            // Find the index of the image element in the uploadedFiles array
             var index = uploadedFiles.findIndex(function(item) {
                 return item.preview === imgElement;
             });
 
             if (index !== -1) {
-                // Remove the image preview element from the DOM
                 imgElement.parentNode.removeChild(imgElement);
-
-                // Remove the corresponding file from the uploadedFiles array
                 uploadedFiles.splice(index, 1);
-
-                // Remove the corresponding file from the input element
                 var mediaInput = document.getElementById('media');
-                mediaInput.value = ''; // Clear the input value
+                mediaInput.value = '';
             }
         }
 
