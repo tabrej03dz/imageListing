@@ -64,6 +64,8 @@
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
 
+        @if(auth()->user()->role == 'admin')
+
 
         <li class="nav-item">
             <a class="nav-link" href="{{route('images.upload')}}"
@@ -85,6 +87,7 @@
         </li>
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
+        @endif
 
 {{--        <li class="nav-item">--}}
 {{--            <a class="nav-link" href="{{route('clearOldImage')}}"--}}
@@ -100,7 +103,7 @@
         <li class="nav-item">
             <a class="nav-link btn btn-danger" href="{{route('logout')}}"
                aria-expanded="true" >
-                <i class="fas fa-fw fa-cog"></i>
+                <i class="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
             </a>
         </li>

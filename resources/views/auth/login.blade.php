@@ -2,56 +2,106 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Login Form</title>
-    <!-- Include Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Login</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="{{asset('assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{{asset('assets/css/sb-admin-2.min.css')}}" rel="stylesheet">
+
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gradient-primary">
 
-<div class="min-h-screen flex items-center justify-center">
-    <div class="bg-white p-8 rounded shadow-md w-96">
-        <h2 class="text-2xl font-bold mb-4">Login</h2>
-        @if(session('error'))
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                {{ session('error') }}
-            </div>
-        @endif
-        @if(session('success'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                {{ session('success') }}
-            </div>
-        @endif
+<div class="container">
 
-        <form action="{{ route('login') }}" method="POST" class="max-w-md mx-auto">
-            @csrf
-            <div class="mb-4">
-                <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-                <input type="email" id="email" name="email" autocomplete="email" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-            </div>
-            <div class="mb-4">
-                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                <input type="password" id="password" name="password" autocomplete="current-password" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-            </div>
-            <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center">
-                    <input type="checkbox" id="remember-me" name="remember-me" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                    <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+        <div class="col-xl-6 col-lg-8 col-md-10">
+
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+{{--                        <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>--}}
+
+                        <div class="col-lg-12">
+                            @if($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul class="mb-0">
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                </div>
+                                <form class="user" action="{{route('login')}}" method="post">
+                                    @csrf
+                                    <div class="form-group">
+                                        <input type="email" class="form-control form-control-user"
+                                               id="email" name="email" aria-describedby="emailHelp"
+                                               placeholder="Enter Email Address...">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control form-control-user"
+                                               id="password" name="password" placeholder="Password">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox small">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck">
+                                            <label class="custom-control-label" for="customCheck">Remember
+                                                Me</label>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                                        Login
+                                    </button>
+                                </form>
+                                <hr>
+                                <div class="text-center">
+                                    <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                </div>
+                                <div class="text-center">
+                                    <a class="small" href="{{route('register')}}">Create an Account!</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="text-sm">
-                    <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</a>
-                </div>
             </div>
-            <div>
-                <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700">Login</button>
-            </div>
-        </form>
 
-        <p class="mt-4 text-sm text-gray-600">Don't have an account? <a href="{{route('register')}}" class="font-medium text-indigo-600 hover:text-indigo-500">Register here</a>.</p>
+        </div>
+
     </div>
+
 </div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="{{asset('assets/vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{{asset('assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{{asset('assets/js/sb-admin-2.min.js')}}"></script>
+
 </body>
 
 </html>
