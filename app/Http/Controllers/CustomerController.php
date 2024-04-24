@@ -41,13 +41,13 @@ class CustomerController extends Controller
     }
 
     public function update(CustomerRequest $request, User $customer){
+        $customer->update($request->except('password'));
 
-        $customer->update(
-        $request->all() +
-                [
-                    'password' => Hash::make($request->password),
-                ]
-        );
+        if($request->password){
+            $customer->password = Hash::make($request->password);
+            $customer->save();
+        }
+
         return redirect('customer');
     }
 

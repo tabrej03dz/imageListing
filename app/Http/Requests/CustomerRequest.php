@@ -25,8 +25,8 @@ class CustomerRequest extends FormRequest
             'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required',
-            'password' => 'string|min:8',
-            'confirm_password' => 'same:password',
+            'password' => 'string|min:8|nullable',
+            'confirm_password' => 'same:password|nullable',
 
         ];
     }
