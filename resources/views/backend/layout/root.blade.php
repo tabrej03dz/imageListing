@@ -57,7 +57,7 @@
         <li class="nav-item">
             <a class="nav-link" href="{{route('image.index')}}"
                aria-expanded="true" >
-                <i class="fas fa-fw fa-cog"></i>
+                <i class="fas fa-images"></i>
                 <span>Images</span>
             </a>
         </li>
@@ -70,7 +70,7 @@
         <li class="nav-item">
             <a class="nav-link" href="{{route('images.upload')}}"
                aria-expanded="true" >
-                <i class="fas fa-fw fa-cog"></i>
+                <i class="fas fa-upload"></i>
                 <span>Upload Images</span>
             </a>
         </li>
@@ -81,7 +81,7 @@
         <li class="nav-item">
             <a class="nav-link" href="{{route('customer.index')}}"
                aria-expanded="true" >
-                <i class="fas fa-fw fa-cog"></i>
+                <i class="fas fa-user-friends"></i>
                 <span>Customers</span>
             </a>
         </li>
