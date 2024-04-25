@@ -52,7 +52,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="media" class="form-label">Choose Image:</label>
+            <label for="media" class="form-label">Choose Media:</label>
             <input type="file" id="media" name="media[]" multiple accept="media/*" required class="form-control">
         </div>
         <div id="imagePreview" class="preview"></div>

@@ -74,7 +74,7 @@
             <a class="nav-link" href="{{route('images.upload')}}"
                aria-expanded="true" >
                 <i class="fas fa-upload {{ request()->routeIs('images.upload') ? 'text-dark' : 'text-white' }}"></i>
-                <span class="{{ request()->routeIs('images.upload') ? 'text-dark' : 'text-white' }}">Upload Images</span>
+                <span class="{{ request()->routeIs('images.upload') ? 'text-dark' : 'text-white' }}">Upload</span>
             </a>
         </li>
         <!-- Divider -->
