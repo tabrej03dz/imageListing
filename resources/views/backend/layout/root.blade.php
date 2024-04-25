@@ -20,6 +20,7 @@
     <!-- Custom styles for this template-->
     <link href="{{asset('assets/css/sb-admin-2.min.css')}}" rel="stylesheet">
 
+
 </head>
 
 <body id="page-top">
@@ -81,11 +82,11 @@
         <hr class="sidebar-divider my-0">
 
 
-        <li class="nav-item {{ url()->current() == 'customer' ? 'bg-white' : '' }}">
+        <li class="nav-item {{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') ) ? 'bg-white' : '' }}">
             <a class="nav-link" href="{{route('customer.index')}}"
                aria-expanded="true" >
-                <i class="fas fa-user-friends {{ url('customer') ? 'text-dark' : 'text-white' }}"></i>
-                <span class="{{ url('customer') ? 'text-dark' : 'text-white' }}">Customers</span>
+                <i class="fas fa-user-friends {{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') ) ? 'text-dark' : '' }}"></i>
+                <span class="{{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') ) ? 'text-dark' : '' }}">Customers</span>
             </a>
         </li>
         <!-- Divider -->
