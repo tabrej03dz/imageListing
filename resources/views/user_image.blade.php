@@ -30,7 +30,14 @@
             @foreach($images as $image)
                 <div class="col-md-6 col-lg-4">
                     <div class="card image-card">
-                        <img class="card-img-top w-100" src="{{ asset('storage/'. $image->media) }}" alt="Image" style="height: 300px;">
+                        @if(str_contains($image->media, 'jpg') || str_contains($image->media, 'png') || str_contains($image->media, 'jpeg'))
+                            <img class="card-img-top w-100" src="{{ asset('storage/'. $image->media) }}" alt="Image" style="height: 300px;">
+                        @else
+                            <video controls class="card-img-top w-100" style="height: 300px;">
+                                <source src="{{asset('storage/'. $image->media)}}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        @endif
                         <div class="card-body">
                             <h5 class="card-title text-center">{{ $image->title }}</h5>
                             <p class="card-text text-center">{{ $image->date }}</p>
