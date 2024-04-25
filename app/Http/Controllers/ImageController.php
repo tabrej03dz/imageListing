@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Image;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -33,7 +34,7 @@ class ImageController extends Controller
         $request->validate([
             'title' => 'required',
             'date' => 'date|nullable',
-            'media.*' => 'required|mimes:jpg,png,jpeg',
+            'media.*' => '',
         ]);
 
         foreach ($request->file('media') as $media){
@@ -41,6 +42,9 @@ class ImageController extends Controller
             $image = new Image();
             $image->date = $request->date ?? Carbon::today();
             $image->title = $request->title;
+
+//            dd($media);
+//            $mime = $media->getMimeType();
             if ($media){
                 $fileName = Str::limit(pathinfo($media->getClientOriginalName(), PATHINFO_FILENAME), 10, '') ;
                 $user = User::where('phone', 'like', '%'.$fileName.'%')->first();
@@ -49,6 +53,7 @@ class ImageController extends Controller
                 }else{
                     return redirect()->back()->with('error', 'user not found for '. $fileName);
                 }
+//                $image->user_id = 1;
 //            dd($fileName);
                 $file = $media->store('public/images');
                 $image->media = str_replace('public/', '', $file);

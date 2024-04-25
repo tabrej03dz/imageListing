@@ -33,7 +33,14 @@
                             @foreach($images as $image)
                                 <tr>
                                     <td class="align-middle">
-                                        <img class="rounded-circle" style="width: 72px; height: 72px;" src="{{ asset('storage/'. $image->media) }}" alt="Image">
+                                        @if(str_contains($image->media, 'jpg') || str_contains($image->media, 'png') || str_contains($image->media, 'jpeg'))
+                                            <img class="rounded-circle" style="width: 72px; height: 72px;" src="{{ asset('storage/'. $image->media) }}" alt="Image">
+                                        @else
+                                            <video controls width="75" height="75">
+                                                <source src="{{asset('storage/'. $image->media)}}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        @endif
                                     </td>
                                     <td class="align-middle">{{$image->title}}</td>
                                     <td class="align-middle">{{$image->date}}</td>
@@ -47,12 +54,12 @@
                             @endforeach
                             </tbody>
                         </table>
-
+{{$images->links()}}
                     </div>
                 </div>
             </div>
 
-        {{$images->links()}}
+
 
     @else
         <p>No images found.</p>

@@ -43,46 +43,49 @@
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-            <a class="nav-link" href="{{route('dashboard')}}">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
+        <li class="nav-item {{ request()->routeIs('dashboard') ? 'bg-white' : '' }}">
+            <a class="nav-link" href="{{ route('dashboard') }}">
+                <i class="fas fa-fw fa-tachometer-alt {{ request()->routeIs('dashboard') ? 'text-dark' : 'text-white' }}"></i>
+                <span class="{{ request()->routeIs('dashboard') ? 'text-dark' : 'text-white' }}">Dashboard</span>
+            </a>
         </li>
+
+
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
 
 
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('image.index')}}"
-               aria-expanded="true" >
-                <i class="fas fa-images"></i>
-                <span>Images</span>
+        <li class="nav-item {{ request()->routeIs('image.index') ? 'bg-white' : '' }}">
+            <a class="nav-link" href="{{ route('image.index') }}" aria-expanded="true">
+                <i class="fas fa-images {{ request()->routeIs('image.index') ? 'text-dark' : 'text-white' }}"></i>
+                <span class="{{ request()->routeIs('image.index') ? 'text-dark' : 'text-white' }}">Images</span>
             </a>
         </li>
+
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
 
         @if(auth()->user()->role == 'admin')
 
 
-        <li class="nav-item">
+        <li class="nav-item {{ request()->routeIs('images.upload') ? 'bg-white' : '' }}">
             <a class="nav-link" href="{{route('images.upload')}}"
                aria-expanded="true" >
-                <i class="fas fa-upload"></i>
-                <span>Upload Images</span>
+                <i class="fas fa-upload {{ request()->routeIs('images.upload') ? 'text-dark' : 'text-white' }}"></i>
+                <span class="{{ request()->routeIs('images.upload') ? 'text-dark' : 'text-white' }}">Upload Images</span>
             </a>
         </li>
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
 
 
-        <li class="nav-item">
+        <li class="nav-item {{ url()->current() == 'customer' ? 'bg-white' : '' }}">
             <a class="nav-link" href="{{route('customer.index')}}"
                aria-expanded="true" >
-                <i class="fas fa-user-friends"></i>
-                <span>Customers</span>
+                <i class="fas fa-user-friends {{ url('customer') ? 'text-dark' : 'text-white' }}"></i>
+                <span class="{{ url('customer') ? 'text-dark' : 'text-white' }}">Customers</span>
             </a>
         </li>
         <!-- Divider -->
