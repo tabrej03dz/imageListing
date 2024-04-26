@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Artisan;
 */
 
 Route::get('/{number?}', [HomeController::class, 'index'])->where('number', '[0-9]+');
+Route::post('imgSearch', [HomeController::class, 'imgSearch'])->name('imgSearch');
 Route::get('clearOldImage', [HomeController::class, 'clearOldImage'])->name('clearOldImage');
 
 Route::get('register', [AuthController::class, 'registerForm'])->name('register');
@@ -57,6 +58,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('import', [CustomerController::class, 'customerImport'])->name('import');
     });
 
+    Route::get('profile', [HomeController::class, 'profile'])->name('profile');
 });
 
 Route::get('/foo', function () {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Image;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class HomeController extends Controller
@@ -42,5 +43,15 @@ class HomeController extends Controller
 
         return redirect('dashboard');
 
+    }
+
+    public function profile(){
+        return view('backend.profile');
+    }
+
+    public function imgSearch(Request $request){
+        $user = User::where('phone', 'like', '%'.$request->search.'%')->first();
+        $images = Image::where('user_id', $user->id)->whereDate('date', '>=', Carbon::now()->subDay(2))->get();
+        return view('user_image', compact('images'));
     }
 }

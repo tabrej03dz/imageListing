@@ -54,7 +54,8 @@
                             @endforeach
                             </tbody>
                         </table>
-{{$images->links()}}
+
+                        {!! $images->links() !!}
                     </div>
                 </div>
             </div>
