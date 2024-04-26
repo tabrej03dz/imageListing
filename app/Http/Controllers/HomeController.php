@@ -50,8 +50,15 @@ class HomeController extends Controller
     }
 
     public function imgSearch(Request $request){
+        $request->validate([
+            'search' => 'required',
+        ]);
         $user = User::where('phone', 'like', '%'.$request->search.'%')->first();
-        $images = Image::where('user_id', $user->id)->whereDate('date', '>=', Carbon::now()->subDay(2))->get();
+        if($user){
+            $images = Image::where('user_id', $user->id)->whereDate('date', '>=', Carbon::now()->subDay(2))->get();
+        }else{
+            return redirect()->back()->with('error', 'User not found! Please enter registered number!');
+        }
         return view('user_image', compact('images'));
     }
 }

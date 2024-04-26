@@ -47,6 +47,11 @@
                                     </ul>
                                 </div>
                             @endif
+                            @if(session('error'))
+                                    <div class="alert alert-danger">
+                                            <li>{{session('error')}}</li>
+                                    </div>
+                            @endif
                             <div class="p-5">
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Search Your Images!</h1>
