@@ -48,32 +48,30 @@ class ImageController extends Controller
             'date' => 'date|nullable',
             'media.*' => '',
         ]);
-
+        $failed = [];
         foreach ($request->file('media') as $media){
-
             $image = new Image();
             $image->date = $request->date ?? Carbon::today();
             $image->title = $request->title;
-
-//            dd($media);
-//            $mime = $media->getMimeType();
             if ($media){
                 $fileName = Str::limit(pathinfo($media->getClientOriginalName(), PATHINFO_FILENAME), 10, '') ;
                 $user = User::where('phone', 'like', '%'.$fileName.'%')->first();
                 if ($user){
                     $image->user_id = $user->id;
                 }else{
-                    return redirect()->back()->with('error', 'user not found for '. $fileName);
+                    array_push($failed, $media->getClientOriginalName());
+                    continue;
                 }
-//                $image->user_id = 1;
-//            dd($fileName);
                 $file = $media->store('public/images');
                 $image->media = str_replace('public/', '', $file);
             }
             $image->save();
         }
-
-        return redirect('image');
+        if( count($failed) > 0){
+            return redirect()->back()->with('failedMsg', 'Images Failed to upload')->with('failed', $failed);
+        }else{
+            return redirect('image');
+        }
     }
 
     public function destroy(Image $image){

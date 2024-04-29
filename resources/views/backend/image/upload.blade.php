@@ -35,6 +35,17 @@
         </div>
     @endif
 
+    @if(session('failedMsg'))
+        <div class="alert alert-danger">
+            {{ session('failedMsg') }}
+                <ul>
+                    @foreach(session('failed') as $f)
+                        <li>{{ $f }}</li>
+                    @endforeach
+                </ul>
+        </div>
+    @endif
+
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}

@@ -23,8 +23,6 @@ class CustomerController extends Controller
     }
 
     public function store(CustomerRequest $request){
-
-//        dd($request->all());
         User::create($request->all() +
             [
                 'password' => Hash::make('password'),
