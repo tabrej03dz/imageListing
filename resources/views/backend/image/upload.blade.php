@@ -15,8 +15,6 @@
         }
     </style>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.css" rel="stylesheet">
-
     @if($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -73,25 +71,4 @@
             <button type="submit" class="btn btn-primary">Upload</button>
         </div>
     </form>
-
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js"></script>
-    <script>
-        Dropzone.options.myDropzone = {
-            chunking: true,
-            forceChunking: true,
-            chunkSize: 1024 * 1024, // 1 MB chunks
-            url: '{{ url("image/store") }}',
-            paramName: 'file',
-            init: function() {
-                this.on('queuecomplete', function() {
-                    // Handle complete file upload
-                    alert('File uploaded successfully');
-                });
-            }
-        };
-    </script>
-
-
 @endsection
