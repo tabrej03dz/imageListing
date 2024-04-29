@@ -1,20 +1,6 @@
 @extends('backend.layout.root', ['title' => 'Upload Images'])
 
 @section('content')
-    <style>
-        .preview {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .preview > img {
-            margin: 5px; /* Adjust the gap between items */
-            flex: 0 0 calc(12.5% - 10px); /* Each item occupies 12.5% width with gaps */
-            max-width: calc(12.5% - 10px); /* Set maximum width to handle smaller screens */
-            box-sizing: border-box; /* Include padding and border in the width calculation */
-        }
-    </style>
-
     @if($errors->any())
         <div class="alert alert-danger">
             <ul>
