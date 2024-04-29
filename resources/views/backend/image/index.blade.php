@@ -1,8 +1,5 @@
 @extends('backend.layout.root', ['title' => 'Images'])
 @section('content')
-    <script src="https://cdn.tailwindcss.com"></script>
-
-
 
     @if(auth()->user()->role == 'admin')
         <form action="{{ route('image.search') }}" method="post">
@@ -14,8 +11,6 @@
         </form>
     @endif
     @if($images->count() > 0)
-
-
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -27,38 +22,35 @@
                             <thead>
                             <tr>
 {{--                                <th>Image</th>--}}
-                                <th>Title</th>
                                 <th>Date</th>
+                                <th>Title</th>
+                                <th>No of Items</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($images as $image)
+                            @foreach($imagesByDate as $date => $images)
+{{--                                @dd($images->first()->title)--}}
                                 <tr>
-{{--                                    <td class="align-middle">--}}
-{{--                                        @if(str_contains($image->media, 'jpg') || str_contains($image->media, 'png') || str_contains($image->media, 'jpeg'))--}}
-{{--                                            <img class="rounded-circle" style="width: 72px; height: 72px;" src="{{ asset('storage/'. $image->media) }}" alt="Image">--}}
-{{--                                        @else--}}
-{{--                                            <video controls width="75" height="75">--}}
-{{--                                                <source src="{{asset('storage/'. $image->media)}}" type="video/mp4">--}}
-{{--                                                Your browser does not support the video tag.--}}
-{{--                                            </video>--}}
-{{--                                        @endif--}}
-{{--                                    </td>--}}
-                                    <td class="align-middle">{{$image->title}}</td>
-                                    <td class="align-middle">{{$image->date}}</td>
+                                    <td class="align-middle">
+                                        <a href="{{route('images.show', ['date' => $date])}}">
+                                            <i class="fas fa-folder"></i> {{$date}}
+                                        </a>
+                                    </td>
+                                    <td class="align-middle">{{$images->first()->title}}</td>
+                                    <td class="align-middle">{{$images->count()}}</td>
                                     <td class="align-middle">
                                         @if(auth()->user()->role == 'admin')
-                                            <a href="{{ route('image.destroy', ['image' => $image]) }}" class="btn btn-danger mr-2">Delete</a>
+                                            <a href="{{ route('images.delete', ['date' => $date]) }}" class="btn btn-danger mr-2">Delete</a>
                                         @endif
-                                        <a href="{{ asset('storage/' . $image->media) }}" class="btn btn-primary" target="_blank" download="{{ $image->title }}">Download</a>
+{{--                                        <a href="{{ asset('storage/' . $image->media) }}" class="btn btn-primary" target="_blank" download="{{ $image->title }}">Download</a>--}}
                                     </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
 
-                        {!! $images->links() !!}
+{{--                        {!! $images->links() !!}--}}
                     </div>
                 </div>
             </div>

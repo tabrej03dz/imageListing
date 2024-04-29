@@ -15,16 +15,28 @@ class ImageController extends Controller
     public function index(Request $request, $number = null){
         if ($request->phone){
             $user = User::where('phone', $request->phone)->first();
-            $images = Image::where('user_id', $user->id)->paginate(5);
+            $images = Image::where('user_id', $user->id)->get();
+            $imagesByDate = $images->groupBy(function ($image) {
+                // Extract the date from the created_at timestamp using Carbon
+                return Carbon::parse($image->date)->format('Y-m-d');
+            });
         }else{
             if(auth()->user()->role == 'admin'){
-                $images = Image::paginate(5);
+                $images = Image::all();
+                $imagesByDate = $images->groupBy(function ($image) {
+                    // Extract the date from the created_at timestamp using Carbon
+                    return Carbon::parse($image->date)->format('Y-m-d');
+                });
             }else{
-                $images = Image::where('user_id', auth()->user()->id)->paginate(5);
+                $images = Image::where('user_id', auth()->user()->id)->get();
+                $imagesByDate = $images->groupBy(function ($image) {
+                    // Extract the date from the created_at timestamp using Carbon
+                    return Carbon::parse($image->date)->format('Y-m-d');
+                });
             }
         }
         $users = User::all();
-        return view('backend.image.index', compact('images', 'users'));
+        return view('backend.image.index', compact('images', 'users', 'imagesByDate'));
     }
     public function uploadImage(){
         return view('backend.image.upload');
@@ -75,16 +87,13 @@ class ImageController extends Controller
         return redirect()->back();
     }
 
+    public function imageShowByDate($date){
+        $images = Image::where('date', $date)->paginate(5);
+        return view('imagesByDate', compact('images', 'date'));
+    }
 
-//    public function downloadImage(Image $image){
-//
-//        try {
-//            $path = storage_path( 'images\PQeLveFCxaZB0IRmVmBgGfWKlEtHv1Omad3rmipO.jpg');
-//        dd($path);
-//            return response()->download($path);
-//        }catch (\Exception $e){
-//            abort(404);
-//        }
-//
-//    }
+    public function imageDeleteByDate($date){
+        $images = Image::where('date', $date)->delete();
+        return redirect()->back()->with('success', 'Images Delete successfully');
+    }
 }

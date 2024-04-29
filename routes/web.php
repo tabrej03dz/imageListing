@@ -44,6 +44,8 @@ Route::middleware(['auth'])->group(function(){
 
     Route::prefix('images')->name('images.')->group(function(){
         Route::get('upload', [ImageController::class, 'uploadImage'])->name('upload');
+        Route::get('delete/{date}', [ImageController::class, 'imageDeleteByDate'])->name('delete');
+        Route::get('show/{date}', [ImageController::class, 'imageShowByDate'])->name('show');
     });
 
     Route::prefix('customer')->name('customer.')->group(function(){
