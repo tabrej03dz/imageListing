@@ -84,7 +84,7 @@ class ImageController extends Controller
             }
         }
         $image->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Image deleted successfully');
     }
 
     public function imageShowByDate($date){
@@ -93,7 +93,18 @@ class ImageController extends Controller
     }
 
     public function imageDeleteByDate($date){
-        $images = Image::where('date', $date)->delete();
+        $images = Image::where('date', $date)->get();
+
+        foreach ($images as $image){
+            if($image->media){
+                $filePath = public_path('storage/'. $image->media);
+                if(file_exists($filePath)){
+                    unlink($filePath);
+                }
+            }
+            $image->delete();
+        }
+
         return redirect()->back()->with('success', 'Images Delete successfully');
     }
 }

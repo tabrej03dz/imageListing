@@ -96,4 +96,9 @@ class CustomerController extends Controller
         return redirect('customer')->with('success', 'User deleted successfully');
     }
 
+    public function customerImages(User $customer){
+        $images = $customer->images;
+        return view('backend.customer.images', compact('images', 'customer'));
+    }
+
 }

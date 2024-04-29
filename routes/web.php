@@ -35,7 +35,7 @@ Route::middleware(['auth'])->group(function(){
     Route::prefix('image')->name('image.')->group(function(){
         Route::get('/', [ImageController::class, 'index'])->name('index');
         Route::get('upload', [ImageController::class, 'uploadImage'])->name('upload');
-        Route::post('upload', [ImageController::class, 'store'])->name('upload');
+        Route::post('store', [ImageController::class, 'store'])->name('store');
         Route::get('delete/{image}', [ImageController::class, 'destroy'])->name('destroy');
         Route::get('download/{image}', [ImageController::class, 'downloadImage'])->name('download');
 
@@ -55,6 +55,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('destroy/{customer}', [CustomerController::class, 'destroy'])->name('destroy');
         Route::post('store', [CustomerController::class, 'store'])->name('store');
         Route::post('update/{customer}', [CustomerController::class, 'update'])->name('update');
+        Route::get('images{customer}', [CustomerController::class, 'customerImages'])->name('images');
 
         Route::get('upload', [CustomerController::class, 'customerUpload'])->name('upload');
         Route::post('import', [CustomerController::class, 'customerImport'])->name('import');

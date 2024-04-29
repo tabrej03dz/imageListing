@@ -35,6 +35,9 @@
                                 <a href="{{ route('customer.edit', ['customer' => $customer]) }}" class="btn btn-success mr-2">
                                     Edit
                                 </a>
+                                <a href="{{ route('customer.images', ['customer' => $customer]) }}" class="btn btn-primary mr-2">
+                                    Images
+                                </a>
                                 <a href="{{ route('customer.destroy', ['customer' => $customer]) }}" class="btn btn-danger mr-2">
                                     Delete
                                 </a>
