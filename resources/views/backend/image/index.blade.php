@@ -1,5 +1,9 @@
 @extends('backend.layout.root', ['title' => 'Images'])
 @section('content')
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+
     @if(auth()->user()->role == 'admin')
         <form action="{{ route('image.search') }}" method="post">
             @csrf
@@ -8,7 +12,6 @@
                 <button type="submit" class="btn btn-primary">Search</button>
             </div>
         </form>
-
     @endif
     @if($images->count() > 0)
 
@@ -23,7 +26,7 @@
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                             <tr>
-                                <th>Image</th>
+{{--                                <th>Image</th>--}}
                                 <th>Title</th>
                                 <th>Date</th>
                                 <th>Action</th>
@@ -32,16 +35,16 @@
                             <tbody>
                             @foreach($images as $image)
                                 <tr>
-                                    <td class="align-middle">
-                                        @if(str_contains($image->media, 'jpg') || str_contains($image->media, 'png') || str_contains($image->media, 'jpeg'))
-                                            <img class="rounded-circle" style="width: 72px; height: 72px;" src="{{ asset('storage/'. $image->media) }}" alt="Image">
-                                        @else
-                                            <video controls width="75" height="75">
-                                                <source src="{{asset('storage/'. $image->media)}}" type="video/mp4">
-                                                Your browser does not support the video tag.
-                                            </video>
-                                        @endif
-                                    </td>
+{{--                                    <td class="align-middle">--}}
+{{--                                        @if(str_contains($image->media, 'jpg') || str_contains($image->media, 'png') || str_contains($image->media, 'jpeg'))--}}
+{{--                                            <img class="rounded-circle" style="width: 72px; height: 72px;" src="{{ asset('storage/'. $image->media) }}" alt="Image">--}}
+{{--                                        @else--}}
+{{--                                            <video controls width="75" height="75">--}}
+{{--                                                <source src="{{asset('storage/'. $image->media)}}" type="video/mp4">--}}
+{{--                                                Your browser does not support the video tag.--}}
+{{--                                            </video>--}}
+{{--                                        @endif--}}
+{{--                                    </td>--}}
                                     <td class="align-middle">{{$image->title}}</td>
                                     <td class="align-middle">{{$image->date}}</td>
                                     <td class="align-middle">
@@ -59,9 +62,6 @@
                     </div>
                 </div>
             </div>
-
-
-
     @else
         <p>No images found.</p>
     @endif

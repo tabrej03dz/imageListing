@@ -61,51 +61,6 @@
         </div>
     </form>
 
-    <script>
-        var uploadedFiles = [];
 
-        document.getElementById('media').addEventListener('change', function(event) {
-            var files = event.target.files;
-            document.getElementById('imagePreview').innerHTML = '';
-            uploadedFiles = [];
-
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                var reader = new FileReader();
-
-                reader.onload = (function(file) {
-                    return function(e) {
-                        var img = document.createElement('img');
-                        img.className = 'preview-image';
-                        img.src = e.target.result;
-                        img.width = 150;
-                        document.getElementById('imagePreview').appendChild(img);
-
-                        uploadedFiles.push({ file: file, preview: img });
-
-                        img.addEventListener('click', function() {
-                            removeImage(img);
-                        });
-                    };
-                })(file);
-
-                reader.readAsDataURL(file);
-            }
-        });
-
-        function removeImage(imgElement) {
-            var index = uploadedFiles.findIndex(function(item) {
-                return item.preview === imgElement;
-            });
-
-            if (index !== -1) {
-                imgElement.parentNode.removeChild(imgElement);
-                uploadedFiles.splice(index, 1);
-                var mediaInput = document.getElementById('media');
-                mediaInput.value = '';
-            }
-        }
-
-    </script>
 
 @endsection
