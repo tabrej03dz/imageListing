@@ -30,7 +30,6 @@
 
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('dashboard')}}">
 {{--            <div class="sidebar-brand-icon rotate-n-15">--}}
@@ -39,10 +38,8 @@
 {{--            <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>--}}
             <img src="{{asset('assets/logo.png')}}" alt="" style="width: 100%; height: auto;">
         </a>
-
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
-
         <!-- Nav Item - Dashboard -->
         <li class="nav-item {{ request()->routeIs('dashboard') ? 'bg-white' : '' }}">
             <a class="nav-link" href="{{ route('dashboard') }}">
@@ -50,13 +47,8 @@
                 <span class="{{ request()->routeIs('dashboard') ? 'text-dark' : 'text-white' }}">Dashboard</span>
             </a>
         </li>
-
-
-
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
-
-
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item {{ request()->routeIs('image.index') ? 'bg-white' : '' }}">
             <a class="nav-link" href="{{ route('image.index') }}" aria-expanded="true">
@@ -69,28 +61,24 @@
         <hr class="sidebar-divider my-0">
 
         @if(auth()->user()->role == 'admin')
-
-
-        <li class="nav-item {{ request()->routeIs('images.upload') ? 'bg-white' : '' }}">
-            <a class="nav-link" href="{{route('images.upload')}}"
-               aria-expanded="true" >
-                <i class="fas fa-upload {{ request()->routeIs('images.upload') ? 'text-dark' : 'text-white' }}"></i>
-                <span class="{{ request()->routeIs('images.upload') ? 'text-dark' : 'text-white' }}">Upload</span>
-            </a>
-        </li>
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-
-        <li class="nav-item {{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') ) ? 'bg-white' : '' }}">
-            <a class="nav-link" href="{{route('customer.index')}}"
-               aria-expanded="true" >
-                <i class="fas fa-user-friends {{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') ) ? 'text-dark' : '' }}"></i>
-                <span class="{{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') ) ? 'text-dark' : '' }}">Customers</span>
-            </a>
-        </li>
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
+            <li class="nav-item {{ request()->routeIs('images.upload') ? 'bg-white' : '' }}">
+                <a class="nav-link" href="{{route('images.upload')}}"
+                   aria-expanded="true" >
+                    <i class="fas fa-upload {{ request()->routeIs('images.upload') ? 'text-dark' : 'text-white' }}"></i>
+                    <span class="{{ request()->routeIs('images.upload') ? 'text-dark' : 'text-white' }}">Upload</span>
+                </a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item {{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') ) ? 'bg-white' : '' }}">
+                <a class="nav-link" href="{{route('customer.index')}}"
+                   aria-expanded="true" >
+                    <i class="fas fa-user-friends {{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') ) ? 'text-dark' : '' }}"></i>
+                    <span class="{{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') ) ? 'text-dark' : '' }}">Customers</span>
+                </a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
         @endif
 
 {{--        <li class="nav-item">--}}
@@ -124,10 +112,8 @@
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
-
         <!-- Main Content -->
         <div id="content">
-
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
