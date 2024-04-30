@@ -12,9 +12,12 @@ use Maatwebsite\Excel\Excel;
 
 class CustomerController extends Controller
 {
-    public function index(){
-        $customers = User::where('role', '!=', 'admin')->paginate(5);
-//        dd($customers);
+    public function index(Request $request){
+        if($request->search){
+            $customers = User::where('role', '!=', 'admin')->where('phone','like', '%'.$request->search.'%')->orWhere('name', 'like', '%'.$request->search.'%')->paginate(5);
+        }else{
+            $customers = User::where('role', '!=', 'admin')->paginate(5);
+        }
         return view('backend.customer.index', compact('customers'));
     }
 

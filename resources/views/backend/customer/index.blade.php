@@ -4,12 +4,59 @@
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
-            <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                <h6 class="m-0 font-weight-bold text-primary">Customers</h6>
-                <div>
-                    <a href="{{ route('customer.create') }}" class="btn btn-primary">Add Customer</a>
-                    <a href="{{ route('customer.upload') }}" class="btn btn-primary">Customer Upload</a>
+            <div class="card-header py-3">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Customers</h6>
+                    </div>
+                    <div class="col-md-6">
+                        <form action="{{route('customer.search')}}" method="post"
+                            class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            @csrf
+                            <div class="input-group">
+                                <input type="text" name="search" class="form-control bg-light border-1 small" placeholder="Search for..."
+                                       aria-label="Search" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                 aria-labelledby="searchDropdown">
+                                <form action="{{route('customer.search')}}" method="post" class="form-inline mr-auto w-100 navbar-search">
+                                    @csrf
+                                    <div class="input-group">
+                                        <input type="text" name="search" class="form-control bg-light border-0 small"
+                                               placeholder="Search for..." aria-label="Search"
+                                               aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="submit">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ route('customer.create') }}" class="btn btn-primary mr-2">Add Customer</a>
+                            <a href="{{ route('customer.upload') }}" class="btn btn-primary">Customer Upload</a>
+                        </div>
+                    </div>
                 </div>
+
             </div>
             @if($customers->count() > 0)
             <div class="card-body">

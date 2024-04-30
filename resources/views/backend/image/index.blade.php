@@ -28,7 +28,7 @@
         <form action="{{ route('image.search') }}" method="post">
             @csrf
             <div class="form-group d-flex ">
-                <input type="text" name="phone" class="form-control" id="search" placeholder="Enter your search term">
+                <input type="number" name="phone" class="form-control" id="search" placeholder="Phone Number">
                 <button type="submit" class="btn btn-primary">Search</button>
             </div>
         </form>

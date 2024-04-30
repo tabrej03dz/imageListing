@@ -59,6 +59,7 @@ Route::middleware(['auth'])->group(function(){
 
         Route::get('upload', [CustomerController::class, 'customerUpload'])->name('upload');
         Route::post('import', [CustomerController::class, 'customerImport'])->name('import');
+        Route::post('search', [CustomerController::class, 'index'])->name('search');
     });
 
     Route::get('profile', [HomeController::class, 'profile'])->name('profile');
