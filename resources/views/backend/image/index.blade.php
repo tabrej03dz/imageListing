@@ -1,6 +1,5 @@
 @extends('backend.layout.root', ['title' => 'Images'])
 @section('content')
-
     @if(auth()->user()->role == 'admin')
         <form action="{{ route('image.search') }}" method="post">
             @csrf
@@ -21,7 +20,6 @@
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                             <tr>
-{{--                                <th>Image</th>--}}
                                 <th>Date</th>
                                 <th>Title</th>
                                 <th>No of Items</th>
@@ -30,7 +28,6 @@
                             </thead>
                             <tbody>
                             @foreach($imagesByDate as $date => $images)
-{{--                                @dd($images->first()->title)--}}
                                 <tr>
                                     <td class="align-middle">
                                         <a href="{{route('images.show', ['date' => $date])}}">
@@ -43,19 +40,15 @@
                                         @if(auth()->user()->role == 'admin')
                                             <a href="{{ route('images.delete', ['date' => $date]) }}" class="btn btn-danger mr-2">Delete</a>
                                         @endif
-{{--                                        <a href="{{ asset('storage/' . $image->media) }}" class="btn btn-primary" target="_blank" download="{{ $image->title }}">Download</a>--}}
                                     </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
-
-{{--                        {!! $images->links() !!}--}}
                     </div>
                 </div>
             </div>
     @else
         <p>No images found.</p>
     @endif
-
 @endsection

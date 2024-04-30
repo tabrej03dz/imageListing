@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Login</title>
+    <title>Search Images</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{asset('assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -19,6 +19,8 @@
 
     <!-- Custom styles for this template-->
     <link href="{{asset('assets/css/sb-admin-2.min.css')}}" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="{{asset('assets/favicon.jpg')}}">
 
 </head>
 
@@ -59,7 +61,7 @@
                                 <form class="user" action="{{route('imgSearch')}}" method="post">
                                     @csrf
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user"
+                                        <input type="number" class="form-control form-control-user"
                                                id="search" name="search" aria-describedby="emailHelp"
                                                placeholder="Enter Your Phone No..">
                                     </div>
