@@ -16,31 +16,37 @@
         </div>
     @endif
     @if(session('failedMsg'))
-        <div class="alert alert-danger">
+        <div class="alert alert-danger position-absolute right-0 top-0 alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
             {{ session('failedMsg') }}
             <ul>
                 @foreach(session('failed') as $f)
                     <li>{{ $f }}</li>
                 @endforeach
             </ul>
-
             <!-- Display count of failed uploads -->
             <p>Number of failed uploads: {{ count(session('failed')) }}</p>
         </div>
-        @endif
+    @endif
 
-        @if(session('uploadSuccess'))
-            <div class="alert alert-success">
-                <ul>
-                    @foreach(session('uploadSuccess') as $s)
-                        <li>{{ $s }}</li>
-                    @endforeach
-                </ul>
-                <!-- Display count of failed uploads -->
-                <p>Number of Success uploads: {{ count(session('uploadSuccess')) }}</p>
-            </div>
-        @endif
-{{--    @if(session('success'))--}}
+    @if(session('uploadSuccess'))
+        <div class="alert alert-success position-absolute left-0 top-0 alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <ul>
+                @foreach(session('uploadSuccess') as $s)
+                    <li>{{ $s }}</li>
+                @endforeach
+            </ul>
+            <!-- Display count of failed uploads -->
+            <p>Number of Success uploads: {{ count(session('uploadSuccess')) }}</p>
+        </div>
+    @endif
+
+    {{--    @if(session('success'))--}}
 
 {{--        --}}
 {{--    @endif--}}

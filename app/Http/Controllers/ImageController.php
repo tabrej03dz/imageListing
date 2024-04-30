@@ -77,10 +77,8 @@ class ImageController extends Controller
 
             $image->save();
         }
-
         $storedImagesCount = count($request->file('media')) - count($failed);
         return redirect()->back()->with('failedMsg', 'Images Failed to upload')->with('failed', $failed)->with('successMsg', $storedImagesCount . ' images uploaded successfully')->with('uploadSuccess', $uploadSuccess);
-
     }
 
 
