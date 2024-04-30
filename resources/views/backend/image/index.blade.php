@@ -1,6 +1,27 @@
 @extends('backend.layout.root', ['title' => 'Images'])
 @section('content')
 
+    @if(session('failedMsg'))
+        <div class="alert alert-danger">
+            {{ session('failedMsg') }}
+            <ul>
+                @foreach(session('failed') as $f)
+                    <li>{{ $f }}</li>
+                @endforeach
+            </ul>
+            <!-- Display count of failed uploads -->
+            <p>Number of failed uploads: {{ count(session('failed')) }}</p>
+        </div>
+    @endif
+
+    @if(session('successMsg'))
+        <div class="alert alert-success">
+            {{ session('successMsg') }}
+            <!-- Display count of successfully uploaded images -->
+            <p>Number of successful uploads: {{ session('uploadedImagesCount') }}</p>
+        </div>
+    @endif
+
     @if(auth()->user()->role == 'admin')
         <form action="{{ route('image.search') }}" method="post">
             @csrf

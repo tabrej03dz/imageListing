@@ -48,31 +48,43 @@ class ImageController extends Controller
             'date' => 'date|nullable',
             'media.*' => '',
         ]);
+
         $failed = [];
+        $uploadSuccess = [];
+        $uploadedImagesCount = 0;
+
         foreach ($request->file('media') as $media){
             $image = new Image();
             $image->date = $request->date ?? Carbon::today();
             $image->title = $request->title;
+
             if ($media){
                 $fileName = Str::limit(pathinfo($media->getClientOriginalName(), PATHINFO_FILENAME), 10, '') ;
                 $user = User::where('phone', 'like', '%'.$fileName.'%')->first();
+
                 if ($user){
                     $image->user_id = $user->id;
-                }else{
+                    array_push($uploadSuccess, $media->getClientOriginalName());
+                } else {
                     array_push($failed, $media->getClientOriginalName());
                     continue;
                 }
+
                 $file = $media->store('public/images');
                 $image->media = str_replace('public/', '', $file);
+
+                // Increment the count of successfully uploaded images
+                $uploadedImagesCount++;
             }
+
             $image->save();
         }
-        if( count($failed) > 0){
-            return redirect()->back()->with('failedMsg', 'Images Failed to upload')->with('failed', $failed);
-        }else{
-            return redirect('image');
-        }
+
+        $storedImagesCount = count($request->file('media')) - count($failed);
+        return redirect()->back()->with('failedMsg', 'Images Failed to upload')->with('failed', $failed)->with('successMsg', $storedImagesCount . ' images uploaded successfully')->with('uploadSuccess', $uploadSuccess);
+
     }
+
 
     public function destroy(Image $image){
         if($image->media){
