@@ -1,6 +1,6 @@
 @extends('backend.layout.root', ['title' => 'Customers'])
 @section('content')
-
+    <script src="https://cdn.tailwindcss.com"></script>
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">

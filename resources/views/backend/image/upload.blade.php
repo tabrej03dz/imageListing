@@ -1,5 +1,4 @@
 @extends('backend.layout.root', ['title' => 'Upload Images'])
-
 @section('content')
     @if($errors->any())
         <div class="alert alert-danger">
@@ -10,15 +9,12 @@
             </ul>
         </div>
     @endif
-
     <h2 class="text-2xl font-semibold text-gray-800 mb-4">Upload Image</h2>
-
     @if(session('error'))
         <div class="alert alert-danger">
             {{ session('error') }}
         </div>
     @endif
-
     @if(session('failedMsg'))
         <div class="alert alert-danger">
             {{ session('failedMsg') }}
@@ -27,12 +23,18 @@
                     <li>{{ $f }}</li>
                 @endforeach
             </ul>
+
             <!-- Display count of failed uploads -->
             <p>Number of failed uploads: {{ count(session('failed')) }}</p>
         </div>
     @endif
 
     @if(session('uploadSuccess'))
+
+        </div>
+    @endif
+    @if(session('success'))
+
         <div class="alert alert-success">
             <ul>
                 @foreach(session('uploadSuccess') as $s)
@@ -44,6 +46,7 @@
         </div>
     @endif
 
+
 {{--    @if(session('successMsg'))--}}
 {{--        <div class="alert alert-success">--}}
 {{--            {{ session('successMsg') }}--}}
@@ -52,18 +55,17 @@
 {{--        </div>--}}
 {{--    @endif--}}
 
+
     <form action="{{ route('image.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label for="title" class="form-label">Image Title:</label>
             <input type="text" id="title" name="title" class="form-control">
         </div>
-
         <div class="mb-3">
             <label for="date" class="form-label">Date:</label>
             <input type="date" id="date" name="date" class="form-control">
         </div>
-
         <div class="mb-3">
             <label for="media" class="form-label">Choose Media:</label>
             <input type="file" id="media" name="media[]" multiple accept="media/*" required class="form-control">

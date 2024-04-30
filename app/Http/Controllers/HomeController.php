@@ -30,7 +30,6 @@ class HomeController extends Controller
 
     public function clearOldImage(){
         $images = Image::whereDate('date', '<', Carbon::now()->subDay(3))->get();
-
         foreach ($images as $image){
             if($image->media){
                 $filePath = public_path('storage/' . $image->media);
@@ -40,9 +39,7 @@ class HomeController extends Controller
             }
             $image->delete();
         }
-
         return redirect('dashboard');
-
     }
 
     public function profile(){
