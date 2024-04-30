@@ -79,16 +79,19 @@
                             <td>{{$customer->email}}</td>
                             <td>{{$customer->phone}}</td>
                             <td>
-                                <a href="{{ route('customer.edit', ['customer' => $customer]) }}" class="btn btn-success mr-2">
-                                    Edit
-                                </a>
-                                <a href="{{ route('customer.images', ['customer' => $customer]) }}" class="btn btn-primary mr-2">
-                                    Images
-                                </a>
-                                <a href="{{ route('customer.destroy', ['customer' => $customer]) }}" class="btn btn-danger mr-2">
-                                    Delete
-                                </a>
+                                <div class="btn-group" role="group" aria-label="Customer Actions">
+                                    <a href="{{ route('customer.edit', ['customer' => $customer]) }}" class="btn btn-success">
+                                        Edit
+                                    </a>
+                                    <a href="{{ route('customer.images', ['customer' => $customer]) }}" class="btn btn-primary">
+                                        Images
+                                    </a>
+                                    <a href="{{ route('customer.destroy', ['customer' => $customer]) }}" class="btn btn-danger">
+                                        Delete
+                                    </a>
+                                </div>
                             </td>
+
 
                         </tr>
                         @endforeach

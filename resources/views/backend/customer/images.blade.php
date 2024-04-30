@@ -23,11 +23,14 @@
                             <tr>
                                 <td class="align-middle">{{$image->title}}</td>
                                 <td class="align-middle">
-                                    @if(auth()->user()->role == 'admin')
-                                        <a href="{{ route('image.destroy', ['image' => $image]) }}" class="btn btn-danger mr-2">Delete</a>
-                                    @endif
-                                    <a href="{{ asset('storage/' . $image->media) }}" class="btn btn-primary" target="_blank" download="{{ $image->title }}">Download</a>
+                                    <div class="btn-group" role="group" aria-label="Image Actions">
+                                        @if(auth()->user()->role == 'admin')
+                                            <a href="{{ route('image.destroy', ['image' => $image]) }}" class="btn btn-danger mr-2">Delete</a>
+                                        @endif
+                                        <a href="{{ asset('storage/' . $image->media) }}" class="btn btn-primary">Download</a>
+                                    </div>
                                 </td>
+
                             </tr>
                         @endforeach
                         </tbody>
