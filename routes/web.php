@@ -39,13 +39,14 @@ Route::middleware(['auth'])->group(function(){
         Route::get('delete/{image}', [ImageController::class, 'destroy'])->name('destroy');
         Route::get('download/{image}', [ImageController::class, 'downloadImage'])->name('download');
 
-        Route::post('search', [ImageController::class, 'index'])->name('search');
+        Route::post('search/{date}', [ImageController::class, 'imageShowByDate'])->name('search');
     });
 
     Route::prefix('images')->name('images.')->group(function(){
         Route::get('upload', [ImageController::class, 'uploadImage'])->name('upload');
         Route::get('delete/{date}', [ImageController::class, 'imageDeleteByDate'])->name('delete');
         Route::get('show/{date}', [ImageController::class, 'imageShowByDate'])->name('show');
+        Route::get('send/{date}', [ImageController::class, 'sendImage'])->name('send');
     });
 
     Route::prefix('customer')->name('customer.')->group(function(){
@@ -63,6 +64,7 @@ Route::middleware(['auth'])->group(function(){
     });
 
     Route::get('profile', [HomeController::class, 'profile'])->name('profile');
+    Route::post('setKeys', [HomeController::class, 'setKeys'])->name('setKeys');
 });
 
 Route::get('/foo', function () {

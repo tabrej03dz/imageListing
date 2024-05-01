@@ -1,38 +1,6 @@
 @extends('backend.layout.root', ['title' => 'Images'])
 @section('content')
 
-
-    @if(session('failedMsg'))
-        <div class="alert alert-danger">
-            {{ session('failedMsg') }}
-            <ul>
-                @foreach(session('failed') as $f)
-                    <li>{{ $f }}</li>
-                @endforeach
-            </ul>
-            <!-- Display count of failed uploads -->
-            <p>Number of failed uploads: {{ count(session('failed')) }}</p>
-        </div>
-    @endif
-
-    @if(session('successMsg'))
-        <div class="alert alert-success">
-            {{ session('successMsg') }}
-            <!-- Display count of successfully uploaded images -->
-            <p>Number of successful uploads: {{ session('uploadedImagesCount') }}</p>
-        </div>
-    @endif
-
-
-    @if(auth()->user()->role == 'admin')
-        <form action="{{ route('image.search') }}" method="post">
-            @csrf
-            <div class="form-group d-flex ">
-                <input type="number" name="phone" class="form-control" id="search" placeholder="Phone Number">
-                <button type="submit" class="btn btn-primary">Search</button>
-            </div>
-        </form>
-    @endif
     @if($images->count() > 0)
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
@@ -64,6 +32,7 @@
                                         @if(auth()->user()->role == 'admin')
                                             <a href="{{ route('images.delete', ['date' => $date]) }}" class="btn btn-danger mr-2">Delete</a>
                                         @endif
+                                            <a href="{{route('images.send', ['date' => $date])}}" class="btn btn-primary"> send</a>
                                     </td>
                                 </tr>
                             @endforeach

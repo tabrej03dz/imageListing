@@ -112,6 +112,33 @@
 
                 <!-- Content Row -->
 
+
+                    <div class="row justify-content-between">
+                        <div class="col-md-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-body">
+                                    <form action="{{route('setKeys')}}" method="post">
+                                        @csrf
+                                        <div class="form-row align-items-center">
+                                            <div class="col-sm-5 my-1 d-flex">
+                                                <label  for="instance_id">Instance Id</label>
+                                                <input type="text" class="form-control" id="instance_id" name="instance_id" value="{{session('instance_id') ?? ''}}" placeholder="Instance Id">
+                                            </div>
+                                            <div class="col-sm-5 my-1 d-flex">
+                                                <label  for="access_token">Access Token</label>
+                                                <input type="text" class="form-control" id="access_token" name="access_token" value="{{session('access_token') ?? ''}}" placeholder="Access Token">
+                                            </div>
+                                            <div class="col-auto my-1">
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 <div class="row">
 
                     <!-- Area Chart -->

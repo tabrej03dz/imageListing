@@ -58,4 +58,10 @@ class HomeController extends Controller
         }
         return view('user_image', compact('images'));
     }
+
+    public function setKeys(Request $request){
+        session(['instance_id' => $request->instance_id]);
+        session(['access_token' => $request->access_token]);
+        return redirect()->back()->with('success', 'Instance Id and Access Token set successfully');
+    }
 }

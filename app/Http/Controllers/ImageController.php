@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use GuzzleHttp\Client;
 
 class ImageController extends Controller
 {
@@ -93,14 +94,19 @@ class ImageController extends Controller
         return redirect()->back()->with('success', 'Image deleted successfully');
     }
 
-    public function imageShowByDate($date){
-        $images = Image::where('date', $date)->paginate(5);
+    public function imageShowByDate($date, Request $request){
+        if($request->phone){
+            $customer = User::where('phone', $request->phone)->first();
+            $images = Image::where('date', $date)->where('user_id', $customer->id)->paginate(5);
+//            dd($images);
+        }else{
+            $images = Image::where('date', $date)->paginate(5);
+        }
         return view('imagesByDate', compact('images', 'date'));
     }
 
     public function imageDeleteByDate($date){
         $images = Image::where('date', $date)->get();
-
         foreach ($images as $image){
             if($image->media){
                 $filePath = public_path('storage/'. $image->media);
@@ -110,7 +116,22 @@ class ImageController extends Controller
             }
             $image->delete();
         }
-
         return redirect()->back()->with('success', 'Images Delete successfully');
+    }
+
+    public function sendImage($date){
+        $images = Image::where('date', $date)->get();
+
+        foreach ($images as $image){
+            $phoneNumber = substr($image->user->phone, -10);
+//            $imageUrl = asset('storage/'. $image->media);
+            $imageUrl = 'https://post.realvictorygroups.com/storage/images/Xq48aK6uuGnLBshswVrzDc4gT3RPla5Rczz2wSEd.png';
+            $message = str_replace(' ', '+', $image->title);
+            $fileName = str_replace(' ', '+', $image->title);
+
+            $client = new Client(['verify' => false]);
+            $response = $client->request('GET', 'https://rvgwp.in/api/send?number=91'.$phoneNumber.'&type=media&message='.$message.'&media_url='.$imageUrl.'&filename='.$fileName.'&instance_id='.session('instance_id').'&access_token='.session('access_token'));
+        }
+        return redirect()->back()->with('success', 'Images send successfully');
     }
 }

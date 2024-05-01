@@ -5,10 +5,10 @@
 
 
     @if(auth()->user()->role == 'admin')
-        <form action="{{ route('image.search') }}" method="post">
+        <form action="{{ route('image.search', ['date' => $date]) }}" method="post">
             @csrf
             <div class="form-group d-flex ">
-                <input type="text" name="phone" class="form-control" id="search" placeholder="Enter your search term">
+                <input type="number" name="phone" class="form-control" id="search" placeholder="Phone Number">
                 <button type="submit" class="btn btn-primary">Search</button>
             </div>
         </form>
@@ -40,7 +40,16 @@
                                     @if(auth()->user()->role == 'admin')
                                         <a href="{{ route('image.destroy', ['image' => $image]) }}" class="btn btn-danger mr-2">Delete</a>
                                     @endif
-                                                                            <a href="{{ asset('storage/' . $image->media) }}" class="btn btn-primary" target="_blank" download="{{ $image->title }}">Download</a>
+                                        <a href="{{ asset('storage/' . $image->media) }}" class="btn btn-primary" target="_blank" download="{{ $image->title }}">Download</a>
+{{--                                        @php--}}
+{{--                                            $phoneNumber = substr($image->user->phone, -10);--}}
+{{--                                            $imageUrl = asset('storage/'. $image->media);--}}
+{{--                                            //$imageUrl = 'https://post.realvictorygroups.com/storage/images/Xq48aK6uuGnLBshswVrzDc4gT3RPla5Rczz2wSEd.png';--}}
+{{--                                            $message = str_replace(' ', '+', $image->title);--}}
+{{--                                            $fileName = str_replace(' ', '+', $image->title);--}}
+{{--                                        @endphp--}}
+{{--                                        <a href="{{'https://rvgwp.in/api/send?number=91'.$phoneNumber.'&type=media&message='.$message.'&media_url='.$imageUrl.'&filename='.$fileName.'&instance_id=662F2C3B48276&access_token=662cfa69080e1'}}" class="btn btn-primary">Send</a>--}}
+
                                 </td>
                             </tr>
                         @endforeach
