@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('download/{image}', [ImageController::class, 'downloadImage'])->name('download');
 
         Route::post('search/{date}', [ImageController::class, 'imageShowByDate'])->name('search');
+        Route::get('singleSend/{image}', [ImageController::class, 'singleImageSend'])->name('singleSend');
     });
 
     Route::prefix('images')->name('images.')->group(function(){

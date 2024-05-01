@@ -32,7 +32,7 @@
                                         @if(auth()->user()->role == 'admin')
                                             <a href="{{ route('images.delete', ['date' => $date]) }}" class="btn btn-danger mr-2">Delete</a>
                                         @endif
-                                            <a href="{{route('images.send', ['date' => $date])}}" class="btn btn-primary"> send</a>
+                                            <a href="{{route('images.send', ['date' => $date])}}" class="btn btn-primary">Bulk send</a>
                                     </td>
                                 </tr>
                             @endforeach

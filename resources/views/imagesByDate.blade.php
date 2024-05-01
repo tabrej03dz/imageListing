@@ -48,7 +48,9 @@
 {{--                                            $message = str_replace(' ', '+', $image->title);--}}
 {{--                                            $fileName = str_replace(' ', '+', $image->title);--}}
 {{--                                        @endphp--}}
-{{--                                        <a href="{{'https://rvgwp.in/api/send?number=91'.$phoneNumber.'&type=media&message='.$message.'&media_url='.$imageUrl.'&filename='.$fileName.'&instance_id=662F2C3B48276&access_token=662cfa69080e1'}}" class="btn btn-primary">Send</a>--}}
+{{--                                        <a href="{{'https://rvgwp.in/api/send?number=91'.$phoneNumber.'&type=media&message='.$message.'&media_url='.$imageUrl.'&filename='.$fileName.'&instance_id='.session('instance_id').'&access_token='.session('access_token')}}" class="btn btn-primary">Send</a>--}}
+
+                                        <a href="{{route('image.singleSend', ['image'=>$image])}}" class="btn btn-primary">Send</a>
 
                                 </td>
                             </tr>
