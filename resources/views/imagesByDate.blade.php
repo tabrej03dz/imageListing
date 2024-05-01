@@ -50,7 +50,11 @@
 {{--                                        @endphp--}}
 {{--                                        <a href="{{'https://rvgwp.in/api/send?number=91'.$phoneNumber.'&type=media&message='.$message.'&media_url='.$imageUrl.'&filename='.$fileName.'&instance_id='.session('instance_id').'&access_token='.session('access_token')}}" class="btn btn-primary">Send</a>--}}
 
-                                        <a href="{{route('image.singleSend', ['image'=>$image])}}" class="btn btn-primary">Send</a>
+                                        @if($image->sent == 0)
+                                            <a href="{{route('image.singleSend', ['image'=>$image])}}" class="btn btn-primary">Send</a>
+                                        @else
+                                            <a href="#" class="btn btn-success disabled">Sent</a>
+                                        @endif
 
                                 </td>
                             </tr>

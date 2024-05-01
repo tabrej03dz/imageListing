@@ -134,9 +134,10 @@ class ImageController extends Controller
                 $response = $client->request('GET', 'https://rvgwp.in/api/send?number=91'.$phoneNumber.'&type=media&message='.$message.'&media_url='.$imageUrl.'&filename='.$fileName.'&instance_id='.session('instance_id').'&access_token='.session('access_token'));
                 $message = $response->getBody()->getContents();
                 if(json_decode($message)->status == 'error'){
-
                     return redirect()->back()->with('error', $message);
                 }
+                $image->sent = '1';
+                $image->save();
             }
             return redirect()->back()->with('success', 'Images send successfully');
         }else{
@@ -157,6 +158,8 @@ class ImageController extends Controller
         if(json_decode($message)->status == 'error'){
             return redirect()->back()->with('error', $message);
         }else{
+            $image->sent = '1';
+            $image->save();
             return redirect()->back()->with('success', 'Image Send Successfully');
         }
     }

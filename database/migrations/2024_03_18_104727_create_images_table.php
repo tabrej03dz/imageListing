@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('date');
             $table->string('media');
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->enum('sent', ['0', '1'])->default(0);
             $table->timestamps();
         });
     }
