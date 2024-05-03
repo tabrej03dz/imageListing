@@ -25,6 +25,9 @@ class CustomerRequest extends FormRequest
             'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required',
+            'start_date' => 'required|date',
+            'expiry_date' => 'required|date',
+            'status' => 'required',
             'password' => 'string|min:8|nullable',
             'confirm_password' => 'same:password|nullable',
 

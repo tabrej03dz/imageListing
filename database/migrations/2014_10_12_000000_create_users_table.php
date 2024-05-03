@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone')->unique();
             $table->enum('role', ['admin', 'user'])->default('user');
+            $table->enum('status', ['0', '1'])->default('1');
+            $table->date('start_date')->nullable();
+            $table->date('expiry_date')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

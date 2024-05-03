@@ -122,19 +122,6 @@
                     <i class="fa fa-bars"></i>
                 </button>
 
-                <!-- Topbar Search -->
-{{--                <form--}}
-{{--                    class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">--}}
-{{--                    <div class="input-group">--}}
-{{--                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."--}}
-{{--                               aria-label="Search" aria-describedby="basic-addon2">--}}
-{{--                        <div class="input-group-append">--}}
-{{--                            <button class="btn btn-primary" type="button">--}}
-{{--                                <i class="fas fa-search fa-sm"></i>--}}
-{{--                            </button>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </form>--}}
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -211,12 +198,43 @@
                 </div>
             @endif
 
+
+                @if (Session::has('failedUserCollection'))
+                    @php
+                        $collection = Session::get('failedUserCollection');
+                    @endphp
+                    @if($collection->count() > 0)
+                        <h4>These Users are not in our system</h4>
+                    @endif
+                <div class="row justify-content-between">
+                    <div class="col-md-12">
+                        <div class="card shadow mb-4">
+                            <div class="card-body d-flex flex-wrap">
+                                @foreach ($collection as $key => $rec)
+                                    <div class="col-md-3 mb-3">
+                                        <div class="card bg-white shadow-sm">
+                                            <div class="card-body position-relative" >
+                                                <!-- Phone number box -->
+{{--                                                <div class="d-flex justify-content-between align-items-center">--}}
+                                                    <p>{{$rec}}</p>
+                                                    <a href="{{route('customer.add', ['phone' => $rec, 'index' => $key])}}" class="btn btn-primary p-1 mx-1 text-xs">Add</a>
+{{--                                                </div>--}}
+                                                <a href="{{route('customer.remove', ['index' => $key])}}" class="btn btn-danger p-1 text-xs float-right position-absolute" style="top: 0; right: 0; background-color: #f3a199;">X</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            @endif
+
             <!-- Begin Page Content -->
             <div class="container-fluid">
-
                 @yield('content')
-
-
             </div>
             <!-- /.container-fluid -->
 

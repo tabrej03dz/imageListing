@@ -23,7 +23,7 @@
             {{ session('failedMsg') }}
             <ul>
                 @foreach(session('failed') as $f)
-                    <li>{{ $f }}</li>
+                    <li>{{ $f }} </li>
                 @endforeach
             </ul>
             <!-- Display count of failed uploads -->
@@ -45,20 +45,6 @@
             <p>Number of Success uploads: {{ count(session('uploadSuccess')) }}</p>
         </div>
     @endif
-
-    {{--    @if(session('success'))--}}
-
-{{--        --}}
-{{--    @endif--}}
-
-
-    {{--    @if(session('successMsg'))--}}
-    {{--        <div class="alert alert-success">--}}
-    {{--            {{ session('successMsg') }}--}}
-    {{--            <!-- Display count of successfully uploaded images -->--}}
-    {{--            <p>Number of successful uploads: {{ session('uploadedImagesCount') }}</p>--}}
-    {{--        </div>--}}
-    {{--    @endif--}}
 
 
     <form action="{{ route('image.store') }}" method="POST" enctype="multipart/form-data">

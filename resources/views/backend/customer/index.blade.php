@@ -68,6 +68,7 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -78,6 +79,9 @@
                             <td>{{$customer->name}}</td>
                             <td>{{$customer->email}}</td>
                             <td>{{$customer->phone}}</td>
+                            <td>
+                                <a href="{{route('customer.status', ['customer' => $customer])}}" class="btn btn-{{$customer->status == '1' ? 'success':'danger'}} p-0 px-1">{{$customer->status == '1' ? 'Active':'Inactive'}}</a>
+                            </td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Customer Actions">
                                     <a href="{{ route('customer.edit', ['customer' => $customer]) }}" class="btn btn-success">

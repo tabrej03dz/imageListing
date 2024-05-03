@@ -7,6 +7,7 @@ use App\Imports\CustomerImport;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Excel;
 
 
@@ -102,4 +103,42 @@ class CustomerController extends Controller
         return view('backend.customer.images', compact('images', 'customer'));
     }
 
+    public function status(User $customer){
+        if($customer->status == '1'){
+            $customer->status = '0';
+        }else{
+            $customer->status = '1';
+        }
+        $customer->save();
+        return redirect('customer')->with('success', 'Customer Status changed successfully');
+    }
+
+    public function failedCustomerAdd($phone, $index){
+        $user = User::create([
+            'name' => $phone,
+            'email' => $phone.'@gmail.com',
+            'password' => Hash::make('password'),
+            'phone' => $phone,
+        ]);
+
+
+        if($user){
+            $collection = Session::get('failedUserCollection');
+            unset($collection[$index]);
+            Session::put('failedUserCollection', $collection);
+            $type = 'success';
+            $message = 'Customer Added successfully';
+        }else{
+            $type = 'error';
+            $message = 'Failed to add customer';
+        }
+        return redirect()->back()->with($type, $message);
+    }
+
+    public function removeFailedCustomer($index){
+        $collection = Session::get('failedUserCollection');
+        unset($collection[$index]);
+        Session::put('failedUserCollection', $collection);
+        return redirect()->back()->with('success', 'Removed Successfully');
+    }
 }

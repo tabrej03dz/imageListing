@@ -1,9 +1,6 @@
 @extends('backend.layout.root', ['title' => 'Images'])
 @section('content')
     <script src="https://cdn.tailwindcss.com"></script>
-
-
-
     @if(auth()->user()->role == 'admin')
         <form action="{{ route('image.search', ['date' => $date]) }}" method="post">
             @csrf

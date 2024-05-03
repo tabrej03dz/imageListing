@@ -57,11 +57,14 @@ Route::middleware(['auth'])->group(function(){
         Route::get('destroy/{customer}', [CustomerController::class, 'destroy'])->name('destroy');
         Route::post('store', [CustomerController::class, 'store'])->name('store');
         Route::post('update/{customer}', [CustomerController::class, 'update'])->name('update');
-        Route::get('images{customer}', [CustomerController::class, 'customerImages'])->name('images');
+        Route::get('images/{customer}', [CustomerController::class, 'customerImages'])->name('images');
+        Route::get('status/{customer}', [CustomerController::class, 'status'])->name('status');
 
         Route::get('upload', [CustomerController::class, 'customerUpload'])->name('upload');
         Route::post('import', [CustomerController::class, 'customerImport'])->name('import');
         Route::post('search', [CustomerController::class, 'index'])->name('search');
+        Route::get('add/{phone}/{index}', [CustomerController::class, 'failedCustomerAdd'])->name('add');
+        Route::get('remove/{index}', [CustomerController::class, 'removeFailedCustomer'])->name('remove');
     });
 
     Route::get('profile', [HomeController::class, 'profile'])->name('profile');
