@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FailedCustomer;
 use App\Models\Image;
 use App\Models\User;
 use GuzzleHttp\Exception\RequestException;
@@ -75,7 +76,12 @@ class ImageController extends Controller
             $image->save();
         }
         $collection = new Collection($failed);
-        Session::put('failedUserCollection', $collection);
+        foreach ($collection as $customer){
+            FailedCustomer::create([
+                'phone' => $customer,
+            ]);
+        }
+//        Session::put('failedUserCollection', $collection);
         $storedImagesCount = count($request->file('media')) - count($failed);
         return redirect()->back()->with('failedMsg', 'Images Failed to upload')->with('failed', $failed)->with('successMsg', $storedImagesCount . ' images uploaded successfully')->with('uploadSuccess', $uploadSuccess);
     }

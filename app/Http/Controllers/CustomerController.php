@@ -113,32 +113,4 @@ class CustomerController extends Controller
         return redirect('customer')->with('success', 'Customer Status changed successfully');
     }
 
-    public function failedCustomerAdd($phone, $index){
-        $user = User::create([
-            'name' => $phone,
-            'email' => $phone.'@gmail.com',
-            'password' => Hash::make('password'),
-            'phone' => $phone,
-        ]);
-
-
-        if($user){
-            $collection = Session::get('failedUserCollection');
-            unset($collection[$index]);
-            Session::put('failedUserCollection', $collection);
-            $type = 'success';
-            $message = 'Customer Added successfully';
-        }else{
-            $type = 'error';
-            $message = 'Failed to add customer';
-        }
-        return redirect()->back()->with($type, $message);
-    }
-
-    public function removeFailedCustomer($index){
-        $collection = Session::get('failedUserCollection');
-        unset($collection[$index]);
-        Session::put('failedUserCollection', $collection);
-        return redirect()->back()->with('success', 'Removed Successfully');
-    }
 }

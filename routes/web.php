@@ -7,6 +7,7 @@ use App\Http\Controllers\ImageController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\FailedCustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,8 +64,12 @@ Route::middleware(['auth'])->group(function(){
         Route::get('upload', [CustomerController::class, 'customerUpload'])->name('upload');
         Route::post('import', [CustomerController::class, 'customerImport'])->name('import');
         Route::post('search', [CustomerController::class, 'index'])->name('search');
-        Route::get('add/{phone}/{index}', [CustomerController::class, 'failedCustomerAdd'])->name('add');
-        Route::get('remove/{index}', [CustomerController::class, 'removeFailedCustomer'])->name('remove');
+
+        Route::prefix('failed')->name('failed.')->group(function(){
+            Route::get('all', [FailedCustomerController::class, 'allFailedCustomer'])->name('all');
+            Route::get('add/{phone}/{customer}', [FailedCustomerController::class, 'add'])->name('add');
+            Route::get('remove/{customer}', [FailedCustomerController::class, 'remove'])->name('remove');
+        });
     });
 
     Route::get('profile', [HomeController::class, 'profile'])->name('profile');
