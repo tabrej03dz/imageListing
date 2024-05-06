@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendImageJob;
 use App\Models\FailedCustomer;
 use App\Models\Image;
 use App\Models\User;
@@ -12,6 +13,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Session;
+
 
 class ImageController extends Controller
 {
@@ -124,38 +126,42 @@ class ImageController extends Controller
     }
 
     public function sendImage($date){
-        if(session('instance_id') && session('access_token')){
-            $images = Image::where('date', $date)->get();
-            foreach ($images as $image){
-                if ($image->user->status == '1' && $image->sent == '0'){
-                    $phoneNumber = substr($image->user->phone, -10);
-//                    $imageUrl = asset('storage/'. $image->media);
-                    $imageUrl = 'https://post.realvictorygroups.com/storage/images/Xq48aK6uuGnLBshswVrzDc4gT3RPla5Rczz2wSEd.png';
-                    $message = str_replace(' ', '+', $image->title);
-                    $fileName = str_replace(' ', '+', $image->title);
+//        if(session('instance_id') && session('access_token')){
+//            $images = Image::where('date', $date)->get();
+//            foreach ($images as $image){
+//                if ($image->user->status == '1' && $image->sent == '0'){
+//                    $phoneNumber = substr($image->user->phone, -10);
+////                    $imageUrl = asset('storage/'. $image->media);
+//                    $imageUrl = 'https://post.realvictorygroups.com/storage/images/Xq48aK6uuGnLBshswVrzDc4gT3RPla5Rczz2wSEd.png';
+//                    $message = str_replace(' ', '+', $image->title);
+//                    $fileName = str_replace(' ', '+', $image->title);
+//
+//                    $client = new Client(['verify' => false]);
+//                    $response = $client->request('GET', 'https://rvgwp.in/api/send?number=91'.$phoneNumber.'&type=media&message='.$message.'&media_url='.$imageUrl.'&filename='.$fileName.'&instance_id='.session('instance_id').'&access_token='.session('access_token'));
+//                    $message = $response->getBody()->getContents();
+//                    if(json_decode($message)->status == 'error'){
+//                        return redirect()->back()->with('error', $message);
+//                    }
+//                    $image->sent = '1';
+//                    $image->save();
+//                }
+//            }
+//            return redirect()->back()->with('success', 'Images send successfully');
+//        }else{
+//            return redirect()->back('error', 'Please Set the Instance Id and Access Token');
+//        }
 
-                    $client = new Client(['verify' => false]);
-                    $response = $client->request('GET', 'https://rvgwp.in/api/send?number=91'.$phoneNumber.'&type=media&message='.$message.'&media_url='.$imageUrl.'&filename='.$fileName.'&instance_id='.session('instance_id').'&access_token='.session('access_token'));
-                    $message = $response->getBody()->getContents();
-                    if(json_decode($message)->status == 'error'){
-                        return redirect()->back()->with('error', $message);
-                    }
-                    $image->sent = '1';
-                    $image->save();
-                }
-            }
-            return redirect()->back()->with('success', 'Images send successfully');
-        }else{
-            return redirect()->back('error', 'Please Set the Instance Id and Access Token');
-        }
+        SendImageJob::dispatch($date);
+
+
     }
 
     public function singleImageSend(Image $image){
         if($image->user->status == '1' && $image->sent == '0'){
 
             $phoneNumber = substr($image->user->phone, -10);
-            $imageUrl = asset('storage/'. $image->media);
-            //$imageUrl = 'https://post.realvictorygroups.com/storage/images/Xq48aK6uuGnLBshswVrzDc4gT3RPla5Rczz2wSEd.png';
+            //$imageUrl = asset('storage/'. $image->media);
+            $imageUrl = 'https://realvictorygroups.com/wp-content/uploads/2024/04/5102941_2691166-e1712569043142-1024x906.jpg';
             $message = str_replace(' ', '+', $image->title);
             $fileName = str_replace(' ', '+', $image->title);
 

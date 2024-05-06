@@ -9,6 +9,14 @@ use Illuminate\Support\Carbon;
 
 class HomeController extends Controller
 {
+    public function __construct(){
+        $checkExpiredUsers = User::whereDate('expiry_date', '<', now())->get();
+        foreach ($checkExpiredUsers as $user){
+            $user->update(['status' => '0']);
+        }
+    }
+
+
     public function dashboard(){
         $customers = User::where('role', '!=', 'admin')->get();
         $images = Image::all();
@@ -21,7 +29,7 @@ class HomeController extends Controller
             if (!$user){
                 return view('welcome');
             }
-            $images = Image::where('user_id', $user->id)->whereDate('date', '>=', Carbon::now()->subDay(2))->get();
+            $images = Image::where('user_id', $user->id)->whereDate('date', '>=', Carbon::now()->subDay(2))->orderBy('date','desc')->get();
             return view('user_image', compact('images'));
         }else{
             return view('welcome');

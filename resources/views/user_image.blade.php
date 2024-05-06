@@ -31,9 +31,9 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="card image-card">
                         @if(str_contains($image->media, 'jpg') || str_contains($image->media, 'png') || str_contains($image->media, 'jpeg'))
-                            <img class="card-img-top w-100" src="{{ asset('storage/'. $image->media) }}" alt="Image" style="height: 300px;">
+                            <img class="card-img-top w-100" src="{{ asset('storage/'. $image->media) }}" alt="Image">
                         @else
-                            <video controls class="card-img-top w-100" style="height: 300px;">
+                            <video controls class="card-img-top w-100">
                                 <source src="{{asset('storage/'. $image->media)}}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
