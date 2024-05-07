@@ -20,7 +20,13 @@ class HomeController extends Controller
     public function dashboard(){
         $customers = User::where('role', '!=', 'admin')->get();
         $images = Image::all();
-        return view('backend.dashboard', compact('customers', 'images'));
+        $currentYear = Carbon::now()->year;
+        $customerData = User::selectRaw('MONTH(created_at) as month, DATE_FORMAT(created_at, "%M") as month_name, COUNT(*) as count')
+            ->whereYear('created_at', $currentYear)
+            ->groupBy('month', 'month_name')
+            ->orderBy('month')
+            ->get();
+        return view('backend.dashboard', compact('customers', 'images', 'customerData'));
     }
 
     public function index($number = null){
@@ -72,4 +78,6 @@ class HomeController extends Controller
         session(['access_token' => $request->access_token]);
         return redirect()->back()->with('success', 'Instance Id and Access Token set successfully');
     }
+
+
 }

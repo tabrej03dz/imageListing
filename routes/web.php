@@ -43,11 +43,6 @@ Route::middleware(['auth'])->group(function(){
         Route::post('search/{date}', [ImageController::class, 'imageShowByDate'])->name('search');
         Route::get('singleSend/{image}', [ImageController::class, 'singleImageSend'])->name('singleSend');
 
-
-
-
-
-        Route::post('store/ajax', function (){dd('dello');})->name('store.ajax');
     });
 
     Route::prefix('images')->name('images.')->group(function(){
@@ -81,6 +76,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('profile', [HomeController::class, 'profile'])->name('profile');
     Route::post('setKeys', [HomeController::class, 'setKeys'])->name('setKeys');
 });
+
 
 Route::get('/foo', function () {
     $exitCode = Artisan::call('storage:link');

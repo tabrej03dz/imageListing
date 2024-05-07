@@ -50,10 +50,10 @@
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item {{ request()->routeIs('image.index') ? 'bg-white' : '' }}">
+        <li class="nav-item {{ request()->routeIs('image.index') || request()->routeIs('images.show') ? 'bg-white' : '' }}">
             <a class="nav-link" href="{{ route('image.index') }}" aria-expanded="true">
-                <i class="fas fa-images {{ request()->routeIs('image.index') ? 'text-dark' : 'text-white' }}"></i>
-                <span class="{{ request()->routeIs('image.index') ? 'text-dark' : 'text-white' }}">Images</span>
+                <i class="fas fa-images {{ request()->routeIs('image.index') || request()->routeIs('images.show') ? 'text-dark' : 'text-white' }}"></i>
+                <span class="{{ request()->routeIs('image.index') || request()->routeIs('images.show') ? 'text-dark' : 'text-white' }}">Images</span>
             </a>
         </li>
 
@@ -70,21 +70,21 @@
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-            <li class="nav-item {{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') ) ? 'bg-white' : '' }}">
+            <li class="nav-item {{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') || request()->routeIs('customer.images') ) ? 'bg-white' : '' }}">
                 <a class="nav-link" href="{{route('customer.index')}}"
                    aria-expanded="true" >
-                    <i class="fas fa-user-friends {{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') ) ? 'text-dark' : '' }}"></i>
-                    <span class="{{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') ) ? 'text-dark' : '' }}">Customers</span>
+                    <i class="fas fa-user-friends {{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') || request()->routeIs('customer.images')) ? 'text-dark' : 'text-white' }}"></i>
+                    <span class="{{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') || request()->routeIs('customer.images') ) ? 'text-dark' : 'text-white' }}">Customers</span>
                 </a>
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <li class="nav-item">
+            <li class="nav-item {{ (request()->routeIs('customer.failed.all') ) ? 'bg-white' : '' }}">
                 <a class="nav-link" href="{{route('customer.failed.all')}}"
                    aria-expanded="true" >
-                    <i class="fas fa-user-friends"></i>
-                    <span class="">Not Existing Customers</span>
+                    <i class="fas fa-user-friends {{ (request()->routeIs('customer.failed.all') ) ? 'text-dark' : 'text-white' }}"></i>
+                    <span class="{{ (request()->routeIs('customer.failed.all') ) ? 'text-dark' : 'text-white' }}">Not Existing Customers</span>
                 </a>
             </li>
             <!-- Divider -->
@@ -269,11 +269,11 @@
 <script src="{{asset('assets/js/sb-admin-2.min.js')}}"></script>
 
 <!-- Page level plugins -->
-<script src="{{asset('assets/vendor/chart.js/Chart.min.js')}}"></script>
+{{--<script src="{{asset('assets/vendor/chart.js/Chart.min.js')}}"></script>--}}
 
 <!-- Page level custom scripts -->
 <script src="{{asset('assets/js/demo/chart-area-demo.js')}}"></script>
-<script src="{{asset('assets/js/demo/chart-pie-demo.js')}}"></script>
+{{--<script src="{{asset('assets/js/demo/chart-pie-demo.js')}}"></script>--}}
 
 </body>
 
