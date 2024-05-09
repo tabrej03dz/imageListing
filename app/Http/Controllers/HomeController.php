@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Image;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
@@ -16,17 +18,17 @@ class HomeController extends Controller
         }
     }
 
-
     public function dashboard(){
         $customers = User::where('role', '!=', 'admin')->get();
         $images = Image::all();
+        $categories = Category::all();
         $currentYear = Carbon::now()->year;
         $customerData = User::selectRaw('MONTH(created_at) as month, DATE_FORMAT(created_at, "%M") as month_name, COUNT(*) as count')
             ->whereYear('created_at', $currentYear)
             ->groupBy('month', 'month_name')
             ->orderBy('month')
             ->get();
-        return view('backend.dashboard', compact('customers', 'images', 'customerData'));
+        return view('backend.dashboard', compact('customers', 'images', 'customerData', 'categories'));
     }
 
     public function index($number = null){
@@ -66,7 +68,7 @@ class HomeController extends Controller
         ]);
         $user = User::where('phone', 'like', '%'.$request->search.'%')->first();
         if($user){
-            $images = Image::where('user_id', $user->id)->whereDate('date', '>=', Carbon::now()->subDay(2))->get();
+            $images = Image::where('user_id', $user->id)->whereDate('date', '>=', Carbon::now()->subDay(2))->orderBy('date', 'desc')->get();
         }else{
             return redirect()->back()->with('error', 'User not found! Please enter registered number!');
         }
@@ -79,5 +81,17 @@ class HomeController extends Controller
         return redirect()->back()->with('success', 'Instance Id and Access Token set successfully');
     }
 
+
+
+    public static function generateRandomHex()
+    {
+        $characters = '0123456789abcdef';
+        $randomString = '';
+
+        for ($i = 0; $i < 6; $i++) {
+            $randomString .= $characters[rand(0, strlen($characters) - 1)];
+        }
+        return $randomString;
+    }
 
 }

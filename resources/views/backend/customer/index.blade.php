@@ -10,7 +10,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">Customers</h6>
                     </div>
                     <div class="col-md-6">
-                        <form action="{{route('customer.search')}}" method="post"
+                        <form action="{{route('customer.search')}}" method="get"
                             class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                             @csrf
                             <div class="input-group">
@@ -32,7 +32,7 @@
                             <!-- Dropdown - Messages -->
                             <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                                  aria-labelledby="searchDropdown">
-                                <form action="{{route('customer.search')}}" method="post" class="form-inline mr-auto w-100 navbar-search">
+                                <form action="{{route('customer.search')}}" method="get" class="form-inline mr-auto w-100 navbar-search">
                                     @csrf
                                     <div class="input-group">
                                         <input type="text" name="search" class="form-control bg-light border-0 small"
@@ -66,8 +66,9 @@
                         <tr>
                             <th>S. No.</th>
                             <th>Name</th>
-                            <th>Email</th>
                             <th>Phone</th>
+                            <th>Categories</th>
+                            <th>Languages</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -77,11 +78,24 @@
                         <tr>
                             <td>{{$loop->iteration}}</td>
                             <td>{{$customer->name}}</td>
-                            <td>{{$customer->email}}</td>
                             <td>{{$customer->phone}}</td>
+                            <td>
+                                @php
+                                    $catsIds = \App\Models\UserCategory::where('user_id', $customer->id)->pluck('category_id');
+                                    $categories = \App\Models\Category::whereIn('id', $catsIds)->get();
+                                @endphp
+
+                                @foreach($categories as $cat)
+                                    <span class="badge badge-primary">{{$cat->name}}</span> <br>
+                                @endforeach
+                            </td>
+                            <td>
+                                {{$customer->languages}}
+                            </td>
                             <td>
                                 <a href="{{route('customer.status', ['customer' => $customer])}}" class="btn btn-{{$customer->status == '1' ? 'success':'danger'}} p-0 px-1">{{$customer->status == '1' ? 'Active':'Inactive'}}</a>
                             </td>
+
                             <td>
                                 <div class="btn-group" role="group" aria-label="Customer Actions">
                                     <a href="{{ route('customer.edit', ['customer' => $customer]) }}" class="btn btn-success">
@@ -95,8 +109,6 @@
                                     </a>
                                 </div>
                             </td>
-
-
                         </tr>
                         @endforeach
 

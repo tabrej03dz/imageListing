@@ -51,4 +51,9 @@ class User extends Authenticatable
     public function images(){
         return $this->hasMany(Image::class, 'user_id');
     }
+
+    public function categories()
+    {
+        return $this->hasManyThrough(Category::class, UserCategory::class, 'user_id', 'category_id');
+    }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\FailedCustomerController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,13 +65,25 @@ Route::middleware(['auth'])->group(function(){
 
         Route::get('upload', [CustomerController::class, 'customerUpload'])->name('upload');
         Route::post('import', [CustomerController::class, 'customerImport'])->name('import');
-        Route::post('search', [CustomerController::class, 'index'])->name('search');
+        Route::get('search', [CustomerController::class, 'index'])->name('search');
 
         Route::prefix('failed')->name('failed.')->group(function(){
             Route::get('all', [FailedCustomerController::class, 'allFailedCustomer'])->name('all');
             Route::get('add/{phone}/{customer}', [FailedCustomerController::class, 'add'])->name('add');
             Route::get('remove/{customer}', [FailedCustomerController::class, 'remove'])->name('remove');
         });
+
+        Route::get('category/delete/{category}/{customer}', [CategoryController::class, 'customerCategoryDelete'])->name('category.delete');
+        Route::get('language/remove/{customer}/{index}', [CustomerController::class, 'customerLanguageRemove'])->name('language.remove');
+    });
+
+    Route::prefix('category')->name('category.')->group(function(){
+        Route::get('/', [CategoryController::class, 'index'])->name('index');
+        Route::get('create', [CategoryController::class, 'create'])->name('create');
+        Route::post('store', [CategoryController::class, 'store'])->name('store');
+        Route::get('edit/{category}', [CategoryController::class, 'edit'])->name('edit');
+        Route::post('update/{category}', [CategoryController::class, 'update'])->name('update');
+        Route::get('destroy/{category}', [CategoryController::class, 'destroy'])->name('destroy');
     });
 
     Route::get('profile', [HomeController::class, 'profile'])->name('profile');

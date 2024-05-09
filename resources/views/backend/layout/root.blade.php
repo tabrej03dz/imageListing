@@ -19,6 +19,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{{asset('assets/css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{asset('assets/favicon.jpg')}}">
 
 
 </head>
@@ -89,6 +90,17 @@
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
+
+            <li class="nav-item {{ (request()->routeIs('category.index') || request()->routeIs('category.create') || request()->routeIs('category.edit') ) ? 'bg-white' : 'text' }}">
+                <a class="nav-link" href="{{route('category.index')}}"
+                   aria-expanded="true" >
+                    <i class="fas fa-user-friends {{ (request()->routeIs('category.index') || request()->routeIs('category.create') ||request()->routeIs('category.edit') ) ? 'text-dark' : 'text-white' }}"></i>
+                    <span class="{{ (request()->routeIs('category.index') || request()->routeIs('category.create') ||request()->routeIs('category.edit') ) ? 'text-dark' : 'text-white' }}">Category</span>
+                </a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
         @endif
 
 {{--        <li class="nav-item">--}}

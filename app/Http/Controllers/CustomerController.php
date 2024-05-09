@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CustomerRequest;
 use App\Imports\CustomerImport;
+use App\Models\Category;
 use App\Models\User;
+use App\Models\UserCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Excel;
 
 
@@ -39,17 +40,41 @@ class CustomerController extends Controller
 
     public function edit(User $customer){
 //        dd($customer);
-        return view('backend.customer.edit', compact('customer'));
+        $categories = Category::all();
+        return view('backend.customer.edit', compact('customer', 'categories'));
     }
 
     public function update(CustomerRequest $request, User $customer){
-        $customer->update($request->except('password'));
+
+        $customer->update($request->except(['password', 'languages']));
+
+
+        if ($request->languages != null){
+            if ($customer->languages != null){
+
+                $languages = json_decode($customer->languages);
+                $customer->languages = json_encode(array_merge($languages, $request->languages));
+            }else{
+                $customer->languages = json_encode($request->languages);
+
+            }
+            $customer->save();
+        }
 
         if($request->password){
             $customer->password = Hash::make($request->password);
             $customer->save();
         }
 
+        if ($request->category_id != null){
+            $categories = $request->category_id;
+            foreach ($categories as $cat){
+                $userCategory = new UserCategory();
+                $userCategory->user_id = $customer->id;
+                $userCategory->category_id = $cat;
+                $userCategory->save();
+            }
+        }
         return redirect('customer');
     }
 
@@ -67,6 +92,7 @@ class CustomerController extends Controller
 
         // Resolve an instance of the Excel facade
         $excel = app()->make('excel');
+
 
         try {
             // Import customers from the uploaded Excel file
@@ -111,6 +137,14 @@ class CustomerController extends Controller
         }
         $customer->save();
         return redirect('customer')->with('success', 'Customer Status changed successfully');
+    }
+
+    public function customerLanguageRemove(User $customer, $index){
+        $languages = json_decode($customer->languages);
+        unset($languages[$index]);
+        $customer->languages = json_encode($languages);
+        $customer->save();
+        return redirect()->back();
     }
 
 }

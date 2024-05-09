@@ -59,6 +59,61 @@
             <input type="date" id="expiry_date" name="expiry_date" value="{{ $customer->expiry_date ?? '' }}" class="form-control">
         </div>
 
+        <div class="mb-3">
+            <label for="" class="form-label">Category:</label>
+            @php
+                $userCatIds = \App\Models\UserCategory::where('user_id', $customer->id)->pluck('category_id');
+                $selectedCategories = \App\Models\Category::whereIn('id', $userCatIds)->get();
+
+            @endphp
+            @if($selectedCategories->count() > 0)
+                <div class="d-flex flex-wrap mt-3"> <!-- Add mt-3 for top margin and flex-wrap to allow wrapping of alert boxes -->
+                    @foreach($selectedCategories as $selectedCat)
+                        <div class="alert alert-info alert-dismissible fade show m-1" role="alert"> <!-- Add m-1 for margin and max-width for limiting width -->
+                            {{$selectedCat->name}}
+                            <a href="{{route('customer.category.delete', ['category' => $selectedCat, 'customer' => $customer])}}" type="button" class="close"  aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
+            <select name="category_id[]" multiple id="" class="form-control">
+                <option value="" disabled>Category</option>
+                @foreach($categories as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                @endforeach
+            </select>
+        </div>
+
+
+
+
+        <div class="mb-3">
+            <label for="" class="form-label">Languages:</label>
+
+            @if($customer->languages != null)
+                <div class="d-flex flex-wrap mt-3">
+                    @foreach(json_decode($customer->languages) as $key => $language)
+                        <div class="alert alert-info alert-dismissible fade show m-1" role="alert">
+                            {{$language}}
+                            <a href="{{route('customer.language.remove', ['customer' => $customer, 'index' => $key])}}" type="button" class="close"  aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+            <select name="languages[]" multiple id="" class="form-control">
+                <option value="" disabled>Select Language</option>
+                <option value="hindi">Hindi</option>
+                <option value="english">English</option>
+                <option value="urdu">Urdu</option>
+                <option value="panjabi">Panjabi</option>
+            </select>
+        </div>
+
 
         <div class="mb-3">
             <label for="password" class="form-label">Password:</label>
@@ -74,4 +129,5 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
+
 @endsection

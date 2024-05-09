@@ -28,9 +28,6 @@ class CustomerImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         // TODO: Implement model() method.
-
-
-//            dd($row);
-            User::create($row + ['password' => Hash::make('password'), 'role' => 'user']);
+        User::create($row + ['password' => Hash::make('password'), 'role' => 'user']);
     }
 }

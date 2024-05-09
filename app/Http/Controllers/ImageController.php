@@ -58,7 +58,7 @@ class ImageController extends Controller
         $uploadedImagesCount = 0;
         foreach ($request->file('media') as $media){
             $image = new Image();
-            $image->date = $request->date ?? Carbon::today();
+            $image->date = $request->date ?? Carbon::tomorrow();
             $image->title = $request->title;
             if ($media){
                 $fileName = Str::limit(pathinfo($media->getClientOriginalName(), PATHINFO_FILENAME), 10, '') ;
