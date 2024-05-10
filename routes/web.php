@@ -116,4 +116,14 @@ Route::get('/migrate', function () {
     }
 });
 
+Route::get('/onlyMigrate', function () {
+    $exitCode = Artisan::call('migrate');
+    if ($exitCode === 0) {
+        return 'Migration successful';
+    } else {
+        return 'Migration failed'; // You can customize this message as needed
+
+    }
+});
+
 
