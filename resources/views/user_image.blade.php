@@ -41,10 +41,10 @@
                         <div class="card-body">
                             <h5 class="card-title text-center">{{ $image->title }}</h5>
                             <p class="card-text text-center">{{ $image->date }}</p>
-                            <a href="{{ asset('storage/' . $image->media) }}"
-                               class="btn btn-primary w-100"
-                               target="_blank"
-                               download="{{ $image->title }}">Download</a>
+{{--                            {{ asset('storage/' . $image->media) }}--}}
+{{--                            download="{{ $image->title }}"--}}
+{{--                            <a href="{{ asset('storage/' . $image->media) }}" id="download-link" class="btn btn-primary w-100" download="{{ $image->title }}">Download</a>--}}
+                            <a href="{{ route('userImageDownload', ['image' => $image])}}" id="download-link" class="btn btn-primary w-100">Download</a>
                         </div>
                     </div>
                 </div>
@@ -56,5 +56,6 @@
         @endif
     </div>
 </div>
+
 </body>
 </html>

@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Image;
 use App\Models\User;
+use App\Models\Visit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -23,12 +25,13 @@ class HomeController extends Controller
         $images = Image::all();
         $categories = Category::all();
         $currentYear = Carbon::now()->year;
+        $visitCounts = Visit::whereDate('created_at', Carbon::today())->count();
         $customerData = User::selectRaw('MONTH(created_at) as month, DATE_FORMAT(created_at, "%M") as month_name, COUNT(*) as count')
             ->whereYear('created_at', $currentYear)
             ->groupBy('month', 'month_name')
             ->orderBy('month')
             ->get();
-        return view('backend.dashboard', compact('customers', 'images', 'customerData', 'categories'));
+        return view('backend.dashboard', compact('customers', 'images', 'customerData', 'categories', 'visitCounts'));
     }
 
     public function index($number = null){
@@ -92,6 +95,19 @@ class HomeController extends Controller
             $randomString .= $characters[rand(0, strlen($characters) - 1)];
         }
         return $randomString;
+    }
+
+
+    public function userImageDownload(Image $image){
+
+        $path = Storage::disk('public')->path($image->media);
+        $extension = pathinfo($image->media, PATHINFO_EXTENSION);
+
+        $mimeType = Storage::disk('public')->mimeType($image->media);
+        return response()->download($path, $image->title.'.'.$extension);
+
+//        $image->update(['status' => '1']);
+//        return response();
     }
 
 }
