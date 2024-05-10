@@ -99,15 +99,12 @@ class HomeController extends Controller
 
 
     public function userImageDownload(Image $image){
-
         $path = Storage::disk('public')->path($image->media);
         $extension = pathinfo($image->media, PATHINFO_EXTENSION);
-
-        $mimeType = Storage::disk('public')->mimeType($image->media);
+        $image->update(['status' => '1']);
+        $image->user->download_count = $image->user->download_count + 1;
+        $image->user->save();
         return response()->download($path, $image->title.'.'.$extension);
-
-//        $image->update(['status' => '1']);
-//        return response();
     }
 
 }
