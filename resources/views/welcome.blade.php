@@ -24,8 +24,15 @@
                                     <li>{{session('error')}}</li>
                                 </div>
                             @endif
+                            
                             <div class="p-5">
-                                <div class="text-center">
+                                <span class="badge bg-danger text-white">Notes</span>
+                                <p style="margin-bottom: 10px;" class="text-center">Please enter your registered mobile number</p>
+                                <p style="margin-bottom: 20px;" class="text-center">कृपया अपना रजिस्टर मोबाइल नंबर दर्ज करें</p>
+                                <div>
+                               
+                                
+                                <div class="text-center mt-3">
                                     <h1 class="h4 text-gray-900 mb-4">Search Your Images!</h1>
                                 </div>
                                 <form class="user" action="{{route('imgSearch')}}" method="post">
@@ -33,19 +40,21 @@
                                     <div class="form-group">
                                         <input type="number" class="form-control form-control-user"
                                                id="search" name="search" aria-describedby="emailHelp"
-                                               placeholder="Enter Your Phone No..">
+                                               placeholder="Enter Your Phone No.." style="border: 2px solid #dc3545; border-radius: 5px;">
                                     </div>
+                                    
+                                    
                                     <button type="submit" class="btn btn-primary btn-user btn-block">
                                         Search
                                     </button>
                                 </form>
+                                
                                 <hr>
-                                {{--                                <div class="text-center">--}}
-                                {{--                                    <a class="small" href="forgot-password.html">Forgot Password?</a>--}}
-                                {{--                                </div>--}}
-                                {{--                                <div class="text-center">--}}
-                                {{--                                    <a class="small" href="{{route('register')}}">Register!</a>--}}
-                                {{--                                </div>--}}
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <div>
+                                        <a href="https://wa.me/915123573747" target="_blank" class="btn btn-success">Get help</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -53,5 +62,6 @@
             </div>
         </div>
     </div>
+   
 @endsection
 
