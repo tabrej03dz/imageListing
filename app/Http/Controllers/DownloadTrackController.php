@@ -17,8 +17,9 @@ class DownloadTrackController extends Controller
         return view('backend.downloads', compact('downloads'));
     }
 
-    public function visits(){
-        $visits = Visit::all();
+    public function visits(Request $request){
+
+        $visits = Visit::whereDate('created_at', $request->date ?? today())->get();
         return view('backend.visits', compact('visits'));
     }
 }

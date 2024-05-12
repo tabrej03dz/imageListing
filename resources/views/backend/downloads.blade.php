@@ -61,7 +61,6 @@
         </thead>
         <tbody>
             @foreach($downloads as $download)
-
             <tr class="small">
                 <td class="p-1">{{$loop->iteration}}</td>
                 <td class="p-1">{{$download->user->phone}}</td>
