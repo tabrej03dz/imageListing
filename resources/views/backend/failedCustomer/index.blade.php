@@ -5,9 +5,12 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <div class="row">
+            <div class="row justify-content-between">
                 <div class="col-md-3">
                     <h6 class="m-0 font-weight-bold text-primary">Failed Customers</h6>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{route('customer.failed.removeAll')}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to remove all failed customers?')">Remove All</a>
                 </div>
             </div>
 
@@ -30,7 +33,7 @@
                                 <td>{{$customer->phone}}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Customer Actions">
-                                        <a href="{{ route('customer.failed.add', ['phone' => $customer->phone, 'customer' => $customer]) }}" class="btn btn-success">
+                                        <a href="{{ route('customer.failed.add', ['customer' => $customer]) }}" class="btn btn-success">
                                             Add
                                         </a>
 

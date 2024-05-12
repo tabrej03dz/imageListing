@@ -12,4 +12,8 @@ class FailedCustomer extends Model
     protected $fillable = [
         'phone',
     ];
+
+    public function images(){
+        return $this->hasMany(FailedCustomerImage::class, 'failed_customer_id');
+    }
 }

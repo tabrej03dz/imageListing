@@ -75,8 +75,9 @@ Route::middleware(['auth'])->group(function(){
 
             Route::prefix('failed')->name('failed.')->group(function(){
                 Route::get('all', [FailedCustomerController::class, 'allFailedCustomer'])->name('all');
-                Route::get('add/{phone}/{customer}', [FailedCustomerController::class, 'add'])->name('add');
+                Route::get('add/{customer}', [FailedCustomerController::class, 'add'])->name('add');
                 Route::get('remove/{customer}', [FailedCustomerController::class, 'remove'])->name('remove');
+                Route::get('removeAll', [FailedCustomerController::class, 'removeAll'])->name('removeAll');
             });
 
             Route::get('category/delete/{category}/{customer}', [CategoryController::class, 'customerCategoryDelete'])->name('category.delete');
