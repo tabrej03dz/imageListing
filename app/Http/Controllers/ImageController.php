@@ -160,8 +160,8 @@ class ImageController extends Controller
         if($image->user->status == '1' && $image->sent == '0'){
 
             $phoneNumber = substr($image->user->phone, -10);
-            $imageUrl = asset('storage/'. $image->media);
-            //$imageUrl = 'https://realvictorygroups.com/wp-content/uploads/2024/04/5102941_2691166-e1712569043142-1024x906.jpg';
+            //$imageUrl = asset('storage/'. $image->media);
+            $imageUrl = 'https://realvictorygroups.com/wp-content/uploads/2024/04/5102941_2691166-e1712569043142-1024x906.jpg';
             $message = str_replace(' ', '+', $image->title);
             $fileName = str_replace(' ', '+', $image->title);
 

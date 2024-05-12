@@ -22,7 +22,7 @@
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{$customers->count()}}</div>
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                        <i class="fas fa-users-cog fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{$images->count()}}</div>
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                        <i class="fas fa-images fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                                         </div>
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                        <i class="fas fa-code fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
@@ -89,7 +89,7 @@
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $count }}</div>
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                        <i class="fas fa-bolt fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
@@ -99,6 +99,31 @@
                                 Clear
                             </a>
                         @endif
+                    </div>
+
+                    <!-- Downloads Count -->
+                    <div class="col-xl-2 col-md-6 mb-4 position-relative">
+                        @php
+                            $count = \App\Models\DownloadTrack::whereDate('updated_at', \Carbon\Carbon::today())->count();
+                        @endphp
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            Downloads
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $count }}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-download fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{{route('downloads.view')}}" class="btn btn-success p-1" style="position: absolute; top: 0; right: 0; ">
+                            view
+                        </a>
                     </div>
 
                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\DownloadTrack;
 use App\Models\Image;
 use App\Models\User;
 use App\Models\Visit;
@@ -48,7 +49,7 @@ class HomeController extends Controller
     }
 
     public function clearOldImage(){
-        $images = Image::whereDate('date', '<', Carbon::now()->subDay(3))->get();
+        $images = Image::whereDate('date', '<', Carbon::now()->subDay(2))->get();
         foreach ($images as $image){
             if($image->media){
                 $filePath = public_path('storage/' . $image->media);
@@ -64,7 +65,6 @@ class HomeController extends Controller
     public function profile(){
         return view('backend.profile');
     }
-
     public function imgSearch(Request $request){
         $request->validate([
             'search' => 'required',
@@ -99,9 +99,21 @@ class HomeController extends Controller
 
 
     public function userImageDownload(Image $image){
+        if ($image->user->status == '0'){
+            return redirect('/')->with('error', 'Inactive User');
+        }
         $path = Storage::disk('public')->path($image->media);
         $extension = pathinfo($image->media, PATHINFO_EXTENSION);
-        $image->update(['status' => '1']);
+
+        $downloadtrack = DownloadTrack::where(['user_id' => $image->user->id, 'image_id' => $image->id])->first();
+        if($downloadtrack){
+            $downloadtrack->update(['download_count' => $downloadtrack->download_count + 1]);
+        }else{
+            DownloadTrack::create([
+                'user_id' => $image->user->id,
+                'image_id' => $image->id,
+            ]);
+        }
         $image->user->download_count = $image->user->download_count + 1;
         $image->user->save();
         return response()->download($path, $image->title.'.'.$extension);

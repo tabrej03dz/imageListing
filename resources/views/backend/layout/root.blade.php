@@ -101,17 +101,27 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
+            <li class="nav-item {{ request()->routeIs('downloads.view')  ? 'bg-white' : 'text' }}">
+                <a class="nav-link" href="{{route('downloads.view')}}"
+                   aria-expanded="true" >
+                    <i class="fas fa-download {{ request()->routeIs('downloads.view') ? 'text-dark' : 'text-white' }}"></i>
+                    <span class="{{ request()->routeIs('downloads.view')  ? 'text-dark' : 'text-white' }}">Downloads</span>
+                </a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item {{ request()->routeIs('visits')  ? 'bg-white' : 'text' }}">
+                <a class="nav-link" href="{{route('visits')}}"
+                   aria-expanded="true" >
+                    <i class="fas fa-download {{ request()->routeIs('visits') ? 'text-dark' : 'text-white' }}"></i>
+                    <span class="{{ request()->routeIs('visits')  ? 'text-dark' : 'text-white' }}">Web Traffic</span>
+                </a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
         @endif
 
-{{--        <li class="nav-item">--}}
-{{--            <a class="nav-link" href="{{route('clearOldImage')}}"--}}
-{{--               aria-expanded="true" >--}}
-{{--                <i class="fas fa-fw fa-cog"></i>--}}
-{{--                <span>Upload Images</span>--}}
-{{--            </a>--}}
-{{--        </li>--}}
-{{--        <!-- Divider -->--}}
-{{--        <hr class="sidebar-divider my-0">--}}
 
 
         <li class="nav-item">

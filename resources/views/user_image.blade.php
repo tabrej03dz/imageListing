@@ -24,16 +24,15 @@
     <div class="">
         <h1 class="text-center mb-5 ">Download Images</h1>
     </div>
-
     <div class="row justify-content-center">
         @if($images->count() > 0)
             @foreach($images as $image)
                 <div class="col-md-6 col-lg-4">
-                    <div class="card image-card">
+                    <div class="card image-card" >
                         @if(str_contains($image->media, 'jpg') || str_contains($image->media, 'png') || str_contains($image->media, 'jpeg'))
-                            <img class="card-img-top w-100" src="{{ asset('storage/'. $image->media) }}" alt="Image">
+                            <img class="card-img-top w-100" src="{{ asset('storage/'. $image->media) }}" alt="Image" style="cursor: {{$image->user->status == '0' ? 'not-allowed' : ''}} ; pointer-events: {{$image->user->status == '0' ? 'none' : ''}};">
                         @else
-                            <video controls class="card-img-top w-100">
+                            <video controls class="card-img-top w-100" style="cursor: {{$image->user->status == '0' ? 'not-allowed' : ''}} ; pointer-events: {{$image->user->status == '0' ? 'none' : ''}};">
                                 <source src="{{asset('storage/'. $image->media)}}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>

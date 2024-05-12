@@ -9,6 +9,7 @@ use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\FailedCustomerController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DownloadTrackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,7 +94,13 @@ Route::middleware(['auth'])->group(function(){
 
         Route::get('profile', [HomeController::class, 'profile'])->name('profile');
         Route::post('setKeys', [HomeController::class, 'setKeys'])->name('setKeys');
-    });
+
+        Route::prefix('downloads')->name('downloads.')->group(function(){
+            Route::get('view', [DownloadTrackController::class, 'view'])->name('view');
+        });
+
+        Route::get('visits', [DownloadTrackController::class, 'visits'])->name('visits');
+});
 
 
 
