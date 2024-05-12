@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SendImageJob;
 use App\Models\FailedCustomer;
+use App\Models\FailedCustomerImage;
 use App\Models\Image;
 use App\Models\User;
 use GuzzleHttp\Exception\RequestException;
@@ -57,32 +58,41 @@ class ImageController extends Controller
         $uploadSuccess = [];
         $uploadedImagesCount = 0;
         foreach ($request->file('media') as $media){
-            $image = new Image();
-            $image->date = $request->date ?? Carbon::tomorrow();
-            $image->title = $request->title;
-            if ($media){
-                $fileName = Str::limit(pathinfo($media->getClientOriginalName(), PATHINFO_FILENAME), 10, '') ;
-                $user = User::where('phone', 'like', '%'.$fileName.'%')->first();
-                if ($user){
-                    $image->user_id = $user->id;
-                    array_push($uploadSuccess, $media->getClientOriginalName());
-                } else {
-                    array_push($failed, $fileName);
-                    continue;
-                }
+            $fileName = pathinfo($media->getClientOriginalName(), PATHINFO_FILENAME);
+            $user = User::where('phone', 'like', '%'.$fileName.'%')->first();
+            if ($user){
+                $image = new Image();
+                $image->date = $request->date ?? Carbon::tomorrow();
+                $image->title = $request->title;
+                $image->user_id = $user->id;
+                array_push($uploadSuccess, $media->getClientOriginalName());
+
                 $file = $media->store('public/images');
                 $image->media = str_replace('public/', '', $file);
                 // Increment the count of successfully uploaded images
                 $uploadedImagesCount++;
+
+            } else {
+                $failedCustomer = FailedCustomer::where('phone', $fileName)->first();
+                if (!$failedCustomer){
+                    $failedCustomer = FailedCustomer::create(['phone' => $fileName]);
+                }
+
+                $failedCustomerImage = new FailedCustomerImage();
+                $failedCustomerImage->title = $request->title;
+                $failedCustomerImage->date = $request->date ?? Carbon::tomorrow();
+                $failedCustomerImage->failed_customer_id = $failedCustomer->id;
+
+                $file = $media->store('public/images');
+                $failedCustomerImage->media = str_replace('public/', '', $file);
+                $failedCustomerImage->save();
+                array_push($failed, $fileName);
+                continue;
+
             }
             $image->save();
         }
-        $collection = new Collection($failed);
-        foreach ($collection as $customer){
-            FailedCustomer::create([
-                'phone' => $customer,
-            ]);
-        }
+
 //        Session::put('failedUserCollection', $collection);
         $storedImagesCount = count($request->file('media')) - count($failed);
         return redirect()->back()->with('failedMsg', 'Images Failed to upload')->with('failed', $failed)->with('successMsg', $storedImagesCount . ' images uploaded successfully')->with('uploadSuccess', $uploadSuccess);
