@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CustomerExport;
 use App\Http\Requests\CustomerRequest;
 use App\Imports\CustomerImport;
 use App\Models\Category;
+use App\Models\Language;
 use App\Models\User;
 use App\Models\UserCategory;
+use App\Models\UserLanguage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Maatwebsite\Excel\Excel;
+//use Maatwebsite\Excel\Excel;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class CustomerController extends Controller
@@ -18,22 +22,44 @@ class CustomerController extends Controller
         if($request->search){
             $customers = User::where('role', '!=', 'admin')->where('phone','like', '%'.$request->search.'%')->orWhere('name', 'like', '%'.$request->search.'%')->paginate(5);
         }else{
-            $customers = User::where('role', '!=', 'admin')->paginate(5);
+            $customers = User::where('role', '!=', 'admin')->paginate(100);
         }
         return view('backend.customer.index', compact('customers'));
     }
 
     public function create(){
-        return view('backend.customer.create');
+        $languages = Language::all();
+        $categories = Category::all();
+        return view('backend.customer.create', compact('languages', 'categories'));
     }
 
     public function store(CustomerRequest $request){
-        User::create($request->all() +
+        $customer = User::create($request->all() +
             [
                 'password' => Hash::make('password'),
                 'role' => 'user',
             ],
         );
+
+        if ($request->category_id != null){
+            $categories = $request->category_id;
+            foreach ($categories as $cat){
+                $userCat = new UserCategory();
+                $userCat->user_id = $customer->id;
+                $userCat->category_id = $cat;
+                $userCat->save();
+            }
+        }
+
+        if($request->language_id != null){
+            $languages = $request->language_id;
+            foreach($languages as $lang){
+                $userLang = new UserLanguage();
+                $userLang->user_id = $customer->id;
+                $userLang->language_id = $lang;
+                $userLang->save();
+            }
+        }
 
         return redirect('customer');
     }
@@ -41,7 +67,8 @@ class CustomerController extends Controller
     public function edit(User $customer){
 //        dd($customer);
         $categories = Category::all();
-        return view('backend.customer.edit', compact('customer', 'categories'));
+        $languages = Language::all();
+        return view('backend.customer.edit', compact('customer', 'categories', 'languages'));
     }
 
     public function update(CustomerRequest $request, User $customer){
@@ -49,16 +76,16 @@ class CustomerController extends Controller
         $customer->update($request->except(['password', 'languages']));
 
 
-        if ($request->languages != null){
-            if ($customer->languages != null){
-
-                $languages = json_decode($customer->languages);
-                $customer->languages = json_encode(array_merge($languages, $request->languages));
-            }else{
-                $customer->languages = json_encode($request->languages);
-
+        if ($request->language_id != null){
+            $languages = $request->language_id;
+            foreach ($languages as $lang){
+                if (!UserLanguage::where(['user_id' => $customer->id, 'language_id' => $lang])->exists()){
+                    $userLanguage = new UserLanguage();
+                    $userLanguage->user_id = $customer->id;
+                    $userLanguage->language_id = $lang;
+                    $userLanguage->save();
+                }
             }
-            $customer->save();
         }
 
         if($request->password){
@@ -145,6 +172,15 @@ class CustomerController extends Controller
         $customer->languages = json_encode($languages);
         $customer->save();
         return redirect()->back();
+    }
+
+    public function customerExport()
+    {
+        return Excel::download(new CustomerExport, 'customers.xlsx');
+    }
+
+    public function customerDetails(User $customer){
+        return view('backend.customer.details', compact('customer'));
     }
 
 }

@@ -1,6 +1,7 @@
 @extends('backend.layout.root', ['title' => 'Images'])
 @section('content')
 
+
     @if($images->count() > 0)
             <!-- DataTales Example -->
             <div class="card shadow mb-4">

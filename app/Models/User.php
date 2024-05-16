@@ -56,4 +56,8 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(Category::class, UserCategory::class, 'user_id', 'category_id');
     }
+
+    public function userPackages(){
+        return $this->hasMany(UserPackage::class, 'user_id');
+    }
 }

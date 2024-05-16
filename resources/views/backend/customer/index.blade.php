@@ -9,7 +9,7 @@
                     <div class="col-md-3">
                         <h6 class="m-0 font-weight-bold text-primary">Customers</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <form action="{{route('customer.search')}}" method="get"
                             class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                             @csrf
@@ -49,10 +49,11 @@
                         </li>
 
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="d-flex justify-content-between">
                             <a href="{{ route('customer.create') }}" class="btn btn-primary mr-2">Add Customer</a>
-                            <a href="{{ route('customer.upload') }}" class="btn btn-primary">Customer Upload</a>
+                            <a href="{{ route('customer.upload') }}" class="btn btn-primary mr-2">Customer Upload</a>
+                            <a href="{{ route('customer.export') }}" class="btn btn-primary">Customer Export</a>
                         </div>
                     </div>
                 </div>
@@ -70,7 +71,7 @@
                             <th>Categories</th>
                             <th>Languages</th>
                             <th>Status</th>
-                            <th>Downloads</th>
+                            <th>Package</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -85,19 +86,30 @@
                                     $catsIds = \App\Models\UserCategory::where('user_id', $customer->id)->pluck('category_id');
                                     $categories = \App\Models\Category::whereIn('id', $catsIds)->get();
                                 @endphp
-
-                                @foreach($categories as $cat)
-                                    <span class="badge badge-primary">{{$cat->name}}</span> <br>
-                                @endforeach
+                                <ul>
+                                    @foreach($categories as $cat)
+                                        <li> {{$cat->name}} </li>
+                                    @endforeach
+                                </ul>
                             </td>
                             <td>
-                                {{$customer->languages}}
+                                @php
+                                    $langsIds = \App\Models\UserLanguage::where('user_id', $customer->id)->pluck('language_id');
+                                    $languages = \App\Models\Language::whereIn('id', $langsIds)->get();
+                                @endphp
+                                <ul>
+                                    @foreach($languages as $lnag)
+                                        <li> {{$lnag->name}} </li>
+                                    @endforeach
+                                </ul>
                             </td>
                             <td>
                                 <a href="{{route('customer.status', ['customer' => $customer])}}" class="btn btn-{{$customer->status == '1' ? 'success':'danger'}} p-0 px-1">{{$customer->status == '1' ? 'Active':'Inactive'}}</a>
                             </td>
                             <td>
-                                <span class="badge badge-primary">{{$customer->download_count}}</span>
+                                    <a href="{{route('customer.assignToPackage', ['customer' => $customer])}}" type="button" class="btn btn-secondary" data-toggle="tooltip" title="Assign Package">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
                             </td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Customer Actions">
@@ -110,6 +122,7 @@
                                     <a href="{{ route('customer.destroy', ['customer' => $customer]) }}" class="btn btn-danger">
                                         Delete
                                     </a>
+                                    <a href="{{route('customer.details', ['customer' => $customer])}}" class="btn btn-warning">Details</a>
                                 </div>
                             </td>
                         </tr>

@@ -6,6 +6,7 @@ use App\Jobs\SendImageJob;
 use App\Models\FailedCustomer;
 use App\Models\FailedCustomerImage;
 use App\Models\Image;
+use App\Models\MultipleSend;
 use App\Models\User;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
@@ -61,6 +62,12 @@ class ImageController extends Controller
             $fileName = pathinfo($media->getClientOriginalName(), PATHINFO_FILENAME);
             $user = User::where('phone', 'like', '%'.$fileName.'%')->first();
             if ($user){
+                $multipleSend = MultipleSend::find(1);
+                if ($multipleSend->multiple_send_in_single_day == '0'){
+                    if (Image::where(['date' => $request->date ?? Carbon::tomorrow(), 'user_id' => $user->id])->exists()){
+                        continue;
+                    }
+                }
                 $image = new Image();
                 $image->date = $request->date ?? Carbon::tomorrow();
                 $image->title = $request->title;
@@ -168,15 +175,15 @@ class ImageController extends Controller
 
     public function singleImageSend(Image $image){
         if($image->user->status == '1' && $image->sent == '0'){
-
-            $phoneNumber = substr($image->user->phone, -10);
-            //$imageUrl = asset('storage/'. $image->media);
-            $imageUrl = 'https://realvictorygroups.com/wp-content/uploads/2024/04/5102941_2691166-e1712569043142-1024x906.jpg';
+//            $phoneNumber = substr($image->user->phone, -10);
+            $phoneNumber = $image->user->phone;
+            $imageUrl = asset('storage/'. $image->media);
+            //$imageUrl = 'https://realvictorygroups.com/wp-content/uploads/2024/04/5102941_2691166-e1712569043142-1024x906.jpg';
             $message = str_replace(' ', '+', $image->title);
             $fileName = str_replace(' ', '+', $image->title);
 
             $client = new Client(['verify' => false]);
-            $response = $client->request('GET', 'https://rvgwp.in/api/send?number=91'.$phoneNumber.'&type=media&message='.$message.'&media_url='.$imageUrl.'&filename='.$fileName.'&instance_id='.session('instance_id').'&access_token='.session('access_token'));
+            $response = $client->request('GET', 'https://rvgwp.in/api/send?number='.$phoneNumber.'&type=media&message='.$message.'&media_url='.$imageUrl.'&filename='.$fileName.'&instance_id='.session('instance_id').'&access_token='.session('access_token'));
             $message = $response->getBody()->getContents();
             if(json_decode($message)->status == 'error'){
                 return redirect()->back()->with('error', $message);
@@ -188,5 +195,23 @@ class ImageController extends Controller
         }else{
             return redirect()->back()->with('error', 'Not an active user!');
         }
+    }
+
+    public function enableMultipleSend(){
+        $enable = MultipleSend::all();
+        if ($enable->count() == 0){
+            MultipleSend::create(['multiple_send_in_single_day' => 1]);
+        }else{
+
+            $enable = MultipleSend::find(1);
+            if ($enable->multiple_send_in_single_day == '1'){
+                $enable->multiple_send_in_single_day = '0';
+            } else{
+                $enable->multiple_send_in_single_day = '1';
+            }
+            $enable->save();
+        }
+
+        return redirect()->back()->with('success', $enable->multiple_send_in_single_day == 1 ? 'enabled':'disabled'. ' successfully');
     }
 }

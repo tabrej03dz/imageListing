@@ -94,12 +94,34 @@
             <li class="nav-item {{ (request()->routeIs('category.index') || request()->routeIs('category.create') || request()->routeIs('category.edit') ) ? 'bg-white' : 'text' }}">
                 <a class="nav-link" href="{{route('category.index')}}"
                    aria-expanded="true" >
-                    <i class="fas fa-user-friends {{ (request()->routeIs('category.index') || request()->routeIs('category.create') ||request()->routeIs('category.edit') ) ? 'text-dark' : 'text-white' }}"></i>
+                    <i class="fas fa-stream {{ (request()->routeIs('category.index') || request()->routeIs('category.create') ||request()->routeIs('category.edit') ) ? 'text-dark' : 'text-white' }}"></i>
                     <span class="{{ (request()->routeIs('category.index') || request()->routeIs('category.create') ||request()->routeIs('category.edit') ) ? 'text-dark' : 'text-white' }}">Category</span>
                 </a>
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
+
+            <li class="nav-item {{ (request()->routeIs('package.index') )  ? 'bg-white' : 'text' }}">
+                <a class="nav-link" href="{{route('package.index')}}"
+                   aria-expanded="true">
+                    <i class="fas fa-language {{ (request()->routeIs('package.index')) ? 'text-dark' : 'text-white' }}"></i>
+                    <span class="{{ (request()->routeIs('package.index'))  ? 'text-dark' : 'text-white' }}">Package</span>
+                </a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item {{ (request()->routeIs('language.index') || request()->routeIs('language.create'))  ? 'bg-white' : 'text' }}">
+                <a class="nav-link" href="{{route('language.index')}}"
+                   aria-expanded="true" >
+                    <i class="fas fa-language {{ (request()->routeIs('language.create') || request()->routeIs('language.index')) ? 'text-dark' : 'text-white' }}"></i>
+                    <span class="{{ (request()->routeIs('language.create') || request()->routeIs('language.index'))  ? 'text-dark' : 'text-white' }}">Language</span>
+                </a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+
 
             <li class="nav-item {{ request()->routeIs('downloads.view')  ? 'bg-white' : 'text' }}">
                 <a class="nav-link" href="{{route('downloads.view')}}"
@@ -114,15 +136,15 @@
             <li class="nav-item {{ request()->routeIs('visits')  ? 'bg-white' : 'text' }}">
                 <a class="nav-link" href="{{route('visits')}}"
                    aria-expanded="true" >
-                    <i class="fas fa-download {{ request()->routeIs('visits') ? 'text-dark' : 'text-white' }}"></i>
+                    <i class="fas fa-signal {{ request()->routeIs('visits') ? 'text-dark' : 'text-white' }}"></i>
                     <span class="{{ request()->routeIs('visits')  ? 'text-dark' : 'text-white' }}">Web Traffic</span>
                 </a>
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
+
+
         @endif
-
-
 
         <li class="nav-item">
             <a class="nav-link btn btn-danger" href="{{route('logout')}}"
@@ -190,7 +212,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{auth()->user()->name}}</span>
-                            <img class="img-profile rounded-circle"
+                            <img class="img-profile rounded-circle" alt="profile"
                                  src="{{asset('assets/profile.png')}}">
                         </a>
                         <!-- Dropdown - User Information -->

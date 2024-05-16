@@ -9,7 +9,33 @@
             </ul>
         </div>
     @endif
-    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Upload Image</h2>
+    <div class="row justify-content-between">
+        <div class="col-md-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Upload Image</h2>
+        </div>
+        <col-md-4>
+            <p>
+                Enable Multiple send to a user in a day
+            </p>
+        </col-md-4>
+        <div class="col-md-2">
+            @php
+                $multipleSend = \App\Models\MultipleSend::all();
+            @endphp
+            @if($multipleSend->count() == 0)
+
+                <a href="{{route('enableMultipleSend')}}" class="btn btn-primary">Enable</a>
+
+
+            @else
+                @php
+                    $multipleSend = \App\Models\MultipleSend::find(1);
+                @endphp
+                <a href="{{route('enableMultipleSend')}}" class="btn btn-{{$multipleSend->multiple_send_in_single_day == 1 ? 'success' : 'danger'}}">{{$multipleSend->multiple_send_in_single_day == 1 ? 'Enabled' : 'Disabled'}}</a>
+
+            @endif
+        </div>
+    </div>
     @if(session('error'))
         <div class="alert alert-danger">
             {{ session('error') }}

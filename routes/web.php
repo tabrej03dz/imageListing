@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\FailedCustomerController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DownloadTrackController;
+use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\PackageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +61,19 @@ Route::middleware(['auth'])->group(function(){
             Route::get('send/{date}', [ImageController::class, 'sendImage'])->name('send');
         });
 
+        Route::prefix('package')->name('package.')->group(function(){
+            Route::get('/', [PackageController::class, 'index'])->name('index');
+            Route::get('create', [PackageController::class, 'create'])->name('create');
+            Route::post('store', [PackageController::class, 'store'])->name('store');
+            Route::get('edit/{package}', [PackageController::class, 'edit'])->name('edit');
+            Route::post('update/{package}', [PackageController::class, 'update'])->name('update');
+            Route::get('destroy/{package}', [PackageController::class, 'destroy'])->name('destroy');
+
+            Route::get('assignToCustomer/{package}', [PackageController::class, 'packageAssignToCustomerForm'])->name('assignToCustomer');
+            Route::post('assignToCustomer/{package}', [PackageController::class, 'packageAssignToCustomer'])->name('assignToCustomer');
+
+        });
+
         Route::prefix('customer')->name('customer.')->group(function(){
             Route::get('/', [CustomerController::class, 'index'])->name('index');
             Route::get('create', [CustomerController::class, 'create'])->name('create');
@@ -73,6 +88,8 @@ Route::middleware(['auth'])->group(function(){
             Route::post('import', [CustomerController::class, 'customerImport'])->name('import');
             Route::get('search', [CustomerController::class, 'index'])->name('search');
 
+            Route::get('details/{customer}', [CustomerController::class, 'customerDetails'])->name('details');
+
             Route::prefix('failed')->name('failed.')->group(function(){
                 Route::get('all', [FailedCustomerController::class, 'allFailedCustomer'])->name('all');
                 Route::get('add/{customer}', [FailedCustomerController::class, 'add'])->name('add');
@@ -80,8 +97,20 @@ Route::middleware(['auth'])->group(function(){
                 Route::get('removeAll', [FailedCustomerController::class, 'removeAll'])->name('removeAll');
             });
 
+            Route::get('assignToPackage/{customer}', [PackageController::class, 'customerAssignToPackageForm'])->name('assignToPackage');
+            Route::Post('assignToPackage/{customer}', [PackageController::class, 'customerAssignToPackage'])->name('assignToPackage');
+
             Route::get('category/delete/{category}/{customer}', [CategoryController::class, 'customerCategoryDelete'])->name('category.delete');
-            Route::get('language/remove/{customer}/{index}', [CustomerController::class, 'customerLanguageRemove'])->name('language.remove');
+            Route::get('language/delete/{language}/{customer}', [LanguageController::class, 'customerLanguageDelete'])->name('language.delete');
+
+            Route::get('export', [CustomerController::class, 'customerExport'])->name('export');
+        });
+
+        Route::prefix('language')->name('language.')->group(function(){
+            Route::get('/', [Languagecontroller::class, 'index'])->name('index');
+            Route::get('create', [LanguageController::class, 'create'])->name('create');
+            Route::post('store', [LanguageController::class, 'store'])->name('store');
+            Route::get('destroy/{language}', [LanguageController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('category')->name('category.')->group(function(){
@@ -101,6 +130,8 @@ Route::middleware(['auth'])->group(function(){
         });
 
         Route::get('visits', [DownloadTrackController::class, 'visits'])->name('visits');
+
+        Route::get('enableMultipleSend', [ImageController::class, 'enableMultipleSend'])->name('enableMultipleSend');
 });
 
 
