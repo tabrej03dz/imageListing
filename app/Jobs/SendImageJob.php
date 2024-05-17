@@ -33,6 +33,7 @@ class SendImageJob implements ShouldQueue
             foreach ($images as $key => $image){
                 if($image->user->status == '1' && $image->sent == '0' && $key <= 300){
                     $phoneNumber = $image->user->phone;
+
                     //$imageUrl = asset('storage/'. $image->media);
                     $imageUrl = 'https://realvictorygroups.com/wp-content/uploads/2024/04/5102941_2691166-e1712569043142-1024x906.jpg';
                     $message = str_replace(' ', '+', $image->title);
