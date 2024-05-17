@@ -72,6 +72,8 @@ Route::middleware(['auth'])->group(function(){
             Route::get('assignToCustomer/{package}', [PackageController::class, 'packageAssignToCustomerForm'])->name('assignToCustomer');
             Route::post('assignToCustomer/{package}', [PackageController::class, 'packageAssignToCustomer'])->name('assignToCustomer');
 
+            Route::get('ofCustomer/delete/{customerPackage}', [PackageController::class, 'customerPackageDelete'])->name('ofCustomer.delete');
+
         });
 
         Route::prefix('customer')->name('customer.')->group(function(){

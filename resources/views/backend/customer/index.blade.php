@@ -68,8 +68,6 @@
                             <th>S. No.</th>
                             <th>Name</th>
                             <th>Phone</th>
-                            <th>Categories</th>
-                            <th>Languages</th>
                             <th>Status</th>
                             <th>Package</th>
                             <th>Action</th>
@@ -81,28 +79,6 @@
                             <td>{{$loop->iteration}}</td>
                             <td>{{$customer->name}}</td>
                             <td>{{$customer->phone}}</td>
-                            <td>
-                                @php
-                                    $catsIds = \App\Models\UserCategory::where('user_id', $customer->id)->pluck('category_id');
-                                    $categories = \App\Models\Category::whereIn('id', $catsIds)->get();
-                                @endphp
-                                <ul>
-                                    @foreach($categories as $cat)
-                                        <li> {{$cat->name}} </li>
-                                    @endforeach
-                                </ul>
-                            </td>
-                            <td>
-                                @php
-                                    $langsIds = \App\Models\UserLanguage::where('user_id', $customer->id)->pluck('language_id');
-                                    $languages = \App\Models\Language::whereIn('id', $langsIds)->get();
-                                @endphp
-                                <ul>
-                                    @foreach($languages as $lnag)
-                                        <li> {{$lnag->name}} </li>
-                                    @endforeach
-                                </ul>
-                            </td>
                             <td>
                                 <a href="{{route('customer.status', ['customer' => $customer])}}" class="btn btn-{{$customer->status == '1' ? 'success':'danger'}} p-0 px-1">{{$customer->status == '1' ? 'Active':'Inactive'}}</a>
                             </td>

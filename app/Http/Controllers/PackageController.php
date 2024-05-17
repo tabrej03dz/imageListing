@@ -65,4 +65,9 @@ class PackageController extends Controller
     public function packageAssignToCustomer(Request $request, Package $package){
 
     }
+
+    public function customerPackageDelete(UserPackage $customerPackage){
+        $customerPackage->delete();
+        return redirect()->back()->with('success', 'Customer Package deleted successfully');
+    }
 }

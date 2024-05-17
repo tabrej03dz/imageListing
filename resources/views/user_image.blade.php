@@ -18,6 +18,7 @@
             border-radius: 8px;
         }
     </style>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 </head>
 <body class="bg-light">
 <div class="container py-5">
@@ -44,6 +45,8 @@
 {{--                            download="{{ $image->title }}"--}}
 {{--                            <a href="{{ asset('storage/' . $image->media) }}" id="download-link" class="btn btn-primary w-100" download="{{ $image->title }}">Download</a>--}}
                             <a href="{{ route('userImageDownload', ['image' => $image])}}" id="download-link" class="btn btn-primary w-100">Download</a>
+
+                            <a href="https://api.whatsapp.com/send?text={{ rawurlencode(url('storage/'. $image->media)) }}" class="btn btn-success w-100 mt-3" target="_blank">Share on WhatsApp</a>
                         </div>
                     </div>
                 </div>
@@ -56,5 +59,17 @@
     </div>
 </div>
 
+<div id="qrcode"></div>
+<script>
+    // Phone number to share with
+    var phoneNumber = "1234567890"; // Replace with actual phone number
+
+    // Create a new QR code element
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: "wa.me/" + phoneNumber,
+        width: 128,
+        height: 128
+    });
+</script>
 </body>
 </html>

@@ -52,12 +52,17 @@ class User extends Authenticatable
         return $this->hasMany(Image::class, 'user_id');
     }
 
-    public function categories()
-    {
-        return $this->hasManyThrough(Category::class, UserCategory::class, 'user_id', 'category_id');
-    }
 
     public function userPackages(){
         return $this->hasMany(UserPackage::class, 'user_id');
     }
+
+    public function userCategories(){
+        return $this->hasMany(UserCategory::class, 'user_id');
+    }
+
+    public function userLanguages(){
+        return $this->hasMany(UserLanguage::class, 'user_id');
+    }
+
 }
