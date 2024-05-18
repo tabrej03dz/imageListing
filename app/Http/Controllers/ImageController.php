@@ -74,7 +74,7 @@ class ImageController extends Controller
                 $image->user_id = $user->id;
                 array_push($uploadSuccess, $media->getClientOriginalName());
 
-                $file = $media->store('public/images');
+                $file = $media->store('public');
                 $image->media = str_replace('public/', '', $file);
                 // Increment the count of successfully uploaded images
                 $uploadedImagesCount++;

@@ -47,14 +47,18 @@ class PackageController extends Controller
 
     public function customerAssignToPackage(Request $request, User $customer){
         $package = Package::find($request->package_id);
-        $userPackage = UserPackage::create([
-            'user_id' => $customer->id,
-            'package_id' => $package->id,
-            'start_date' => $request->start_date ?? Carbon::today(),
-            'expiry_date' => $request->start_date ? Carbon::createFromFormat('Y-m-d', $request->input('start_date'))->addDays($package->duration)->toDateString() :  Carbon::today()->addDays($package->duration)->toDateString(),
-        ]);
+        if(!UserPackage::where(['user_id' => $customer->id, 'package_id' => $package->id])->where('expiry_date', '>', $request->start_date ?? Carbon::today())->exists()){
+            $userPackage = UserPackage::create([
+                'user_id' => $customer->id,
+                'package_id' => $package->id,
+                'start_date' => $request->start_date ?? Carbon::today(),
+                'expiry_date' => $request->start_date ? Carbon::createFromFormat('Y-m-d', $request->input('start_date'))->addDays($package->duration)->toDateString() : Carbon::today()->addDays($package->duration)->toDateString(),
+            ]);
+            return redirect('customer')->with('success', 'Assigned successfully');
+        }else{
+            return redirect()->back()->with('error', 'This package is already assigned to this customer');
+        }
 
-        return redirect('customer')->with('success', 'Assigned successfully');
     }
 
     public function packageAssignToCustomerForm(Package $package){
@@ -63,7 +67,18 @@ class PackageController extends Controller
     }
 
     public function packageAssignToCustomer(Request $request, Package $package){
-
+//        $customer = User::find($request->customer_id);
+        if (!UserPackage::where(['user_id' => $request->customer_id, 'package_id' => $package->id])->where('expiry_date' , '>', $request->start_date ?? Carbon::today())->exists()){
+            $userPackage = UserPackage::create([
+                'user_id' => $request->customer_id,
+                'package_id' => $package->id,
+                'start_date' => $request->start_date ?? Carbon::today(),
+                'expiry_date' => $request->start_date ? Carbon::createFromFormat('Y-m-d', $request->input('start_date'))->addDays($package->duration)->toDateString() : Carbon::today()->addDays($package->duration)->toDateString(),
+            ]);
+            return redirect()->back()->with('success', 'Package assigned to customer successfully');
+        }else{
+            return redirect()->back()->with('error', 'This package is already assigned to this user');
+        }
     }
 
     public function customerPackageDelete(UserPackage $customerPackage){

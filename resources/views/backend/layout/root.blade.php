@@ -101,11 +101,11 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <li class="nav-item {{ (request()->routeIs('package.index') )  ? 'bg-white' : 'text' }}">
+            <li class="nav-item {{ (request()->routeIs('package.index') || request()->routeIs('package.create'))  ? 'bg-white' : 'text' }}">
                 <a class="nav-link" href="{{route('package.index')}}"
                    aria-expanded="true">
-                    <i class="fas fa-language {{ (request()->routeIs('package.index')) ? 'text-dark' : 'text-white' }}"></i>
-                    <span class="{{ (request()->routeIs('package.index'))  ? 'text-dark' : 'text-white' }}">Package</span>
+                    <i class="fas fa-language {{ (request()->routeIs('package.index') || request()->routeIs('package.create')) ? 'text-dark' : 'text-white' }}"></i>
+                    <span class="{{ (request()->routeIs('package.index') || request()->routeIs('package.create'))  ? 'text-dark' : 'text-white' }}">Package</span>
                 </a>
             </li>
             <!-- Divider -->
