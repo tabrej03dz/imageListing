@@ -8,13 +8,9 @@ use App\Models\FailedCustomerImage;
 use App\Models\Image;
 use App\Models\MultipleSend;
 use App\Models\User;
-use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Session;
 
 
 class ImageController extends Controller
@@ -90,7 +86,7 @@ class ImageController extends Controller
                 $failedCustomerImage->date = $request->date ?? Carbon::tomorrow();
                 $failedCustomerImage->failed_customer_id = $failedCustomer->id;
 
-                $file = $media->store('public/images');
+                $file = $media->store('public/');
                 $failedCustomerImage->media = str_replace('public/', '', $file);
                 $failedCustomerImage->save();
                 array_push($failed, $fileName);
