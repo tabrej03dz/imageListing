@@ -70,7 +70,7 @@ class ImageController extends Controller
                 $image->user_id = $user->id;
                 array_push($uploadSuccess, $media->getClientOriginalName());
 
-                $file = $media->store('public');
+                $file = $media->store('public/images');
                 $image->media = str_replace('public/', '', $file);
                 // Increment the count of successfully uploaded images
                 $uploadedImagesCount++;
@@ -86,7 +86,7 @@ class ImageController extends Controller
                 $failedCustomerImage->date = $request->date ?? Carbon::tomorrow();
                 $failedCustomerImage->failed_customer_id = $failedCustomer->id;
 
-                $file = $media->store('public/');
+                $file = $media->store('public/images');
                 $failedCustomerImage->media = str_replace('public/', '', $file);
                 $failedCustomerImage->save();
                 array_push($failed, $fileName);
