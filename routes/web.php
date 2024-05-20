@@ -12,6 +12,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DownloadTrackController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PackageController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -129,6 +130,11 @@ Route::middleware(['auth'])->group(function(){
 
         Route::prefix('downloads')->name('downloads.')->group(function(){
             Route::get('view', [DownloadTrackController::class, 'view'])->name('view');
+        });
+
+        Route::prefix('payment')->name('payment.')->group(function(){
+            Route::get('add/{customerPackage}', [PaymentController::class, 'paymentAdd'])->name('add');
+            Route::post('make/{customerPackage}', [PaymentCOntroller::class, 'makePayment'])->name('make');
         });
 
         Route::get('visits', [DownloadTrackController::class, 'visits'])->name('visits');

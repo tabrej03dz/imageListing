@@ -14,4 +14,8 @@ class Payment extends Model
         'amount',
         'payment_method',
     ];
+
+    public function userPackage(){
+        return $this->belongsTo(UserPackage::class, 'user_package_id');
+    }
 }

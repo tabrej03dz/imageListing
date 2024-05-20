@@ -1,18 +1,16 @@
 @extends('backend.layout.root', ['title' => 'User Details'])
 @section('content')
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="profile-card text-center p-4">
-                    <img src="{{asset('assets/profile.png')}}" alt="Profile Picture" class="profile-pic" style="border-radius: 50%;">
-                    <h2 class="mb-3 text-success">{{$customer->name}}</h2>
-                    <p class="text-warning">{{$customer->phone}}</p>
-
-                    <div class="card">
-                        <div class="card-head">
-                           <h4 class="text-left m-2">Packages</h4>
-                        </div>
-                        <div class="card-body">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="profile-card text-center">
+                <img src="{{asset('assets/profile.png')}}" alt="Profile Picture" class="profile-pic" style="border-radius: 50%;">
+                <h2 class="mb-3 text-success">{{$customer->name}}</h2>
+                <p class="text-warning">{{$customer->phone}}</p>
+                <div class="card">
+                    <div class="card-head">
+                        <h4 class="text-left m-2">Packages</h4>
+                    </div>
+                    <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
@@ -24,6 +22,8 @@
                                     <th>Start Date</th>
                                     <th>Expiry Date</th>
                                     <th>Expire In</th>
+                                    <th>Paid</th>
+                                    <th>Due</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -37,8 +37,14 @@
                                         <td>{{$package->start_date}}</td>
                                         <td>{{$package->expiry_date}}</td>
                                         <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $package->expiry_date)->diffInDays(\Carbon\Carbon::today()) }}</td>
+                                        @php
+                                            $paid = $package->payments->sum('amount');
+                                        @endphp
+                                        <td class="bg-{{$package->package->price == $paid ? 'success' : 'warning'}}">{{$paid}}</td>
+                                        <td class="bg-{{$package->package->price == $paid ? 'warning' : 'danger'}}">{{$package->package->price - $paid}}</td>
                                         <td>
                                             <a href="{{route('package.ofCustomer.delete', ['customerPackage' => $package])}}" class="btn btn-danger">Delete</a>
+                                            <a href="{{route('payment.add', ['customerPackage' => $package])}}" class="btn btn-success">Add Payment</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -47,25 +53,22 @@
                             </table>
                         </div>
                     </div>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-head">
+                        <h4 class="text-left m-2">Categories</h4>
                     </div>
-
-
-
-                    <div class="card mt-4">
-                        <div class="card-head">
-                            <h4 class="text-left m-2">Categories</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                    <tr>
-                                        <th>S. No.</th>
-                                        <th>Name</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>S. No.</th>
+                                    <th>Name</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
                                     @foreach($customer->userCategories as $category)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
@@ -75,31 +78,27 @@
                                             </td>
                                         </tr>
                                     @endforeach
-
-                                    </tbody>
-                                </table>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-
-
-
-                    <div class="card mt-4">
-                        <div class="card-head">
-                            <h4 class="text-left m-2">Categories</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                    <tr>
-                                        <th>S. No.</th>
-                                        <th>Name</th>
-                                        <th>Code</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-head">
+                        <h4 class="text-left m-2">Languages</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>S. No.</th>
+                                    <th>Name</th>
+                                    <th>Code</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
                                     @foreach($customer->userLanguages as $language)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
@@ -110,13 +109,10 @@
                                             </td>
                                         </tr>
                                     @endforeach
-
-                                    </tbody>
-                                </table>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

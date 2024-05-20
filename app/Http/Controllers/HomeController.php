@@ -9,15 +9,22 @@ use App\Models\User;
 use App\Models\Visit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
     public function __construct(){
-        $checkExpiredUsers = User::whereDate('expiry_date', '<', now())->get();
-        foreach ($checkExpiredUsers as $user){
-            $user->update(['status' => '0']);
+//        $checkExpiredUsers = User::whereDate('expiry_date', '<', now())->get();
+//        foreach ($checkExpiredUsers as $user){
+//            $user->update(['status' => '0']);
+//        }
+        $users = User::where('role', '!=', 'admin')->get();
+        foreach ($users as $user){
+            $expiryDate = $user->userPackages->max('expiry_date');
+            $expiryDate = Carbon::parse($expiryDate);
+            if ($expiryDate->lessThan(Carbon::now())){
+                $user->update(['status' => '0']);
+            }
         }
     }
 
@@ -65,6 +72,7 @@ class HomeController extends Controller
     public function profile(){
         return view('backend.profile');
     }
+
     public function imgSearch(Request $request){
         $request->validate([
             'search' => 'required',
@@ -92,7 +100,7 @@ class HomeController extends Controller
         $randomString = '';
 
         for ($i = 0; $i < 6; $i++) {
-            $randomString .= $characters[rand(0, strlen($characters) - 1)];
+            $randomString .= $characters[rand(0, 15)];
         }
         return $randomString;
     }
