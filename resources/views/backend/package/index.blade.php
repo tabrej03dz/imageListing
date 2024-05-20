@@ -38,7 +38,7 @@
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$package->name}}</td>
-                                <td>{{$package->description}}</td>
+                                <td>{!! $package->description !!}</td>
                                 <td>{{$package->price}}</td>
                                 <td>{{$package->duration}}</td>
                                 <td>

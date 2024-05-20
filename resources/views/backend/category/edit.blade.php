@@ -20,13 +20,6 @@
         </div>
 
         <div class="mb-3">
-            <label for="description" class="form-label">Email:</label>
-            <textarea name="description" id="" cols="30" rows="10" class="form-control">
-                {{$category->description}}
-            </textarea>
-        </div>
-
-        <div class="mb-3">
             <label for="category_id" class="form-label">Parent Category:</label>
             <select name="category_id" id="" class="form-control">
                 <option value="">Parent Category</option>
@@ -39,7 +32,18 @@
         </div>
 
         <div class="mb-3">
+            <label for="description" class="form-label">Email:</label>
+            <textarea name="description" id="category_description_editor" cols="30" rows="10" class="form-control">
+                {{$category->description}}
+            </textarea>
+        </div>
+
+        <div class="mb-3">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
+
+    <script>
+        CKEDITOR.replace('category_description_editor');
+    </script>
 @endsection

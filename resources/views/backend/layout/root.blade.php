@@ -20,6 +20,7 @@
     <!-- Custom styles for this template-->
     <link href="{{asset('assets/css/sb-admin-2.min.css')}}" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{asset('assets/favicon.jpg')}}">
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 
 
 </head>
