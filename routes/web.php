@@ -13,6 +13,7 @@ use App\Http\Controllers\DownloadTrackController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +28,8 @@ use App\Http\Controllers\PaymentController;
 Route::middleware(['visit'])->group(function(){
     Route::get('/{number?}', [HomeController::class, 'index'])->where('number', '[0-9]+');
 });
-    Route::post('imgSearch', [HomeController::class, 'imgSearch'])->name('imgSearch');
-    Route::get('clearOldImage', [HomeController::class, 'clearOldImage'])->name('clearOldImage');
+    Route::post('imgSearch', [DashboardController::class, 'imgSearch'])->name('imgSearch');
+    Route::get('clearOldImage', [DashboardController::class, 'clearOldImage'])->name('clearOldImage');
 
     Route::get('register', [AuthController::class, 'registerForm'])->name('register');
     Route::post('register', [AuthController::class, 'register'])->name('register');
@@ -36,7 +37,7 @@ Route::middleware(['visit'])->group(function(){
     Route::get('login', [AuthController::class, 'loginForm'])->name('login');
     Route::post('login', [AuthController::class, 'login'])->name('login');
 
-Route::get('userImageDownload/{image}', [HomeController::class, 'userImageDownload'])->name('userImageDownload');
+Route::get('userImageDownload/{image}', [DashboardController::class, 'userImageDownload'])->name('userImageDownload');
 
 
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
@@ -125,8 +126,8 @@ Route::middleware(['auth'])->group(function(){
             Route::get('destroy/{category}', [CategoryController::class, 'destroy'])->name('destroy');
         });
 
-        Route::get('profile', [HomeController::class, 'profile'])->name('profile');
-        Route::post('setKeys', [HomeController::class, 'setKeys'])->name('setKeys');
+        Route::get('profile', [DashboardController::class, 'profile'])->name('profile');
+        Route::post('setKeys', [DashboardController::class, 'setKeys'])->name('setKeys');
 
         Route::prefix('downloads')->name('downloads.')->group(function(){
             Route::get('view', [DownloadTrackController::class, 'view'])->name('view');
