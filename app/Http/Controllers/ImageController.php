@@ -140,7 +140,7 @@ class ImageController extends Controller
 
     public function sendImage($date){
         if(session('instance_id') && session('access_token')){
-            $images = Image::where(['date' => $date, 'sent' => '0'])->take(100)->get();
+            $images = Image::where(['date' => $date, 'sent' => '0'])->take(5)->get();
             foreach ($images as $image){
                 if ($image->user->status == '1'){
                     $phoneNumber = $image->user->phone;
