@@ -142,15 +142,15 @@ class ImageController extends Controller
         if(session('instance_id') && session('access_token')){
             $images = Image::where(['date' => $date, 'sent' => '0'])->take(100)->get();
             foreach ($images as $image){
-                if ($image->user->status == '1' && $image->sent == '0'){
-                    $phoneNumber = substr($image->user->phone, -10);
-//                    $imageUrl = asset('storage/'. $image->media);
-                    $imageUrl = 'https://realvictorygroups.xyz/storage/images/J7B9hozWanXBs0Hh0uAoyjE6fEs6V4RfhsAyJPAQ.jpg';
+                if ($image->user->status == '1'){
+                    $phoneNumber = $image->user->phone;
+                    $imageUrl = asset('storage/'. $image->media);
+                    //$imageUrl = 'https://realvictorygroups.xyz/storage/images/3ylvpSonouuOx6lZB7OYfR0V3BGzJoj3tHlA3Zu7.jpg';
                     $message = str_replace(' ', '+', $image->title);
                     $fileName = str_replace(' ', '+', $image->title);
 
                     $client = new Client(['verify' => false]);
-                    $response = $client->request('GET', 'https://rvgwp.in/api/send?number=91'.$phoneNumber.'&type=media&message='.$message.'&media_url='.$imageUrl.'&filename='.$fileName.'&instance_id='.session('instance_id').'&access_token='.session('access_token'));
+                    $response = $client->request('GET', 'https://rvgwp.in/api/send?number='.$phoneNumber.'&type=media&message='.$message.'&media_url='.$imageUrl.'&filename='.$fileName.'&instance_id='.session('instance_id').'&access_token='.session('access_token'));
                     $message = $response->getBody()->getContents();
                     if(json_decode($message)->status == 'error'){
                         return redirect()->back()->with('error', $message);
@@ -174,9 +174,9 @@ class ImageController extends Controller
 //            $phoneNumber = substr($image->user->phone, -10);
             $phoneNumber = $image->user->phone;
 
-            //$imageUrl = asset('storage/'. $image->media);
+            $imageUrl = asset('storage/'. $image->media);
 
-            $imageUrl = 'https://realvictorygroups.xyz/storage/images/J7B9hozWanXBs0Hh0uAoyjE6fEs6V4RfhsAyJPAQ.jpg';
+            //$imageUrl = 'https://realvictorygroups.xyz/storage/images/3ylvpSonouuOx6lZB7OYfR0V3BGzJoj3tHlA3Zu7.jpg';
             $message = str_replace(' ', '+', $image->title);
             $fileName = str_replace(' ', '+', $image->title);
 
