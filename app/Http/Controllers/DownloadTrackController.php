@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use App\Models\DownloadTrack;
 use App\Models\Visit;
@@ -21,5 +22,15 @@ class DownloadTrackController extends Controller
 
         $visits = Visit::whereDate('created_at', $request->date ?? today())->get();
         return view('backend.visits', compact('visits'));
+    }
+
+    public function clearVisits(){
+        Visit::where('created_at', '<',  Carbon::now()->subDays(3))->delete();
+        return redirect()->back()->with('success', 'Three days older records cleared successfully');
+    }
+
+    public function clearDownloads(){
+        DownloadTrack::where('updated_at', '<', Carbon::now()->subDays(3))->delete();
+        return redirect()->back()->with('success', 'Three days older records cleared successfully');
     }
 }

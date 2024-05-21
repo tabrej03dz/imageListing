@@ -139,6 +139,8 @@ Route::middleware(['auth'])->group(function(){
         });
 
         Route::get('visits', [DownloadTrackController::class, 'visits'])->name('visits');
+        Route::get('clearVisits', [DownloadTrackController::class, 'clearVisits'])->name('clearVisits');
+        Route::get('clearDownloads', [DownloadTrackController::class, 'clearDownloads'])->name('clearDownloads');
 
         Route::get('enableMultipleSend', [ImageController::class, 'enableMultipleSend'])->name('enableMultipleSend');
 });

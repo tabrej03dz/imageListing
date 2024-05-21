@@ -29,13 +29,13 @@ class SendImageJob implements ShouldQueue
     public function handle(): void
     {
         if(session('instance_id') && session('access_token')){
-            $images = Image::where('date', $this->date)->get();
+            $images = Image::where(['date' => $this->date, 'sent' => '0'])->take(100)->get();
             foreach ($images as $key => $image){
-                if($image->user->status == '1' && $image->sent == '0' && $key <= 300){
+                if($image->user->status == '1'){
                     $phoneNumber = $image->user->phone;
 
-                    $imageUrl = asset('storage/'. $image->media);
-                    //$imageUrl = 'https://realvictorygroups.com/wp-content/uploads/2024/04/5102941_2691166-e1712569043142-1024x906.jpg';
+                    //$imageUrl = asset('storage/'. $image->media);
+                    $imageUrl = 'https://realvictorygroups.com/wp-content/uploads/2024/04/5102941_2691166-e1712569043142-1024x906.jpg';
                     $message = str_replace(' ', '+', $image->title);
                     $fileName = str_replace(' ', '+', $image->title);
 

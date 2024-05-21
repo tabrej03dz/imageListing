@@ -46,6 +46,11 @@
         <div class="col-md-1">
             <a href="{{route('downloads.view')}}" class="btn btn-primary p-1">Reset</a>
         </div>
+        <div class="col-md-2">
+            <a href="{{route('clearDownloads')}}" class="btn btn-danger" onclick="
+                confirm('Are you sure to delete download records older than three days');
+            ">Clear Records</a>
+        </div>
 
     </div>
     <table class="table table-bordered">

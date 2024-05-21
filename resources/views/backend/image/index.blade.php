@@ -18,6 +18,7 @@
                                 <th>No of Items</th>
                                 <th>Action</th>
                                 <th>Sent</th>
+                                <th>Remains</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -36,7 +37,7 @@
                                         @endif
                                             <a id="bulkSendBtn" href="{{route('images.send', ['date' => $date])}}" class="btn btn-primary">Bulk send</a>
                                     </td>
-                                    <td class="align-middle">{{$images->where('sent', '1')->count()}}</td>
+                                    <td class="align-middle text-center" colspan="2">{{$images->where('sent', '1')->count().'/'. $images->where('sent', '0')->count()}}</td>
 
                                 </tr>
                             @endforeach
