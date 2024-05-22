@@ -31,17 +31,17 @@
                                 @foreach($customer->userPackages as $package)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td>{{$package->package?->name}}</td>
-                                        <td>{{$package->package?->duration}}</td>
-                                        <td>{{$package->package?->price}}</td>
+                                        <td>{{$package->package->name}}</td>
+                                        <td>{{$package->package->duration}}</td>
+                                        <td>{{$package->package->price}}</td>
                                         <td>{{$package->start_date}}</td>
                                         <td>{{$package->expiry_date}}</td>
                                         <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $package->expiry_date)->diffInDays(\Carbon\Carbon::today()) }}</td>
                                         @php
                                             $paid = $package->payments->sum('amount');
                                         @endphp
-                                        <td class="bg-{{$package->package?->price == $paid ? 'success' : 'warning'}}">{{$paid}}</td>
-                                        <td class="bg-{{$package->package?->price == $paid ? 'warning' : 'danger'}}">{{$package->package->price - $paid}}</td>
+                                        <td class="bg-{{$package->package->price == $paid ? 'success' : 'warning'}}">{{$paid}}</td>
+                                        <td class="bg-{{$package->package->price == $paid ? 'warning' : 'danger'}}">{{$package->package->price - $paid}}</td>
                                         <td>
                                             <a href="{{route('package.ofCustomer.delete', ['customerPackage' => $package])}}" class="btn btn-danger">Delete</a>
                                             <a href="{{route('payment.add', ['customerPackage' => $package])}}" class="btn btn-success">Add Payment</a>
