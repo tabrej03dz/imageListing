@@ -41,6 +41,7 @@ class ImageController extends Controller
         $users = User::all();
         return view('backend.image.index', compact('images', 'users', 'imagesByDate'));
     }
+
     public function uploadImage(){
         return view('backend.image.upload');
     }
@@ -51,6 +52,7 @@ class ImageController extends Controller
             'date' => 'date|nullable',
             'media.*' => '',
         ]);
+
         $failed = [];
         $uploadSuccess = [];
         $uploadedImagesCount = 0;
@@ -64,6 +66,7 @@ class ImageController extends Controller
                         continue;
                     }
                 }
+
                 $image = new Image();
                 $image->date = $request->date ?? Carbon::tomorrow();
                 $image->title = $request->title;
@@ -74,13 +77,11 @@ class ImageController extends Controller
                 $image->media = str_replace('public/', '', $file);
                 // Increment the count of successfully uploaded images
                 $uploadedImagesCount++;
-
             } else {
                 $failedCustomer = FailedCustomer::where('phone', $fileName)->first();
                 if (!$failedCustomer){
                     $failedCustomer = FailedCustomer::create(['phone' => $fileName]);
                 }
-
                 $failedCustomerImage = new FailedCustomerImage();
                 $failedCustomerImage->title = $request->title;
                 $failedCustomerImage->date = $request->date ?? Carbon::tomorrow();
@@ -91,7 +92,6 @@ class ImageController extends Controller
                 $failedCustomerImage->save();
                 array_push($failed, $fileName);
                 continue;
-
             }
             $image->save();
         }
@@ -173,9 +173,7 @@ class ImageController extends Controller
         if($image->user->status == '1' && $image->sent == '0'){
 //            $phoneNumber = substr($image->user->phone, -10);
             $phoneNumber = $image->user->phone;
-
             $imageUrl = asset('storage/'. $image->media);
-
             //$imageUrl = 'https://realvictorygroups.xyz/storage/images/3ylvpSonouuOx6lZB7OYfR0V3BGzJoj3tHlA3Zu7.jpg';
             $message = str_replace(' ', '+', $image->title);
             $fileName = str_replace(' ', '+', $image->title);

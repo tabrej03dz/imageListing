@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Search Image</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="https://realvictorygroups.xyz/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="https://realvictorygroups.xyz/assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="https://realvictorygroups.xyz/assets/favicon.jpg">
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+        <div class="row justify-content-center">
+        <div class="col-xl-6 col-lg-8 col-md-10">
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+                        <div class="col-lg-12">
+
+                            <div class="p-5">
+                                <span class="badge bg-danger text-white">Notes</span>
+                                <p style="margin-bottom: 10px;" class="text-center">Please enter your registered mobile number</p>
+                                <p style="margin-bottom: 20px;" class="text-center">कृपया अपना रजिस्टर मोबाइल नंबर दर्ज करें</p>
+                                <div>
+
+                                    <div class="text-center mt-3">
+                                        <h1 class="h4 text-gray-900 mb-4">Search Your Images!</h1>
+                                    </div>
+                                    <form class="user" id="imageSearchForm">
+                                        <div class="form-group">
+                                            <input type="number" class="form-control form-control-user"
+                                                   id="phone" name="phone" aria-describedby="emailHelp"
+                                                   placeholder="Enter Your Phone No.." style="border: 2px solid #dc3545; border-radius: 5px;">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                            Search
+                                        </button>
+                                    </form>
+
+                                    <hr>
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <div>
+                                            <a href="https://wa.me/915123573747" target="_blank" class="btn btn-success">Get help</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div id="image-container"></div>
+
+    </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="https://realvictorygroups.xyz/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="https://realvictorygroups.xyz/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="https://realvictorygroups.xyz/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="https://realvictorygroups.xyz/assets/js/sb-admin-2.min.js"></script>
+
+
+    <script>
+        document.getElementById('imageSearchForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const phone = document.getElementById('phone').value;
+            const apiUrl = 'http://127.0.0.1:8000/api/imageSearch';
+
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    //'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include CSRF token if needed
+                },
+                body: JSON.stringify({ phone: phone })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayImages(data.images);
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+        });
+
+        function displayImages(images) {
+            const imageContainer = document.getElementById('image-container');
+            imageContainer.innerHTML = ''; // Clear any existing content
+
+            if (images.length === 0) {
+                imageContainer.innerHTML = '<p>No images found.</p>';
+                return;
+            }
+
+            images.forEach(image => {
+                const imageWrapper = document.createElement('div');
+                imageWrapper.style.margin = '10px';
+                imageWrapper.style.display = 'inline-block';
+                imageWrapper.style.textAlign = 'center';
+
+                const imgElement = document.createElement('img');
+                imgElement.src = 'http://127.0.0.1:8000/storage/' + image.media; // Assuming the image URL is stored in `image.url`
+                imgElement.alt = 'Image'; // Optionally add a description
+                imgElement.style.width = '200px'; // Adjust as needed
+                imgElement.style.display = 'block';
+
+                const downloadLink = document.createElement('a');
+                // downloadLink.href = imgElement.src;
+                downloadLink.href = `http://127.0.0.1:8000/api/imageDownload/${image.id}`;
+                // downloadLink.download = image.title; // Set the filename for the download
+                downloadLink.textContent = 'Download';
+                downloadLink.style.display = 'block';
+                downloadLink.style.marginTop = '5px';
+                downloadLink.style.color = '#007bff';
+                downloadLink.style.textDecoration = 'none';
+                downloadLink.classList = 'btn btn-warning';
+
+                const shareLink = document.createElement('a');
+                shareLink.href = `https://api.whatsapp.com/send?text=http://127.0.0.1:8000/storage/${image.media}`;
+                shareLink.textContent = 'Share on whatsapp';
+                shareLink.style.display = 'block';
+                shareLink.style.marginTop = '5px';
+                shareLink.style.color = '#007bff';
+                shareLink.style.textDecoration = 'none';
+                shareLink.classList = 'btn btn-success';
+
+
+                // downloadLink.addEventListener('click', function(event) {
+                //     event.preventDefault(); // Prevent the default link behavior
+                //
+                //     // Call another API here
+                //     callDownloadAPI(image.id);
+                // });
+
+                imageWrapper.appendChild(imgElement);
+                imageWrapper.appendChild(downloadLink);
+                imageWrapper.appendChild(shareLink);
+                imageContainer.appendChild(imageWrapper);
+            });
+        }
+
+
+        // function callDownloadAPI(imageId) {
+        //     // Example: Make a fetch request to another API endpoint
+        //     fetch(`http:127.0.0.1:8000/api/imageDownload/${imageId}`)
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             // Process the response from the other API if needed
+        //             console.log('Response from another API:', data);
+        //         })
+        //         .catch(error => {
+        //             console.error('Error while calling another API:', error);
+        //         });
+        // }
+    </script>
+
+</body>
+
+</html>
+

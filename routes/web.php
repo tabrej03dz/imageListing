@@ -25,6 +25,10 @@ use App\Http\Controllers\DashboardController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('welcome', function(){
+    return view('welcome1');
+});
 Route::middleware(['visit'])->group(function(){
     Route::get('/{number?}', [HomeController::class, 'index'])->where('number', '[0-9]+');
 });
