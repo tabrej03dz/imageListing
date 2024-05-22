@@ -29,6 +29,8 @@ use App\Http\Controllers\DashboardController;
 Route::get('welcome', function(){
     return view('welcome1');
 });
+
+Route::get('packageAssignToAllCustomer', [DashboardController::class, 'packageAssignToAllCustomer'])->name('packageAssignToAllCustomer');
 Route::middleware(['visit'])->group(function(){
     Route::get('/{number?}', [HomeController::class, 'index'])->where('number', '[0-9]+');
 });

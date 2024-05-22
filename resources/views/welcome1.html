@@ -66,7 +66,7 @@
             </div>
         </div>
 
-            <div id="image-container"></div>
+            <div id="image-container" class="text-center"></div>
 
     </div>
     </div>
@@ -122,16 +122,31 @@
             }
 
             images.forEach(image => {
-                const imageWrapper = document.createElement('div');
-                imageWrapper.style.margin = '10px';
-                imageWrapper.style.display = 'inline-block';
-                imageWrapper.style.textAlign = 'center';
+                const cardContainer = document.createElement('div');
+                cardContainer.classList = 'card image-card';
+                cardContainer.style.margin = '10px';
+                cardContainer.style.display = 'inline-block';
+                cardContainer.style.textAlign = 'center';
 
                 const imgElement = document.createElement('img');
                 imgElement.src = 'http://127.0.0.1:8000/storage/' + image.media; // Assuming the image URL is stored in `image.url`
                 imgElement.alt = 'Image'; // Optionally add a description
-                imgElement.style.width = '200px'; // Adjust as needed
+                imgElement.style.width = '300px'; // Adjust as needed
+                imgElement.style.height = 'auto';
                 imgElement.style.display = 'block';
+                imgElement.style.borderTopLeftRadius = '10px';
+                imgElement.style.borderTopRightRadius = '10px';
+
+                const cardBody = document.createElement('div');
+                cardBody.classList = 'card-body';
+
+                const imageTitle = document.createElement('h5');
+                imageTitle.classList = 'card-title text-center';
+                imageTitle.textContent = image.title;
+
+                const imageDate = document.createElement('p');
+                imageDate.classList = 'card-text text-center';
+                imageDate.textContent = image.date;
 
                 const downloadLink = document.createElement('a');
                 // downloadLink.href = imgElement.src;
@@ -161,10 +176,15 @@
                 //     callDownloadAPI(image.id);
                 // });
 
-                imageWrapper.appendChild(imgElement);
-                imageWrapper.appendChild(downloadLink);
-                imageWrapper.appendChild(shareLink);
-                imageContainer.appendChild(imageWrapper);
+                cardContainer.appendChild(imgElement);
+                cardBody.appendChild(imageTitle);
+                cardBody.appendChild(imageDate);
+                cardBody.appendChild(downloadLink);
+                cardBody.appendChild(shareLink);
+                cardContainer.appendChild(cardBody);
+                // cardContainer.appendChild(downloadLink);
+                // cardContainer.appendChild(shareLink);
+                imageContainer.appendChild(cardContainer);
             });
         }
 

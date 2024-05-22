@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\DownloadTrack;
 use App\Models\Image;
+use App\Models\Package;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
+Use App\Models\UserPackage;
 
 class DashboardController extends Controller
 {
@@ -82,5 +84,21 @@ class DashboardController extends Controller
         $image->user->download_count = $image->user->download_count + 1;
         $image->user->save();
         return response()->download($path, $image->title.'.'.$extension);
+    }
+
+    public function packageAssignToAllCustomer(){
+//        2024-05-22
+
+        $customers = User::where('role', '!=', 'admin')->get();
+        foreach($customers as $customer){
+            UserPackage::create([
+                'user_id' => $customer->id,
+                'package_id' => Package::first()->id,
+                'start_date' => '2024-05-22',
+                'expiry_date' => '2025-05-22',
+            ]);
+            $customer->update(['status' => '1']);
+        }
+        return redirect('customer')->with('success', 'package assigned successfully to all customer');
     }
 }
