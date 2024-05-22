@@ -1,4 +1,4 @@
-{{--@extends('backend.layout.root', ['title' => 'User Details'])--}}
+@extends('backend.layout.root', ['title' => 'User Details'])
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-12">
