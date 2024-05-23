@@ -142,7 +142,7 @@ class ImageController extends Controller
 
     public function sendImage($date){
         if(session('instance_id') && session('access_token')){
-            $images = Image::where(['date' => $date, 'sent' => '0'])->take(100)->get();
+            $images = Image::where(['date' => $date, 'sent' => '0'])->take(40)->get();
             foreach ($images as $image){
                 if ($image->user->status == '1'){
                     $phoneNumber = $image->user->phone;
@@ -153,10 +153,10 @@ class ImageController extends Controller
 
                     $client = new Client(['verify' => false]);
                     $response = $client->request('GET', 'https://rvgwp.in/api/send?number='.$phoneNumber.'&type=media&message='.$message.'&media_url='.$imageUrl.'&filename='.$fileName.'&instance_id='.session('instance_id').'&access_token='.session('access_token'));
-                    //$message = $response->getBody()->getContents();
-//                    if(json_decode($message)['status'] == 'error'){
-//                        return redirect()->back()->with('error', $message);
-//                    }
+                    $message = $response->getBody()->getContents();
+                    if(json_decode($message)['status'] == 'error'){
+                        return redirect()->back()->with('error', $message);
+                    }
                     $image->sent = '1';
                     $image->save();
                 }else{
