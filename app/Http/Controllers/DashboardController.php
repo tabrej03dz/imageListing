@@ -90,10 +90,14 @@ class DashboardController extends Controller
 //        2024-05-22
 
         $customers = User::where('role', '!=', 'admin')->get();
+        $packageId = Package::first()->id;
         foreach($customers as $customer){
+            if(UserPackage::where(['user_id' => $customer->id, 'package_id' => $packageId])->exists()){
+                continue;
+            }
             UserPackage::create([
                 'user_id' => $customer->id,
-                'package_id' => Package::first()->id,
+                'package_id' => $packageId,
                 'start_date' => '2024-05-22',
                 'expiry_date' => '2025-05-22',
             ]);
