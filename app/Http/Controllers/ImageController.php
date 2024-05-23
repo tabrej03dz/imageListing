@@ -157,6 +157,8 @@ class ImageController extends Controller
 //                    }
                     $image->sent = '1';
                     $image->save();
+                }else{
+                    continue;
                 }
             }
             return redirect()->back()->with('success', 'Images send successfully');
