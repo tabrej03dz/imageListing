@@ -145,7 +145,7 @@ class ImageController extends Controller
             $images = Image::where(['date' => $date, 'sent' => '0'])->take(50)->get();
             foreach ($images as $image){
                 if ($image->user->status == '1'){
-                    $phoneNumber = $image->user->phone;
+                    $phoneNumber = substr($image->user->phone, 0, 12);
                     $imageUrl = asset('storage/'. $image->media);
                     //$imageUrl = 'https://realvictorygroups.xyz/storage/images/deipEEisit9ziAmq7SnsdmLSVg9upJBXwlCcs7Pz.jpg';
                     $message = str_replace(' ', '+', $image->title);
@@ -177,7 +177,7 @@ class ImageController extends Controller
     public function singleImageSend(Image $image){
         if($image->user->status == '1' && $image->sent == '0'){
 //            $phoneNumber = substr($image->user->phone, -10);
-            $phoneNumber = $image->user->phone;
+            $phoneNumber = substr($image->user->phone, 0, 12);
             $imageUrl = asset('storage/'. $image->media);
             //$imageUrl = 'https://realvictorygroups.xyz/storage/images/deipEEisit9ziAmq7SnsdmLSVg9upJBXwlCcs7Pz.jpg';
             $message = str_replace(' ', '+', $image->title);
