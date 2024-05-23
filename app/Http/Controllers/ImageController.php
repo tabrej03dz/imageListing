@@ -57,7 +57,9 @@ class ImageController extends Controller
         $uploadSuccess = [];
         $uploadedImagesCount = 0;
         foreach ($request->file('media') as $media){
-            $fileName = pathinfo($media->getClientOriginalName(), PATHINFO_FILENAME);
+            //            $phoneNumber = substr($image->user->phone, -10);
+
+            $fileName = substr(pathinfo($media->getClientOriginalName(), PATHINFO_FILENAME), 0,12);
             $user = User::where('phone', 'like', '%'.$fileName.'%')->first();
             if ($user){
                 $multipleSend = MultipleSend::find(1);
@@ -144,8 +146,8 @@ class ImageController extends Controller
             foreach ($images as $image){
                 if ($image->user->status == '1'){
                     $phoneNumber = $image->user->phone;
-                    $imageUrl = asset('storage/'. $image->media);
-                    //$imageUrl = 'https://realvictorygroups.xyz/storage/images/3ylvpSonouuOx6lZB7OYfR0V3BGzJoj3tHlA3Zu7.jpg';
+                    //$imageUrl = asset('storage/'. $image->media);
+                    $imageUrl = 'https://realvictorygroups.xyz/storage/images/deipEEisit9ziAmq7SnsdmLSVg9upJBXwlCcs7Pz.jpg';
                     $message = str_replace(' ', '+', $image->title);
                     $fileName = str_replace(' ', '+', $image->title);
 
@@ -175,8 +177,8 @@ class ImageController extends Controller
         if($image->user->status == '1' && $image->sent == '0'){
 //            $phoneNumber = substr($image->user->phone, -10);
             $phoneNumber = $image->user->phone;
-            $imageUrl = asset('storage/'. $image->media);
-            //$imageUrl = 'https://realvictorygroups.xyz/storage/images/3ylvpSonouuOx6lZB7OYfR0V3BGzJoj3tHlA3Zu7.jpg';
+            //$imageUrl = asset('storage/'. $image->media);
+            $imageUrl = 'https://realvictorygroups.xyz/storage/images/deipEEisit9ziAmq7SnsdmLSVg9upJBXwlCcs7Pz.jpg';
             $message = str_replace(' ', '+', $image->title);
             $fileName = str_replace(' ', '+', $image->title);
 
