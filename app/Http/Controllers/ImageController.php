@@ -152,7 +152,7 @@ class ImageController extends Controller
                     $client = new Client(['verify' => false]);
                     $response = $client->request('GET', 'https://rvgwp.in/api/send?number='.$phoneNumber.'&type=media&message='.$message.'&media_url='.$imageUrl.'&filename='.$fileName.'&instance_id='.session('instance_id').'&access_token='.session('access_token'));
                     $message = $response->getBody()->getContents();
-                    if(json_decode($message)->status == 'error'){
+                    if(json_decode($message)['status'] == 'error'){
                         return redirect()->back()->with('error', $message);
                     }
                     $image->sent = '1';
