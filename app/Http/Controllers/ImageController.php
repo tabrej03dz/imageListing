@@ -146,8 +146,8 @@ class ImageController extends Controller
             foreach ($images as $image){
                 if ($image->user->status == '1'){
                     $phoneNumber = $image->user->phone;
-                    //$imageUrl = asset('storage/'. $image->media);
-                    $imageUrl = 'https://realvictorygroups.xyz/storage/images/deipEEisit9ziAmq7SnsdmLSVg9upJBXwlCcs7Pz.jpg';
+                    $imageUrl = asset('storage/'. $image->media);
+                    //$imageUrl = 'https://realvictorygroups.xyz/storage/images/deipEEisit9ziAmq7SnsdmLSVg9upJBXwlCcs7Pz.jpg';
                     $message = str_replace(' ', '+', $image->title);
                     $fileName = str_replace(' ', '+', $image->title);
 
@@ -177,8 +177,8 @@ class ImageController extends Controller
         if($image->user->status == '1' && $image->sent == '0'){
 //            $phoneNumber = substr($image->user->phone, -10);
             $phoneNumber = $image->user->phone;
-            //$imageUrl = asset('storage/'. $image->media);
-            $imageUrl = 'https://realvictorygroups.xyz/storage/images/deipEEisit9ziAmq7SnsdmLSVg9upJBXwlCcs7Pz.jpg';
+            $imageUrl = asset('storage/'. $image->media);
+            //$imageUrl = 'https://realvictorygroups.xyz/storage/images/deipEEisit9ziAmq7SnsdmLSVg9upJBXwlCcs7Pz.jpg';
             $message = str_replace(' ', '+', $image->title);
             $fileName = str_replace(' ', '+', $image->title);
 
