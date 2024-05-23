@@ -69,8 +69,8 @@
             <tr class="small">
                 <td class="p-1">{{$loop->iteration}}</td>
                 <td class="p-1">{{$download->user->phone}}</td>
-                <td class="p-1">{{$download->image->title}}</td>
-                <td class="p-1">{{$download->image->date}}</td>
+                <td class="p-1">{{$download->image?->title}}</td>
+                <td class="p-1">{{$download->image?->date}}</td>
                 <td class="p-1">{{$download->download_count}}</td>
                 <td class="p-1">{{$download->updated_at->format('d-m-Y H:i:s')}}</td>
             </tr>
