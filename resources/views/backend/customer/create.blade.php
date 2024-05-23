@@ -39,15 +39,15 @@
             </select>
         </div>
 
-        <div class="mb-3">
-            <label for="start_date" class="form-label">Package Start Date:</label>
-            <input type="date" id="start_date" name="start_date" class="form-control">
-        </div>
+{{--        <div class="mb-3">--}}
+{{--            <label for="start_date" class="form-label">Package Start Date:</label>--}}
+{{--            <input type="date" id="start_date" name="start_date" class="form-control">--}}
+{{--        </div>--}}
 
-        <div class="mb-3">
-            <label for="expiry_date" class="form-label">Package Expiry Date:</label>
-            <input type="date" id="expiry_date" name="expiry_date" class="form-control">
-        </div>
+{{--        <div class="mb-3">--}}
+{{--            <label for="expiry_date" class="form-label">Package Expiry Date:</label>--}}
+{{--            <input type="date" id="expiry_date" name="expiry_date" class="form-control">--}}
+{{--        </div>--}}
 
         <div class="mb-3">
             <label for="" class="form-label">Category:</label>
