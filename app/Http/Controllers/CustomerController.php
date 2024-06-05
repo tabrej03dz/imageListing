@@ -22,9 +22,9 @@ class CustomerController extends Controller
 {
     public function index(Request $request){
         if($request->search){
-            $customers = User::where('role', '!=', 'admin')->where('phone','like', '%'.$request->search.'%')->orWhere('name', 'like', '%'.$request->search.'%')->paginate(5);
+            $customers = User::where('role', 'user')->where('phone','like', '%'.$request->search.'%')->orWhere('name', 'like', '%'.$request->search.'%')->paginate(5);
         }else{
-            $customers = User::where('role', '!=', 'admin')->paginate(100);
+            $customers = User::where('role', 'user')->paginate(100);
         }
         return view('backend.customer.index', compact('customers'));
     }
@@ -39,7 +39,6 @@ class CustomerController extends Controller
         $customer = User::create($request->all() +
             [
                 'password' => Hash::make('password'),
-                'role' => 'user',
             ],
         );
 
@@ -62,6 +61,14 @@ class CustomerController extends Controller
                 $userLang->save();
             }
         }
+
+        $package = Package::first();
+        UserPackage::create([
+            'user_id' => $customer->id,
+            'package_id' => $package->id,
+            'start_date' => today()->toDateString(),
+            'expiry_date' => today()->addDays($package->duration)->toDateString(),
+        ]);
 
         return redirect('customer');
     }

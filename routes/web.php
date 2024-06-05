@@ -14,6 +14,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,11 +63,13 @@ Route::middleware(['auth'])->group(function(){
 
         });
 
+
         Route::prefix('images')->name('images.')->group(function(){
             Route::get('upload', [ImageController::class, 'uploadImage'])->name('upload');
             Route::get('delete/{date}', [ImageController::class, 'imageDeleteByDate'])->name('delete');
             Route::get('show/{date}', [ImageController::class, 'imageShowByDate'])->name('show');
             Route::get('send/{date}', [ImageController::class, 'sendImage'])->name('send');
+            Route::get('sentCount/{date}', [ImageController::class, 'sentCount'])->name('sentCount');
         });
 
         Route::prefix('package')->name('package.')->group(function(){
@@ -114,6 +117,15 @@ Route::middleware(['auth'])->group(function(){
             Route::get('language/delete/{language}/{customer}', [LanguageController::class, 'customerLanguageDelete'])->name('language.delete');
 
             Route::get('export', [CustomerController::class, 'customerExport'])->name('export');
+        });
+
+        Route::prefix('user')->name('user.')->group(function(){
+            Route::get('/', [UserController::class, 'index'])->name('index');
+            Route::get('create', [UserController::class, 'create'])->name('create');
+            Route::post('store', [UserController::class, 'store'])->name('store');
+            Route::get('edit/{user}', [UserController::class, 'edit'])->name('edit');
+            Route::post('update/{user}', [UserController::class, 'update'])->name('update');
+            Route::get('delete/{user}', [UserController::class, 'delete'])->name('delete');
         });
 
         Route::prefix('language')->name('language.')->group(function(){
@@ -181,5 +193,7 @@ Route::get('/onlyMigrate', function () {
 
     }
 });
+
+
 
 

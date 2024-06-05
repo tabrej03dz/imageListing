@@ -255,6 +255,7 @@
                 @php
                     $months = [];
                     $counts = [];
+                        //dd($customerData);
                     foreach ($customerData as $data){
                         array_push($months, $data->month_name);
                         array_push($counts, $data->count);

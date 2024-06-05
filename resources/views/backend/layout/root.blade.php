@@ -43,6 +43,8 @@
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
         <!-- Nav Item - Dashboard -->
+        @if(auth()->user())
+
         <li class="nav-item {{ request()->routeIs('dashboard') ? 'bg-white' : '' }}">
             <a class="nav-link" href="{{ route('dashboard') }}">
                 <i class="fas fa-fw fa-tachometer-alt {{ request()->routeIs('dashboard') ? 'text-dark' : 'text-white' }}"></i>
@@ -51,18 +53,8 @@
         </li>
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item {{ request()->routeIs('image.index') || request()->routeIs('images.show') ? 'bg-white' : '' }}">
-            <a class="nav-link" href="{{ route('image.index') }}" aria-expanded="true">
-                <i class="fas fa-images {{ request()->routeIs('image.index') || request()->routeIs('images.show') ? 'text-dark' : 'text-white' }}"></i>
-                <span class="{{ request()->routeIs('image.index') || request()->routeIs('images.show') ? 'text-dark' : 'text-white' }}">Images</span>
-            </a>
-        </li>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-        @if(auth()->user()->role == 'admin')
+        @if(auth()->user()->role == 'admin' || auth()->user()->role == 'designer')
             <li class="nav-item {{ request()->routeIs('images.upload') ? 'bg-white' : '' }}">
                 <a class="nav-link" href="{{route('images.upload')}}"
                    aria-expanded="true" >
@@ -72,11 +64,12 @@
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-            <li class="nav-item {{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') || request()->routeIs('customer.images') ) ? 'bg-white' : '' }}">
-                <a class="nav-link" href="{{route('customer.index')}}"
-                   aria-expanded="true" >
-                    <i class="fas fa-user-friends {{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') || request()->routeIs('customer.images')) ? 'text-dark' : 'text-white' }}"></i>
-                    <span class="{{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') || request()->routeIs('customer.images') ) ? 'text-dark' : 'text-white' }}">Customers</span>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item {{ request()->routeIs('image.index') || request()->routeIs('images.show') ? 'bg-white' : '' }}">
+                <a class="nav-link" href="{{ route('image.index') }}" aria-expanded="true">
+                    <i class="fas fa-images {{ request()->routeIs('image.index') || request()->routeIs('images.show') ? 'text-dark' : 'text-white' }}"></i>
+                    <span class="{{ request()->routeIs('image.index') || request()->routeIs('images.show') ? 'text-dark' : 'text-white' }}">Images</span>
                 </a>
             </li>
             <!-- Divider -->
@@ -91,12 +84,14 @@
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
+        @endif
 
-            <li class="nav-item {{ (request()->routeIs('category.index') || request()->routeIs('category.create') || request()->routeIs('category.edit') ) ? 'bg-white' : 'text' }}">
-                <a class="nav-link" href="{{route('category.index')}}"
+        @if(auth()->user()->role == 'admin' || auth()->user()->role == 'calling')
+            <li class="nav-item {{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') || request()->routeIs('customer.images') ) ? 'bg-white' : '' }}">
+                <a class="nav-link" href="{{route('customer.index')}}"
                    aria-expanded="true" >
-                    <i class="fas fa-stream {{ (request()->routeIs('category.index') || request()->routeIs('category.create') ||request()->routeIs('category.edit') ) ? 'text-dark' : 'text-white' }}"></i>
-                    <span class="{{ (request()->routeIs('category.index') || request()->routeIs('category.create') ||request()->routeIs('category.edit') ) ? 'text-dark' : 'text-white' }}">Category</span>
+                    <i class="fas fa-user-friends {{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') || request()->routeIs('customer.images')) ? 'text-dark' : 'text-white' }}"></i>
+                    <span class="{{ (request()->routeIs('customer.index') || request()->routeIs('customer.edit') || request()->routeIs('customer.create') || request()->routeIs('customer.images') ) ? 'text-dark' : 'text-white' }}">Customers</span>
                 </a>
             </li>
             <!-- Divider -->
@@ -112,11 +107,35 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
+            <li class="nav-item {{ (request()->routeIs('category.index') || request()->routeIs('category.create') || request()->routeIs('category.edit') ) ? 'bg-white' : 'text' }}">
+                <a class="nav-link" href="{{route('category.index')}}"
+                   aria-expanded="true" >
+                    <i class="fas fa-stream {{ (request()->routeIs('category.index') || request()->routeIs('category.create') ||request()->routeIs('category.edit') ) ? 'text-dark' : 'text-white' }}"></i>
+                    <span class="{{ (request()->routeIs('category.index') || request()->routeIs('category.create') ||request()->routeIs('category.edit') ) ? 'text-dark' : 'text-white' }}">Category</span>
+                </a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+        @endif
+
+        @if(auth()->user()->role == 'admin')
+
             <li class="nav-item {{ (request()->routeIs('language.index') || request()->routeIs('language.create'))  ? 'bg-white' : 'text' }}">
                 <a class="nav-link" href="{{route('language.index')}}"
                    aria-expanded="true" >
                     <i class="fas fa-language {{ (request()->routeIs('language.create') || request()->routeIs('language.index')) ? 'text-dark' : 'text-white' }}"></i>
                     <span class="{{ (request()->routeIs('language.create') || request()->routeIs('language.index'))  ? 'text-dark' : 'text-white' }}">Language</span>
+                </a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item {{ (request()->routeIs('user.index') || request()->routeIs('user.create') || request()->routeIs('user.edit') ) ? 'bg-white' : 'text' }}">
+                <a class="nav-link" href="{{route('user.index')}}"
+                   aria-expanded="true" >
+                    <i class="fas fa-stream {{ (request()->routeIs('user.index') || request()->routeIs('user.create') ||request()->routeIs('user.edit') ) ? 'text-dark' : 'text-white' }}"></i>
+                    <span class="{{ (request()->routeIs('user.index') || request()->routeIs('user.create') ||request()->routeIs('user.edit') ) ? 'text-dark' : 'text-white' }}">Users</span>
                 </a>
             </li>
             <!-- Divider -->
@@ -143,8 +162,6 @@
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
-
         @endif
 
         <li class="nav-item">
@@ -156,6 +173,8 @@
         </li>
         <!-- Divider -->
         <hr class="sidebar-divider mb-4">
+
+        @endif
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">

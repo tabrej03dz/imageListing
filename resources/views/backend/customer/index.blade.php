@@ -6,10 +6,10 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-1">
                         <h6 class="m-0 font-weight-bold text-primary">Customers</h6>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-2">
                         <form action="{{route('customer.search')}}" method="get"
                             class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                             @csrf
@@ -49,11 +49,12 @@
                         </li>
 
                     </div>
-                    <div class="col-md-4">
-                        <div class="d-flex justify-content-between">
+                    <div class="col-md-9">
+                        <div class="d-flex justify-content-end">
                             <a href="{{ route('customer.create') }}" class="btn btn-primary mr-2">Add Customer</a>
                             <a href="{{ route('customer.upload') }}" class="btn btn-primary mr-2">Customer Upload</a>
-                            <a href="{{ route('customer.export') }}" class="btn btn-primary">Customer Export</a>
+                            <a href="{{ route('customer.export') }}" class="btn btn-primary mr-2">Customer Export</a>
+                            <a href="{{route('packageAssignToAllCustomer')}}" class="btn btn-primary">Package Assign to all customer</a>
                         </div>
                     </div>
                 </div>

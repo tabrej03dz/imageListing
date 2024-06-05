@@ -46,7 +46,10 @@
 {{--                            <a href="{{ asset('storage/' . $image->media) }}" id="download-link" class="btn btn-primary w-100" download="{{ $image->title }}">Download</a>--}}
                             <a href="{{ route('userImageDownload', ['image' => $image])}}" id="download-link" class="btn btn-primary w-100">Download</a>
 
-                            <a href="https://api.whatsapp.com/send?text={{ rawurlencode(url('storage/'. $image->media)) }}" class="btn btn-success w-100 mt-3" target="_blank">Share on WhatsApp</a>
+                            @php
+                                $whatsappLink = "https://api.whatsapp.com/send?text=" . rawurlencode("Check out this image: " . url('storage/' . $image->media));
+                            @endphp
+                            <a href="{{$whatsappLink}}" class="btn btn-success w-100 mt-3" target="_blank">Share on WhatsApp</a>
                         </div>
                     </div>
                 </div>

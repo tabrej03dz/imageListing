@@ -24,7 +24,7 @@ class ImageController extends Controller
                 return Carbon::parse($image->date)->format('Y-m-d');
             });
         }else{
-            if(auth()->user()->role == 'admin'){
+            if(auth()->user()->role == 'admin' || auth()->user()->role == 'designer'){
                 $images = Image::all();
                 $imagesByDate = $images->groupBy(function ($image) {
                     // Extract the date from the created_at timestamp using Carbon
@@ -154,11 +154,12 @@ class ImageController extends Controller
                     $client = new Client(['verify' => false]);
                     $response = $client->request('GET', 'https://rvgwp.in/api/send?number='.$phoneNumber.'&type=media&message='.$message.'&media_url='.$imageUrl.'&filename='.$fileName.'&instance_id='.session('instance_id').'&access_token='.session('access_token'));
                     $message = $response->getBody()->getContents();
+                    $image->sent = '1';
                     if(json_decode($message)->status == 'error'){
 //                        return redirect()->back()->with('error', $message);
-                        continue;
+                        $image->sent = '0';
                     }
-                    $image->sent = '1';
+
                     $image->save();
                 }else{
                     continue;
@@ -215,4 +216,5 @@ class ImageController extends Controller
 
         return redirect()->back()->with('success', $enable->multiple_send_in_single_day == 1 ? 'enabled':'disabled'. ' successfully');
     }
+
 }

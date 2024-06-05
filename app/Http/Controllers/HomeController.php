@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Storage;
 class HomeController extends Controller
 {
     public function __construct(){
-//        $checkExpiredUsers = User::whereDate('expiry_date', '<', now())->get();
-//        foreach ($checkExpiredUsers as $user){
-//            $user->update(['status' => '0']);
-//        }
         $users = User::where('role', '!=', 'admin')->get();
         foreach ($users as $user){
             $expiryDate = $user->userPackages->max('expiry_date');
@@ -29,7 +25,7 @@ class HomeController extends Controller
     }
 
     public function dashboard(){
-        $customers = User::where('role', '!=', 'admin')->get();
+        $customers = User::where('role', 'user')->get();
         $images = Image::all();
         $categories = Category::all();
         $currentYear = Carbon::now()->year;
@@ -54,20 +50,5 @@ class HomeController extends Controller
             return view('welcome');
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
