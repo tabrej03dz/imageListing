@@ -15,6 +15,7 @@ use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\NoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -154,6 +155,15 @@ Route::middleware(['auth'])->group(function(){
         Route::prefix('payment')->name('payment.')->group(function(){
             Route::get('add/{customerPackage}', [PaymentController::class, 'paymentAdd'])->name('add');
             Route::post('make/{customerPackage}', [PaymentCOntroller::class, 'makePayment'])->name('make');
+        });
+
+        Route::prefix('note')->name('note.')->group(function(){
+            Route::get('/', [NoteController::class, 'index'])->name('index');
+            Route::get('create/{user}', [NoteController::class, 'create'])->name('create');
+            Route::post('store/{user}', [NoteController::class, 'store'])->name('store');
+            Route::get('edit/{note}', [NoteController::class, 'edit'])->name('edit');
+            Route::post('update/{note}', [NoteController::class, 'update'])->name('update');
+            Route::get('delete/{note}', [NoteController::class, 'delete'])->name('delete');
         });
 
         Route::get('visits', [DownloadTrackController::class, 'visits'])->name('visits');

@@ -8,7 +8,12 @@
                 <p class="text-warning">{{$customer->phone}}</p>
                 <div class="card">
                     <div class="card-head">
-                        <h4 class="text-left m-2">Packages</h4>
+                        <div class="flex d-flex justify-content-between">
+                            <h4 class="text-left m-2">Packages</h4>
+                            <a href="{{route('customer.assignToPackage', ['customer' => $customer])}}" type="button" class="btn btn-primary p-1 mt-3 mr-3" data-toggle="tooltip" title="Assign Package">
+                                create package
+                            </a>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -109,6 +114,44 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card mt-4">
+                    <div class="card-head">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="text-left m-2">Notes</h4>
+                            <a href="{{route('note.create', ['user' => $customer])}}" type="button" class="btn btn-primary p-1 mt-3 mr-3" data-toggle="tooltip" title="Assign Package">
+                                create note
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>S. No.</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($customer->notes as $note)
+                                    <tr>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$note->name}}</td>
+                                        <td>{!! $note->description !!}</td>
+                                        <td>
+                                            <a href="{{route('note.delete', ['note' => $note])}}" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

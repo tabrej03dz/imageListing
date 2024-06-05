@@ -70,7 +70,6 @@
                             <th>Name</th>
                             <th>Phone</th>
                             <th>Status</th>
-                            <th>Package</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -78,15 +77,18 @@
                         @foreach($customers as $customer)
                         <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td>{{$customer->name}}</td>
-                            <td>{{$customer->phone}}</td>
+
+                            <td><a href="{{route('customer.details', ['customer' => $customer])}}">
+                                {{$customer->name}}
+                            </a></td>
+
+                            <td><a href="{{route('customer.details', ['customer' => $customer])}}">
+                                    {{$customer->phone}}
+                            </a></td>
+
+                                <td></td>
                             <td>
                                 <a href="{{route('customer.status', ['customer' => $customer])}}" class="btn btn-{{$customer->status == '1' ? 'success':'danger'}} p-0 px-1">{{$customer->status == '1' ? 'Active':'Inactive'}}</a>
-                            </td>
-                            <td>
-                                    <a href="{{route('customer.assignToPackage', ['customer' => $customer])}}" type="button" class="btn btn-secondary" data-toggle="tooltip" title="Assign Package">
-                                        <i class="fas fa-plus"></i>
-                                    </a>
                             </td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Customer Actions">
