@@ -126,7 +126,7 @@
                         <div class="d-flex justify-content-between">
                             <h4 class="text-left m-2">Notes</h4>
                             <a href="{{route('note.create', ['user' => $customer])}}" type="button" class="btn btn-primary p-1 mt-3 mr-3" data-toggle="tooltip" title="Assign Package">
-                                create note
+                                Add Notes
                             </a>
                         </div>
                     </div>
