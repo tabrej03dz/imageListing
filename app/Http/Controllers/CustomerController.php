@@ -13,6 +13,7 @@ use App\Models\UserCategory;
 use App\Models\UserLanguage;
 use App\Models\UserPackage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 //use Maatwebsite\Excel\Excel;
 use Maatwebsite\Excel\Facades\Excel;
@@ -32,15 +33,22 @@ class CustomerController extends Controller
     public function create(){
         $languages = Language::all();
         $categories = Category::all();
-        return view('backend.customer.create', compact('languages', 'categories'));
+        $countries = DB::table('countries')->get('*');
+        return view('backend.customer.create', compact('languages', 'categories', 'countries'));
     }
 
     public function store(CustomerRequest $request){
+//        dd($request->all());
         $customer = User::create($request->all() +
             [
                 'password' => Hash::make('password'),
             ],
         );
+        $customer->country = $request->country;
+        $customer->state = $request->state;
+        $customer->city = $request->city;
+        $customer->save();
+
 
         if ($request->category_id != null){
             $categories = $request->category_id;
@@ -74,7 +82,7 @@ class CustomerController extends Controller
     }
 
     public function edit(User $customer){
-//        dd($customer);
+//        dd($customer->states->name);
         $categories = Category::all();
         $languages = Language::all();
         return view('backend.customer.edit', compact('customer', 'categories', 'languages'));

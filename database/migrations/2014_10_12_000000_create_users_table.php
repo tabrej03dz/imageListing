@@ -19,10 +19,11 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->string('phone1')->nullable();
             $table->string('business_name')->nullable();
-            $table->string('address')->nullable();
+            $table->string('country')->nullable();
             $table->string('state')->nullable();
             $table->string('city')->nullable();
             $table->string('pin')->nullable();
+            $table->string('address')->nullable();
             $table->string('gst_number')->nullable();
             $table->enum('role', ['admin', 'user', 'designer', 'calling'])->default('user');
             $table->enum('status', ['0', '1'])->default('1');

@@ -32,6 +32,9 @@ Route::get('welcome', function(){
     return view('welcome1');
 });
 
+Route::post('getState', [\App\Http\Controllers\AddressController::class, 'getState']);
+Route::post('getCity', [\App\Http\Controllers\AddressController::class, 'getCity']);
+
 Route::get('packageAssignToAllCustomer', [DashboardController::class, 'packageAssignToAllCustomer'])->name('packageAssignToAllCustomer');
 Route::middleware(['visit'])->group(function(){
     Route::get('/{number?}', [HomeController::class, 'index'])->where('number', '[0-9]+');

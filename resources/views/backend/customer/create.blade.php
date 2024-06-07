@@ -33,8 +33,21 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="state" class="form-label">State:</label>
-                    <input type="text" id="state" name="state" placeholder="State" class="form-control">
+                    <label for="country" class="form-label">Country:</label>
+                    <select id="country" name="country" class="form-select form-control">
+                        <option value="">Select Country</option>
+                        @foreach($countries as $country)
+                            <option value="{{$country->id}}">{{$country->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="city" class="form-label">City:</label>
+                    <select id="city" name="city" class="form-select form-control">
+                        <option value="">Select City</option>
+
+                    </select>
                 </div>
 
                 <div class="mb-3">
@@ -82,9 +95,12 @@
                     <input type="text" id="address" name="address" placeholder="Address" class="form-control">
                 </div>
 
+
                 <div class="mb-3">
-                    <label for="city" class="form-label">City:</label>
-                    <input type="text" id="city" name="city" placeholder="City" class="form-control">
+                    <label for="state" class="form-label">State:</label>
+                    <select id="state" name="state" class="form-select form-control">
+                        <option value="">Select State</option>
+                    </select>
                 </div>
 
                 <div class="mb-3">
@@ -103,44 +119,38 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{{--        <div class="mb-3">--}}
-{{--            <label for="start_date" class="form-label">Package Start Date:</label>--}}
-{{--            <input type="date" id="start_date" name="start_date" class="form-control">--}}
-{{--        </div>--}}
-
-{{--        <div class="mb-3">--}}
-{{--            <label for="expiry_date" class="form-label">Package Expiry Date:</label>--}}
-{{--            <input type="date" id="expiry_date" name="expiry_date" class="form-control">--}}
-{{--        </div>--}}
-
-
-
-
-
-
-
-
     </form>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+
+    <script>
+        jQuery(document).ready(function(){
+            jQuery('#country').change(function(){
+                let cid = jQuery(this).val();
+                jQuery.ajax({
+                    url: '/getState',
+                    type: 'post',
+                    data: 'cid='+cid+'&_token={{csrf_token()}}',
+                    success: function (result){
+                        jQuery('#state').html(result);
+                    }
+                });
+            });
+
+
+            jQuery('#state').change(function(){
+                let sid = jQuery(this).val();
+                jQuery.ajax({
+                    url: '/getCity',
+                    type: 'post',
+                    data: 'sid='+sid+'&_token={{csrf_token()}}',
+                    success: function (result){
+                        jQuery('#city').html(result);
+                    }
+                });
+            });
+        });
+    </script>
+
 @endsection
