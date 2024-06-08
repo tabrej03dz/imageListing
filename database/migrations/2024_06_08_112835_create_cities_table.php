@@ -23,8 +23,6 @@ return new class extends Migration
             $table->decimal('longitude', 11, 8)->nullable();
             $table->boolean('flag')->default(true);
             $table->string('wikiDataId')->nullable()->comment('Rapid API GeoDB Cities');
-
-            // Indexes
             $table->index('state_id');
             $table->index('country_id');
             $table->index('country_code');

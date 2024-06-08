@@ -37,17 +37,14 @@
                     <select id="country" name="country" class="form-select form-control">
                         <option value="">Select Country</option>
                         @foreach($countries as $country)
-                            <option value="{{$country->id}}">{{$country->name}}</option>
+                            <option value="{{$country->id}}" {{$country->name == 'India' ? 'selected' : ''}}>{{$country->name}}</option>
                         @endforeach
                     </select>
                 </div>
 
                 <div class="mb-3">
                     <label for="city" class="form-label">City:</label>
-                    <select id="city" name="city" class="form-select form-control">
-                        <option value="">Select City</option>
-
-                    </select>
+                    <input type="text" id="city" name="city" placeholder="City" class="form-control">
                 </div>
 
                 <div class="mb-3">
@@ -126,31 +123,48 @@
 
     <script>
         jQuery(document).ready(function(){
+            // Fetch states when the document is ready
+            fetchStates();
+
+            // Fetch states when the country dropdown value changes
             jQuery('#country').change(function(){
-                let cid = jQuery(this).val();
-                jQuery.ajax({
-                    url: '/getState',
-                    type: 'post',
-                    data: 'cid='+cid+'&_token={{csrf_token()}}',
-                    success: function (result){
-                        jQuery('#state').html(result);
-                    }
-                });
+                fetchStates();
             });
 
+            function fetchStates() {
+                let cid = jQuery('#country').val();
+                if (cid) {
+                    jQuery.ajax({
+                        url: '/getState',
+                        type: 'post',
+                        data: {
+                            cid: cid,
+                            _token: '{{csrf_token()}}'
+                        },
+                        success: function (result){
+                            jQuery('#state').html(result);
+                        }
+                    });
+                }
+            }
 
-            jQuery('#state').change(function(){
-                let sid = jQuery(this).val();
-                jQuery.ajax({
-                    url: '/getCity',
-                    type: 'post',
-                    data: 'sid='+sid+'&_token={{csrf_token()}}',
-                    success: function (result){
-                        jQuery('#city').html(result);
-                    }
-                });
-            });
+            // Uncomment to enable fetching cities when state changes
+            // jQuery('#state').change(function(){
+            //     let sid = jQuery(this).val();
+            //     jQuery.ajax({
+            //         url: '/getCity',
+            //         type: 'post',
+            //         data: {
+            //             sid: sid,
+            //             _token: '{{csrf_token()}}'
+            //         },
+            //         success: function (result){
+            //             jQuery('#city').html(result);
+            //         }
+            //     });
+            // });
         });
+
     </script>
 
 @endsection
