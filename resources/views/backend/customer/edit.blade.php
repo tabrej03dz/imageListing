@@ -27,22 +27,43 @@
         @csrf
 
         <div class="row">
+
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="name" class="form-label">Name:</label>
                     <input type="text" id="name" name="name" value="{{ $customer->name }}" class="form-control" placeholder="Name">
                 </div>
+            </div>
 
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" id="email" name="email" value="{{ $customer->email }}" class="form-control" placeholder="Email">
+                </div>
+            </div>
+
+            <div class="col-md-6">
                 <div class="mb-3">
                     <label for="phone" class="form-label">Phone 1:</label>
                     <input type="text" id="phone" name="phone" value="{{ $customer->phone }}" class="form-control" placeholder="Phone 1">
                 </div>
+            </div>
 
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="phone1" class="form-label">Phone 2:</label>
+                    <input type="text" id="phone1" name="phone1" value="{{ $customer->phone1 }}" class="form-control" placeholder="Phone 2">
+                </div>
+            </div>
+
+            <div class="col-md-6">
                 <div class="mb-3">
                     <label for="business_name" class="form-label">Business Name:</label>
                     <input type="text" id="business_name" name="business_name" value="{{ $customer->business_name }}" class="form-control" placeholder="Business Name">
                 </div>
+            </div>
 
+            <div class="col-md-6">
                 <div class="mb-3">
                     <label for="country" class="form-label">Country:</label>
                     <select id="country" name="country" class="form-select form-control">
@@ -52,12 +73,46 @@
                         @endforeach
                     </select>
                 </div>
+            </div>
 
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="state" class="form-label">State:</label>
+                    <select name="state" id="state" class="form-control">
+                        <option value="">Select State</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="city" class="form-label">City:</label>
+                    <input type="text" id="city" name="city" value="{{ $customer->city }}" class="form-control" placeholder="City">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address:</label>
+                    <input type="text" id="address" name="address" value="{{ $customer->address }}" class="form-control" placeholder="Address">
+                </div>
+            </div>
+
+            <div class="col-md-6">
                 <div class="mb-3">
                     <label for="pin" class="form-label">Pin Code:</label>
                     <input type="number" id="pin" name="pin" value="{{ $customer->pin }}" class="form-control" placeholder="Pin Code">
                 </div>
+            </div>
 
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="gst_number" class="form-label">GST Number:</label>
+                    <input type="text" id="gst_number" name="gst_number" value="{{ $customer->gst_number }}" class="form-control" placeholder="GST Number">
+                </div>
+            </div>
+
+            <div class="col-md-6">
                 <div class="mb-3">
                     <label for="status" class="form-label">Status:</label>
                     <select id="status" name="status" class="form-select form-control">
@@ -66,7 +121,9 @@
                         <option value="0" {{$customer->status == '0' ? 'selected' : ''}}>Inactive</option>
                     </select>
                 </div>
+            </div>
 
+            <div class="col-md-6">
                 <div class="mb-3">
                     <label for="" class="form-label">Category:</label>
                     @php
@@ -94,53 +151,9 @@
                         @endforeach
                     </select>
                 </div>
-
-
-
-                <div class="mb-3">
-                    <label for="confirm-password" class="form-label">Confirm Password:</label>
-                    <input type="password" id="confirm-password" name="confirm_password" class="form-control" placeholder="Confirm Password">
-                </div>
-
-                <div class="mb-3">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-
             </div>
 
             <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email:</label>
-                    <input type="email" id="email" name="email" value="{{ $customer->email }}" class="form-control" placeholder="Email">
-                </div>
-
-                <div class="mb-3">
-                    <label for="phone1" class="form-label">Phone 2:</label>
-                    <input type="text" id="phone1" name="phone1" value="{{ $customer->phone1 }}" class="form-control" placeholder="Phone 2 optional">
-                </div>
-
-                <div class="mb-3">
-                    <label for="address" class="form-label">Address:</label>
-                    <input type="text" id="address" name="address" value="{{ $customer->address }}" class="form-control" placeholder="Address">
-                </div>
-
-                <div class="mb-3">
-                    <label for="state" class="form-label">State:</label>
-                    <select name="state" id="state" class="form-control">
-                        <option value="">Select State</option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label for="city" class="form-label">City:</label>
-                    <input type="text" id="city" name="city" value="{{ $customer->city }}" class="form-control" placeholder="City">
-                </div>
-
-                <div class="mb-3">
-                    <label for="gst_number" class="form-label">GST Number:</label>
-                    <input type="text" id="gst_number" name="gst_number" value="{{ $customer->gst_number }}" class="form-control" placeholder="GST Number">
-                </div>
-
                 <div class="mb-3">
                     <label for="" class="form-label">Languages:</label>
 
@@ -169,12 +182,26 @@
                         @endforeach
                     </select>
                 </div>
+            </div>
 
+            <div class="col-md-6">
                 <div class="mb-3">
                     <label for="password" class="form-label">Password:</label>
                     <input type="password" id="password" name="password" class="form-control" placeholder="Password">
                 </div>
+            </div>
 
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="confirm-password" class="form-label">Confirm Password:</label>
+                    <input type="password" id="confirm-password" name="confirm_password" class="form-control" placeholder="Confirm Password">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
             </div>
         </div>
     </form>
