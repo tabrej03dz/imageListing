@@ -60,7 +60,7 @@
                         <div class="flex d-flex justify-content-between">
                             <h4 class="text-left m-2">Packages</h4>
                             <a href="{{route('customer.assignToPackage', ['customer' => $customer])}}" type="button" class="btn btn-primary p-1 mt-3 mr-3" data-toggle="tooltip" title="Assign Package">
-                                create package
+                                assign package
                             </a>
                         </div>
                     </div>

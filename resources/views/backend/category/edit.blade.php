@@ -10,7 +10,7 @@
         </div>
     @endif
 
-    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Create Category</h2>
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Edit Category</h2>
 
     <form action="{{ route('category.update', ['category' => $category]) }}" method="POST" >
         @csrf
@@ -32,7 +32,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="description" class="form-label">Email:</label>
+            <label for="description" class="form-label">Description:</label>
             <textarea name="description" id="category_description_editor" cols="30" rows="10" class="form-control">
                 {{$category->description}}
             </textarea>
