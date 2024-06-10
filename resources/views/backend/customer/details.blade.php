@@ -3,9 +3,58 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="profile-card text-center">
-                <img src="{{asset('assets/profile.png')}}" alt="Profile Picture" class="profile-pic" style="border-radius: 50%;">
-                <h2 class="mb-3 text-success">{{$customer->name}}</h2>
-                <p class="text-warning">{{$customer->phone}}</p>
+
+                <div class="row">
+                    <div class="col-md-6 p-5">
+                        <img src="{{asset('assets/profile.png')}}" alt="Profile Picture" class="profile-pic" style="border-radius: 50%;">
+                        <h2 class="mb-2 text-success">{{$customer->name}}</h2>
+                        <p class="mb-2 text-warning">{{$customer->phone}}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <td>Email</td>
+                                <td>{{$customer->email}}</td>
+                            </tr>
+                            <tr>
+                                <td>Phone 2</td>
+                                <td>{{$customer->phone1}}</td>
+                            </tr>
+                            <tr>
+                                <td>Business Name</td>
+                                <td>{{$customer->business_name}}</td>
+                            </tr>
+                            <tr>
+                                <td>Country </td>
+                                <td>{{$customer->countri->name}}</td>
+                            </tr>
+                            <tr>
+                                <td>State</td>
+                                <td>{{$customer->states->name}}</td>
+                            </tr>
+                            <tr>
+                                <td>City</td>
+                                <td>{{$customer->city}}</td>
+                            </tr>
+                            <tr>
+                                <td>Pin Code</td>
+                                <td>{{$customer->pin}}</td>
+                            </tr>
+                            <tr>
+                                <td>Address</td>
+                                <td>{{$customer->address}}</td>
+                            </tr>
+                            <tr>
+                                <td>GST Number</td>
+                                <td>{{$customer->gst_number}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
                 <div class="card">
                     <div class="card-head">
                         <div class="flex d-flex justify-content-between">
@@ -20,7 +69,7 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>S. No.</th>
+                                    <th>#</th>
                                     <th>Name</th>
                                     <th>Duration (days)</th>
                                     <th>Price</th>
@@ -48,8 +97,10 @@
                                         <td class="bg-{{$package->package->price == $paid ? 'success' : 'warning'}}">{{$paid}}</td>
                                         <td class="bg-{{$package->package->price == $paid ? 'warning' : 'danger'}}">{{$package->package->price - $paid}}</td>
                                         <td>
-                                            <a href="{{route('package.ofCustomer.delete', ['customerPackage' => $package])}}" class="btn btn-danger">Delete</a>
-                                            <a href="{{route('payment.add', ['customerPackage' => $package])}}" class="btn btn-success">Add Payment</a>
+                                            <div class="btn-group">
+                                                <a href="{{route('package.ofCustomer.delete', ['customerPackage' => $package])}}" class="btn btn-danger">Delete</a>
+                                                <a href="{{route('payment.add', ['customerPackage' => $package])}}" class="btn btn-success">Add Payment</a>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -59,6 +110,8 @@
                         </div>
                     </div>
                 </div>
+
+
                 <div class="card mt-4">
                     <div class="card-head">
                         <h4 class="text-left m-2">Categories</h4>
