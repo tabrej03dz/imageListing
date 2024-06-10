@@ -24,7 +24,7 @@ class CustomerController extends Controller
 {
     public function index(Request $request){
         if($request->search){
-            $customers = User::where('role', 'user')->where('phone','like', '%'.$request->search.'%')->orWhere('name', 'like', '%'.$request->search.'%')->paginate(5);
+            $customers = User::where('role', 'user')->where('phone','like', '%'.$request->search.'%')->orWhere('name', 'like', '%'.$request->search.'%')->orWhere('email', 'like', '%'.$request->search.'%')->orWhere('phone1', 'like', '%'.$request->search.'%')->orWhere('business_name', 'like', '%'.$request->search.'%')->orWhere('city', 'like', '%'.$request->search.'%')->orWhere('pin', 'like', '%'.$request->search.'%')->orWhere('address', 'like', '%'.$request->search.'%')->orWhere('gst_number', 'like', '%'.$request->search.'%')->paginate(100);
         }else{
             $customers = User::where('role', 'user')->paginate(100);
         }
