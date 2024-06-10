@@ -6,6 +6,7 @@ use App\Exports\CustomerExport;
 use App\Http\Requests\CustomerRequest;
 use App\Imports\CustomerImport;
 use App\Models\Category;
+use App\Models\Country;
 use App\Models\Language;
 use App\Models\Package;
 use App\Models\User;
@@ -44,9 +45,14 @@ class CustomerController extends Controller
                 'password' => Hash::make('password'),
             ],
         );
+        $customer->phone1 = $request->phone1;
+        $customer->business_name = $request->business_name;
         $customer->country = $request->country;
         $customer->state = $request->state;
         $customer->city = $request->city;
+        $customer->pin = $request->pin;
+        $customer->address = $request->address;
+        $customer->gst_number = $request->gst_number;
         $customer->save();
 
 
@@ -85,13 +91,25 @@ class CustomerController extends Controller
 //        dd($customer->states->name);
         $categories = Category::all();
         $languages = Language::all();
-        return view('backend.customer.edit', compact('customer', 'categories', 'languages'));
+        $countries = Country::all();
+        return view('backend.customer.edit', compact('customer', 'categories', 'languages', 'countries'));
     }
 
     public function update(CustomerRequest $request, User $customer){
 
         $customer->update($request->except(['password', 'languages']));
 
+        $customer->country = $request->country;
+        if ($request->state){
+            $customer->sate = $request->state;
+        }
+        $customer->phone1 = $request->phone1;
+        $customer->business_name = $request->business_name;
+        $customer->city = $request->city;
+        $customer->pin = $request->pin;
+        $customer->address = $request->address;
+        $customer->gst_number = $request->gst_number;
+        $customer->save();
 
         if ($request->language_id != null){
             $languages = $request->language_id;

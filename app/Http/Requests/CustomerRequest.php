@@ -28,6 +28,13 @@ class CustomerRequest extends FormRequest
             'start_date' => 'date',
             'expiry_date' => 'date',
             'status' => 'required',
+            'business_name' => 'required',
+            'country' => '',
+            'state' => '',
+            'city' => '',
+            'pin' => '',
+            'address' => '',
+            'gst_number' => '',
             'password' => 'string|min:8|nullable',
             'confirm_password' => 'same:password|nullable',
 

@@ -85,8 +85,6 @@
                             <td><a href="{{route('customer.details', ['customer' => $customer])}}">
                                     {{$customer->phone}}
                             </a></td>
-
-                                <td></td>
                             <td>
                                 <a href="{{route('customer.status', ['customer' => $customer])}}" class="btn btn-{{$customer->status == '1' ? 'success':'danger'}} p-0 px-1">{{$customer->status == '1' ? 'Active':'Inactive'}}</a>
                             </td>
