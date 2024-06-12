@@ -142,6 +142,17 @@
             <hr class="sidebar-divider my-0">
 
 
+                <li class="nav-item {{ (request()->routeIs('information.index') || request()->routeIs('information.create') || request()->routeIs('information.edit') ) ? 'bg-white' : 'text' }}">
+                    <a class="nav-link" href="{{route('information.index')}}"
+                       aria-expanded="true" >
+                        <i class="fas fa-stream {{ (request()->routeIs('information.index') || request()->routeIs('information.create') ||request()->routeIs('information.edit') ) ? 'text-dark' : 'text-white' }}"></i>
+                        <span class="{{ (request()->routeIs('information.index') || request()->routeIs('information.create') ||request()->routeIs('information.edit') ) ? 'text-dark' : 'text-white' }}">Information</span>
+                    </a>
+                </li>
+                <!-- Divider -->
+                <hr class="sidebar-divider my-0">
+
+
 
             <li class="nav-item {{ request()->routeIs('downloads.view')  ? 'bg-white' : 'text' }}">
                 <a class="nav-link" href="{{route('downloads.view')}}"

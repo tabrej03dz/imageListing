@@ -85,4 +85,27 @@ class PackageController extends Controller
         $customerPackage->delete();
         return redirect()->back()->with('success', 'Customer Package deleted successfully');
     }
+
+    public function customerPackageEdit(UserPackage $customerPackage){
+        $packages = Package::all();
+        return view('backend.package.customerPackageEdit', compact('packages', 'customerPackage'));
+    }
+
+    public function customerPackageUpdate(Request $request, UserPackage $customerPackage){
+        $customerPackage->update([
+            'start_date' => $request->start_date ?? Carbon::today(),
+            'expiry_date' => $request->start_date ? Carbon::createFromFormat('Y-m-d', $request->input('start_date'))->addDays($customerPackage->package->duration)->toDateString() : Carbon::today()->addDays($customerPackage->package->duration)->toDateString(),
+        ]);
+
+        return redirect('customer/details/'.$customerPackage->user_id)->with('success', 'Updated successfully');
+    }
+
+    public function customerPackageStatus(UserPackage $customerPackage){
+        if($customerPackage->status == '1'){
+            $customerPackage->update(['status' => '0']);
+        }else{
+            $customerPackage->update(['status' => '1']);
+        }
+        return back()->with('success', 'Status Changed successfully');
+    }
 }

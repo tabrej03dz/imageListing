@@ -16,6 +16,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\InformationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +89,9 @@ Route::middleware(['auth'])->group(function(){
             Route::post('assignToCustomer/{package}', [PackageController::class, 'packageAssignToCustomer'])->name('assignToCustomer');
 
             Route::get('ofCustomer/delete/{customerPackage}', [PackageController::class, 'customerPackageDelete'])->name('ofCustomer.delete');
+            Route::get('ofCustomer/edit/{customerPackage}', [PackageController::class, 'customerPackageEdit'])->name('ofCustomer.edit');
+            Route::post('ofCustomer/update/{customerPackage}', [PackageController::class, 'customerPackageUpdate'])->name('ofCustomer.update');
+            Route::get('ofCustomer/status/{customerPackage}', [PackageController::class, 'customerPackageStatus'])->name('ofCustomer.status');
 
         });
 
@@ -167,6 +171,16 @@ Route::middleware(['auth'])->group(function(){
             Route::get('edit/{note}', [NoteController::class, 'edit'])->name('edit');
             Route::post('update/{note}', [NoteController::class, 'update'])->name('update');
             Route::get('delete/{note}', [NoteController::class, 'delete'])->name('delete');
+        });
+
+        Route::prefix('information')->name('information.')->group(function(){
+           Route::get('/', [InformationController::class, 'index'])->name('index');
+           Route::get('create', [InformationController::class, 'create'])->name('create');
+           Route::post('store', [InformationController::class, 'store'])->name('store');
+           Route::get('edit/{information}', [InformationController::class, 'edit'])->name('edit');
+           Route::post('update/{information}', [InformationController::class, 'update'])->name('update');
+           Route::get('delete/{information}', [InformationController::class, 'delete'])->name('delete');
+           Route::post('send/{information}', [InformationController::class, 'informationSendToUser'])->name('send');
         });
 
         Route::get('visits', [DownloadTrackController::class, 'visits'])->name('visits');

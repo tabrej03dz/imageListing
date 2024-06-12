@@ -27,11 +27,11 @@
                             </tr>
                             <tr>
                                 <td>Country </td>
-                                <td>{{$customer->countri->name}}</td>
+                                <td>{{$customer->countri?->name}}</td>
                             </tr>
                             <tr>
                                 <td>State</td>
-                                <td>{{$customer->states->name}}</td>
+                                <td>{{$customer->states?->name}}</td>
                             </tr>
                             <tr>
                                 <td>City</td>
@@ -69,9 +69,8 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>#</th>
                                     <th>Name</th>
-                                    <th>Duration (days)</th>
+{{--                                    <th>Duration (days)</th>--}}
                                     <th>Price</th>
                                     <th>Start Date</th>
                                     <th>Expiry Date</th>
@@ -84,9 +83,8 @@
                                 <tbody>
                                 @foreach($customer->userPackages as $package)
                                     <tr>
-                                        <td>{{$loop->iteration}}</td>
                                         <td>{{$package->package->name}}</td>
-                                        <td>{{$package->package->duration}}</td>
+{{--                                        <td>{{$package->package->duration}}</td>--}}
                                         <td>{{$package->package->price}}</td>
                                         <td>{{$package->start_date}}</td>
                                         <td>{{$package->expiry_date}}</td>
@@ -98,6 +96,9 @@
                                         <td class="bg-{{$package->package->price == $paid ? 'warning' : 'danger'}}">{{$package->package->price - $paid}}</td>
                                         <td>
                                             <div class="btn-group">
+{{--                                                @dd($package->status)--}}
+                                                <a href="{{route('package.ofCustomer.status', ['customerPackage' => $package])}}" class="btn btn-{{$package->status == '1' ? 'info' : 'dark'}}">{{$package->status == '1' ? 'Active' : 'Inactive'}}</a>
+                                                <a href="{{route('package.ofCustomer.edit', ['customerPackage' => $package])}}" class="btn btn-primary">Edit</a>
                                                 <a href="{{route('package.ofCustomer.delete', ['customerPackage' => $package])}}" class="btn btn-danger">Delete</a>
                                                 <a href="{{route('payment.add', ['customerPackage' => $package])}}" class="btn btn-success">Add Payment</a>
                                             </div>

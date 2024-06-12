@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_packages', function (Blueprint $table) {
+        Schema::create('user_information', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('package_id')->constrained('packages')->cascadeOnDelete();
-            $table->date('start_date');
-            $table->date('expiry_date');
-            $table->enum('status', ['0','1'])->default('1');
+            $table->foreignId('information_id')->constrained('information')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_packages');
+        Schema::dropIfExists('user_information');
     }
 };
