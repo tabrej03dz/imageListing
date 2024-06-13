@@ -202,7 +202,7 @@
                                         <td>{{$note->name}}</td>
                                         <td>{!! $note->description !!}</td>
                                         <td>
-                                            <a href="{{route('note.delete', ['note' => $note])}}" class="btn btn-danger">Delete</a>
+                                            <a href="{{route('note.delete', ['note' => $note])}}" onclick="return confirm('Are you sure to delete ?')" class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach

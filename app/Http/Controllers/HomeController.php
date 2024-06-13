@@ -30,11 +30,19 @@ class HomeController extends Controller
         $categories = Category::all();
         $currentYear = Carbon::now()->year;
         $visitCounts = Visit::whereDate('created_at', Carbon::today())->count();
-        $customerData = User::selectRaw('MONTH(created_at) as month, DATE_FORMAT(created_at, "%M") as month_name, COUNT(*) as count')
+//        $customerData = User::selectRaw('MONTH(created_at) as month, DATE_FORMAT(created_at, "%M") as month_name, COUNT(*) as count')
+//            ->whereYear('created_at', $currentYear)
+//            ->groupBy('month', 'month_name')
+//            ->orderBy('month')
+//            ->get();
+
+        $customerData = User::selectRaw('DAY(created_at) as day, DATE_FORMAT(created_at, "%d %M %Y") as day_name, COUNT(*) as count')
             ->whereYear('created_at', $currentYear)
-            ->groupBy('month', 'month_name')
-            ->orderBy('month')
+            ->groupBy('day', 'day_name')
+            ->orderBy('day')
             ->get();
+
+//        dd($customerData);
         return view('backend.dashboard', compact('customers', 'images', 'customerData', 'categories', 'visitCounts'));
     }
 

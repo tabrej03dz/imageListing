@@ -17,6 +17,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\InformationController;
+use App\Http\Controllers\RecycleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -182,6 +183,23 @@ Route::middleware(['auth'])->group(function(){
            Route::get('delete/{information}', [InformationController::class, 'delete'])->name('delete');
            Route::post('send/{information}', [InformationController::class, 'informationSendToUser'])->name('send');
         });
+
+        Route::prefix('recycle')->name('recycle.')->group(function(){
+            Route::get('/', [RecycleController::class, 'index'])->name('index');
+            Route::get('customerRestore/{id}', [RecycleController::class, 'customerRestore'])->name('customerRestore');
+            Route::get('customerDestroy/{id}', [RecycleController::class, 'customerDestroy'])->name('customerDestroy');
+            Route::get('categoryRestore/{id}', [RecycleController::class, 'categoryRestore'])->name('categoryRestore');
+            Route::get('categoryDelete/{id}', [RecycleController::class, 'categoryDelete'])->name('categoryDelete');
+            Route::get('languageRestore/{id}', [RecycleController::class, 'languageRestore'])->name('languageRestore');
+            Route::get('languageDelete/{id}', [RecycleController::class, 'languageDelete'])->name('languageDelete');
+            Route::get('packageDelete/{id}', [RecycleController::class, 'packageDelete'])->name('packageDelete');
+            Route::get('packageRestore/{id}', [RecycleController::class, 'packageRestore'])->name('packageRestore');
+            Route::get('noteDelete/{id}', [RecycleController::class, 'noteDelete'])->name('noteDelete');
+            Route::get('noteRestore/{id}', [RecycleController::class, 'noteRestore'])->name('noteRestore');
+
+        });
+
+
 
         Route::get('visits', [DownloadTrackController::class, 'visits'])->name('visits');
         Route::get('clearVisits', [DownloadTrackController::class, 'clearVisits'])->name('clearVisits');

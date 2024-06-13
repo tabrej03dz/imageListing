@@ -57,7 +57,7 @@
                                             <a href="{{ route('information.edit', ['information' => $information]) }}" class="btn btn-success">
                                                 Edit
                                             </a>
-                                            <a href="{{ route('information.delete', ['information' => $information]) }}" class="btn btn-danger">
+                                            <a href="{{ route('information.delete', ['information' => $information]) }}" onclick="return confirm('Are you sure to delete ?')" class="btn btn-danger">
                                                 Delete
                                             </a>
                                         </div>

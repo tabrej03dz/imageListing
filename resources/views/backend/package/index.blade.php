@@ -51,7 +51,7 @@
                                         <a href="{{ route('package.edit', ['package' => $package]) }}" class="btn btn-success">
                                             Edit
                                         </a>
-                                        <a href="{{ route('package.destroy', ['package' => $package]) }}" class="btn btn-danger">
+                                        <a href="{{ route('package.destroy', ['package' => $package]) }}" onclick="return confirm('Are you sure to delete')" class="btn btn-danger">
                                             Delete
                                         </a>
                                     </div>

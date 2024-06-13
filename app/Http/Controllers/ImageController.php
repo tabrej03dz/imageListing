@@ -147,15 +147,16 @@ class ImageController extends Controller
                 if ($image->user->status == '1'){
                     $phoneNumber = substr($image->user->phone, 0, 12);
                     $imageUrl = asset('storage/'. $image->media);
-                    //$imageUrl = 'https://realvictorygroups.xyz/storage/images/deipEEisit9ziAmq7SnsdmLSVg9upJBXwlCcs7Pz.jpg';
+                    $imageUrl = 'https://realvictorygroups.xyz/storage/images/yd9MT1LoVgkvxdgmPaABzuoB1zlvWzKuVdN5h996.jpg';
                     $message = str_replace(' ', '+', $image->title);
                     $fileName = str_replace(' ', '+', $image->title);
 
                     $client = new Client(['verify' => false]);
                     $response = $client->request('GET', 'https://rvgwp.in/api/send?number='.$phoneNumber.'&type=media&message='.$message.'&media_url='.$imageUrl.'&filename='.$fileName.'&instance_id='.session('instance_id').'&access_token='.session('access_token'));
-                    $message = $response->getBody()->getContents();
+                    $message = json_decode($response->getBody()->getContents());
                     $image->sent = '1';
-                    if(json_decode($message)->status == 'error'){
+                    if($message->status == 'error'){
+
 //                        return redirect()->back()->with('error', $message);
                         $image->sent = '0';
                     }

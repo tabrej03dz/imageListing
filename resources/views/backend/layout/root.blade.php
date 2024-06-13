@@ -173,6 +173,16 @@
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
+
+            <li class="nav-item {{ request()->routeIs('recycle.index')  ? 'bg-white' : 'text' }}">
+                <a class="nav-link" href="{{route('recycle.index')}}"
+                   aria-expanded="true" >
+                    <i class="fas fa-signal {{ request()->routeIs('recycle.index') ? 'text-dark' : 'text-white' }}"></i>
+                    <span class="{{ request()->routeIs('recycle.index')  ? 'text-dark' : 'text-white' }}">Recycle</span>
+                </a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
         @endif
 
         <li class="nav-item">

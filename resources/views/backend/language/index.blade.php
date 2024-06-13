@@ -33,7 +33,7 @@
                                 <td class="align-middle">{{$language->name}}</td>
                                 <td class="align-middle">{{$language->code}}</td>
                                 <td class="align-middle">
-                                    <a id="bulkSendBtn" href="{{route('language.destroy', ['language' => $language])}}" class="btn btn-danger">Delete</a>
+                                    <a id="bulkSendBtn" href="{{route('language.destroy', ['language' => $language])}}" onclick="return confirm('Are you sure to delete ?')" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
                         @endforeach

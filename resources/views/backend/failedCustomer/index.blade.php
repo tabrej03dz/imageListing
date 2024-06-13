@@ -37,7 +37,7 @@
                                             Add
                                         </a>
 
-                                        <a href="{{ route('customer.failed.remove', ['customer' => $customer]) }}" class="btn btn-danger">
+                                        <a href="{{ route('customer.failed.remove', ['customer' => $customer]) }}" onclick="return confirm('Are you sure to delete')" class="btn btn-danger">
                                             Remove
                                         </a>
                                     </div>

@@ -96,7 +96,7 @@
                                     <a href="{{ route('customer.images', ['customer' => $customer]) }}" class="btn btn-primary">
                                         Images
                                     </a>
-                                    <a href="{{ route('customer.destroy', ['customer' => $customer]) }}" class="btn btn-danger">
+                                    <a href="{{ route('customer.destroy', ['customer' => $customer]) }}" onclick="return confirm('Are you sure to delete ?')" class="btn btn-danger">
                                         Delete
                                     </a>
                                     <a href="{{route('customer.details', ['customer' => $customer])}}" class="btn btn-warning">Details</a>

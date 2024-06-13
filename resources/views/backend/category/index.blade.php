@@ -40,7 +40,7 @@
                                         <a href="{{ route('category.edit', ['category' => $category]) }}" class="btn btn-success">
                                             Edit
                                         </a>
-                                        <a href="{{ route('category.destroy', ['category' => $category]) }}" class="btn btn-danger">
+                                        <a href="{{ route('category.destroy', ['category' => $category]) }}" onclick="return confirm('Are you sure to delete ?')" class="btn btn-danger">
                                             Delete
                                         </a>
                                     </div>

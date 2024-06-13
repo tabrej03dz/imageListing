@@ -231,7 +231,6 @@
                             </div>
                             <div class="card-body">
                                 @foreach($categories as $category)
-
                                     @php
                                         $categoryCount = \App\Models\UserCategory::where('category_id', $category->id)->count();
                                     $percentage = ($categoryCount * 100)/ $customers->count();
@@ -242,26 +241,21 @@
                                         <div class="progress-bar " role="progressbar" style="width: {{$percentage}}%; background-color: {{ '#'.\App\Http\Controllers\DashboardController::generateRandomHex()}};"
                                              aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-
                                 @endforeach
-
                             </div>
                         </div>
-
                     </div>
-
                 </div>
 
                 @php
-                    $months = [];
+                    $days = [];
                     $counts = [];
                         //dd($customerData);
                     foreach ($customerData as $data){
-                        array_push($months, $data->month_name);
+                        array_push($days, $data->day_name);
                         array_push($counts, $data->count);
                     }
-
-                    $monthJSON = json_encode($months);
+                    $daysJSON = json_encode($days);
                     $countJSON = json_encode($counts);
 
                 @endphp
@@ -277,7 +271,7 @@
                 <!-- Area Chart -->
                 <script>
 
-                    var months = {!! $monthJSON !!};
+                    var days = {!! $daysJSON !!};
 
                     var counts = {!! $countJSON !!};
 
@@ -286,7 +280,7 @@
                     var myLineChart = new Chart(ctx, {
                         type: 'line',
                         data: {
-                            labels: months,
+                            labels: days,
                             datasets: [{
                                 label: "Customer",
                                 lineTension: 0.3,
