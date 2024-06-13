@@ -220,10 +220,8 @@
 
                 <!-- Content Row -->
                 <div class="row">
-
                     <!-- Content Column -->
                     <div class="col-12 mb-4">
-
                         <!-- Project Card Example -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
@@ -242,6 +240,53 @@
                                              aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Row -->
+                <div class="row">
+                    <!-- Content Column -->
+                    <div class="col-12 mb-4">
+                        <!-- Project Card Example -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Expiring Packages</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Package</th>
+                                            <th>Name</th>
+                                            <th>Phone</th>
+                                            <th>Expiry Date</th>
+                                            <th>Expire In</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($expiringPackages as $package)
+                                                <tr>
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>{{$package->package->name}}</td>
+                                                    <td>{{$package->customer?->name}}</td>
+                                                    <td>{{$package->customer?->phone}}</td>
+                                                    <td>{{$package->expiry_date}}</td>
+                                                    <td>{{ ($package->expiry_date < \Carbon\Carbon::today()) ? 'Expired' : \Carbon\Carbon::createFromFormat('Y-m-d', $package->expiry_date)->diffInDays(\Carbon\Carbon::today()) }}</td>
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <a href="{{route('package.renew', ['package' => $package])}}" class="btn btn-primary">Renew</a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

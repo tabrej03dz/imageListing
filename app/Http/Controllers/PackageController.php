@@ -108,4 +108,14 @@ class PackageController extends Controller
         }
         return back()->with('success', 'Status Changed successfully');
     }
+
+    public function renewPackage(UserPackage $package){
+        if($package->expiry_date < Carbon::today()){
+            $expiry_date = Carbon::today()->addDays($package->package->duration)->toDateString();
+        }else{
+            $expiry_date = Carbon::createFromFormat('Y-m-d', $package->expiry_date)->addDays($package->package->duration + 1)->toDateString();
+        }
+        $package->update(['expiry_date' => $expiry_date]);
+        return back()->with('success', 'package renewed successfully');
+    }
 }

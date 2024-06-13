@@ -22,28 +22,25 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($customers as $customer)
-                                    <tr>
-                                        <td>{{$loop->iteration}}</td>
-                                        <td>{{$customer->name}}</td>
-                                        <td>{{$customer->phone}}</td>
-                                        <td>{{$customer->email}}</td>
-                                        <td>
-                                            <div class="btn-group">
-                                                {{--                                                @dd($package->status)--}}
-                                                <a href="{{route('recycle.customerRestore', ['id' => $customer->id])}}" onclick="return confirm('Do you really want to delete it permanently')" class="btn btn-success">Restore</a>
-                                                <a href="{{route('recycle.customerDestroy', ['id' => $customer->id])}}" class="btn btn-danger">Delete</a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-
+                                    @foreach($customers as $customer)
+                                        <tr>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$customer->name}}</td>
+                                            <td>{{$customer->phone}}</td>
+                                            <td>{{$customer->email}}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a href="{{route('recycle.customerRestore', ['id' => $customer->id])}}" class="btn btn-success">Restore</a>
+                                                    <a href="{{route('recycle.customerDestroy', ['id' => $customer->id])}}" onclick="return confirm('Do you really want to delete it permanently')" class="btn btn-danger">Delete</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-
 
                 <div class="card mt-4">
                     <div class="card-head">

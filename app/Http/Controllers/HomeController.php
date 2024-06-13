@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\DownloadTrack;
 use App\Models\Image;
 use App\Models\User;
+use App\Models\UserPackage;
 use App\Models\Visit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -42,8 +43,11 @@ class HomeController extends Controller
             ->orderBy('day')
             ->get();
 
+        $expiringPackages = UserPackage::where('expiry_date', '<', Carbon::today()->addDays(20))->get();
+//        dd($expiringPackage);
+
 //        dd($customerData);
-        return view('backend.dashboard', compact('customers', 'images', 'customerData', 'categories', 'visitCounts'));
+        return view('backend.dashboard', compact('customers', 'images', 'customerData', 'categories', 'visitCounts', 'expiringPackages'));
     }
 
     public function index($number = null){

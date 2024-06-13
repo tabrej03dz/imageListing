@@ -93,6 +93,7 @@ Route::middleware(['auth'])->group(function(){
             Route::get('ofCustomer/edit/{customerPackage}', [PackageController::class, 'customerPackageEdit'])->name('ofCustomer.edit');
             Route::post('ofCustomer/update/{customerPackage}', [PackageController::class, 'customerPackageUpdate'])->name('ofCustomer.update');
             Route::get('ofCustomer/status/{customerPackage}', [PackageController::class, 'customerPackageStatus'])->name('ofCustomer.status');
+            Route::get('renew/{package}', [PackageController::class, 'renewPackage'])->name('renew');
 
         });
 
