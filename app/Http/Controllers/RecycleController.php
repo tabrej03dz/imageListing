@@ -80,4 +80,68 @@ class RecycleController extends Controller
         $note->restore();
         return back()->with('success', 'Note restored successfully');
     }
+
+    public function clearAllCustomer(){
+        $customers = User::onlyTrashed()->get();
+        foreach($customers as $customer){
+            $customer->forceDelete();
+        }
+        return back()->with('success', 'Clear all customers successfully');
+    }
+
+    public function restoreAllCustomer(){
+        $customers = User::onlyTrashed()->get();
+        foreach($customers as $customer){
+            $customer->restore();
+        }
+
+    }
+
+    public function clearAllCategories(){
+        $categories = Category::onlyTrashed()->get();
+        foreach ($categories as $category){
+            $category->forceDelete();
+        }
+        return back()->with('success', 'Clear All Categories successfully');
+    }
+
+    public function restoreAllCategories(){
+        $categories = Category::onlyTrashed()->get();
+        foreach($categories as $category){
+            $category->restore();
+        }
+        return back()->with('success', 'Restore All Categories successfully');
+    }
+
+    public function restoreAllLanguages(){
+        $languages = Language::onlyTrashed()->get();
+        foreach ($languages as $language){
+            $language->restore();
+        }
+        return back()->with('success', 'Restore languages successfully');
+    }
+
+    public function deleteAllLanguages(){
+        $languages = Language::onlyTrashed()->get();
+        foreach($languages as $language){
+            $language->forceDelete();
+        }
+        return back()->with('success', 'Clear all languages successfully');
+    }
+
+    public function restoreAllPackages(){
+        $packages = Package::onlyTrashed()->get();
+        foreach ($packages as $package){
+            $package->restore();
+        }
+        return back()->with('success', 'Restore all packages successfully');
+    }
+
+    public function deleteAllPackages(){
+        $packages = Package::onlyTrashed()->get();
+        foreach ($packages as $package){
+            $package->forceDelete();
+        }
+        return back()->with('success', 'Clear all packages successfully');
+    }
 }

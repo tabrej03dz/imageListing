@@ -197,7 +197,14 @@ Route::middleware(['auth'])->group(function(){
             Route::get('packageRestore/{id}', [RecycleController::class, 'packageRestore'])->name('packageRestore');
             Route::get('noteDelete/{id}', [RecycleController::class, 'noteDelete'])->name('noteDelete');
             Route::get('noteRestore/{id}', [RecycleController::class, 'noteRestore'])->name('noteRestore');
-
+            Route::get('deleteAllCustomer', [RecycleController::class, 'clearAllCustomer'])->name('deleteAllCustomer');
+            Route::get('restoreAllCustomer', [RecycleController::class, 'restoreAllCustomer'])->name('restoreAllCustomer');
+            Route::get('deleteAllCategories', [RecycleController::class, 'clearAllCategories'])->name('deleteAllCategories');
+            Route::get('restoreAllCategories', [RecycleController::class, 'restoreAllCategories'])->name('restoreAllCategories');
+            Route::get('restoreAllLanguages', [RecycleController::class, 'restoreAllLanguages'])->name('restoreAllLanguages');
+            Route::get('deleteAllLanguages', [RecycleController::class, 'deleteAllLanguages'])->name('deleteAllLanguages');
+            Route::get('restoreAllPackages', [RecycleController::class, 'restoreAllPackages'])->name('restoreAllPackages');
+            Route::get('deleteAllPackages', [RecycleController::class, 'deleteAllPackages'])->name('deleteAllPackages');
         });
 
 

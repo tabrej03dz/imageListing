@@ -5,8 +5,16 @@
             <div class="profile-card text-center">
                 <div class="card">
                     <div class="card-head">
-                        <div class="flex d-flex justify-content-between">
-                            <h4 class="text-left m-2">Customers</h4>
+                        <div class="row justify-content-between mt-2">
+                            <div class="col-md-2">
+                                <h4 class="text-left m-2">Customers</h4>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="btn-group">
+                                    <a href="{{route('recycle.restoreAllCustomer')}}" class="btn btn-success">Restore All Customer</a>
+                                    <a href="{{route('recycle.deleteAllCustomer')}}" onclick="return confirm('danger! This Action is irreversible" class="btn btn-danger">Clear All Customer</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body">
@@ -44,7 +52,17 @@
 
                 <div class="card mt-4">
                     <div class="card-head">
-                        <h4 class="text-left m-2">Categories</h4>
+                        <div class="row justify-content-between mt-2">
+                            <div class="col-md-2">
+                                <h4 class="text-left m-2">Categories</h4>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="btn-group">
+                                    <a href="{{route('recycle.restoreAllCategories')}}" class="btn btn-success">Restore Categories</a>
+                                    <a href="{{route('recycle.deleteAllCategories')}}" onclick="return confirm('Danger?: This action is irreversible')" class="btn btn-danger">Clear All Categories</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -57,16 +75,16 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($categories as $category)
-                                    <tr>
-                                        <td>{{$loop->iteration}}</td>
-                                        <td>{{$category->name}}</td>
-                                        <td>
-                                            <a href="{{route('recycle.categoryRestore', ['id' => $category->id])}}" class="btn btn-success">Restore</a>
-                                            <a href="{{route('recycle.categoryDelete', ['id' => $category->id])}}" onclick="return confirm('Do you really want to delete it permanently')" class="btn btn-danger">Delete</a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                    @foreach($categories as $category)
+                                        <tr>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$category->name}}</td>
+                                            <td>
+                                                <a href="{{route('recycle.categoryRestore', ['id' => $category->id])}}" class="btn btn-success">Restore</a>
+                                                <a href="{{route('recycle.categoryDelete', ['id' => $category->id])}}" onclick="return confirm('Do you really want to delete it permanently')" class="btn btn-danger">Delete</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -74,7 +92,17 @@
                 </div>
                 <div class="card mt-4">
                     <div class="card-head">
-                        <h4 class="text-left m-2">Languages</h4>
+                        <div class="row justify-content-between">
+                            <div class="col-md-2">
+                                <h4 class="text-left m-2">Languages</h4>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="btn-group">
+                                    <a href="{{route('recycle.restoreAllLanguages')}}" class="btn btn-success">Restore Languages</a>
+                                    <a href="{{route('recycle.deleteAllLanguages')}}" onclick="return confirm('Danger! This action is irreversible')" class="btn btn-danger">Delete all Languages</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -109,8 +137,16 @@
 
                 <div class="card mt-4">
                     <div class="card-head">
-                        <div class="d-flex justify-content-between">
-                            <h4 class="text-left m-2">Packages</h4>
+                        <div class="row justify-content-between">
+                            <div class="col-md-2">
+                                <h4 class="text-left m-2">Packages</h4>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="btn-group">
+                                    <a href="{{route('recycle.restoreAllPackages')}}" class="btn btn-success">Restore Packages</a>
+                                    <a href="{{route('recycle.deleteAllPackages')}}" onclick="return confirm('Danger! This action is irreversible')" class="btn btn-success">Delete Packages</a>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
