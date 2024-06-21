@@ -22,7 +22,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($imagesByDate as $date => $images)
+                        @foreach($imagesByDate->sortKeys() as $date => $images)
                             <tr>
                                 <td class="align-middle">
                                     <a href="{{route('images.show', ['date' => $date])}}">
