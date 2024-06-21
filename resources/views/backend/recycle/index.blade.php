@@ -11,8 +11,8 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="btn-group">
-                                    <a href="{{route('recycle.restoreAllCustomer')}}" class="btn btn-success">Restore All Customer</a>
-                                    <a href="{{route('recycle.deleteAllCustomer')}}" onclick="return confirm('danger! This Action is irreversible" class="btn btn-danger">Clear All Customer</a>
+                                    <a href="{{route('recycle.restore.allCustomer')}}" class="btn btn-success">Restore All Customer</a>
+                                    <a href="{{route('recycle.destroy.allCustomer')}}" onclick="return confirm('danger! This Action is irreversible')" class="btn btn-danger">Clear All Customer</a>
                                 </div>
                             </div>
                         </div>
@@ -38,8 +38,8 @@
                                             <td>{{$customer->email}}</td>
                                             <td>
                                                 <div class="btn-group">
-                                                    <a href="{{route('recycle.customerRestore', ['id' => $customer->id])}}" class="btn btn-success">Restore</a>
-                                                    <a href="{{route('recycle.customerDestroy', ['id' => $customer->id])}}" onclick="return confirm('Do you really want to delete it permanently')" class="btn btn-danger">Delete</a>
+                                                    <a href="{{route('recycle.restore.customer', ['id' => $customer->id])}}" class="btn btn-success">Restore</a>
+                                                    <a href="{{route('recycle.destroy.customer', ['id' => $customer->id])}}" onclick="return confirm('Do you really want to delete it permanently')" class="btn btn-danger">Delete</a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -58,8 +58,8 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="btn-group">
-                                    <a href="{{route('recycle.restoreAllCategories')}}" class="btn btn-success">Restore Categories</a>
-                                    <a href="{{route('recycle.deleteAllCategories')}}" onclick="return confirm('Danger?: This action is irreversible')" class="btn btn-danger">Clear All Categories</a>
+                                    <a href="{{route('recycle.restore.allCategories')}}" class="btn btn-success">Restore Categories</a>
+                                    <a href="{{route('recycle.destroy.allCategories')}}" onclick="return confirm('Danger?: This action is irreversible')" class="btn btn-danger">Clear All Categories</a>
                                 </div>
                             </div>
                         </div>
@@ -80,8 +80,8 @@
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$category->name}}</td>
                                             <td>
-                                                <a href="{{route('recycle.categoryRestore', ['id' => $category->id])}}" class="btn btn-success">Restore</a>
-                                                <a href="{{route('recycle.categoryDelete', ['id' => $category->id])}}" onclick="return confirm('Do you really want to delete it permanently')" class="btn btn-danger">Delete</a>
+                                                <a href="{{route('recycle.restore.category', ['id' => $category->id])}}" class="btn btn-success">Restore</a>
+                                                <a href="{{route('recycle.destroy.category', ['id' => $category->id])}}" onclick="return confirm('Do you really want to delete it permanently')" class="btn btn-danger">Delete</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -98,8 +98,8 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="btn-group">
-                                    <a href="{{route('recycle.restoreAllLanguages')}}" class="btn btn-success">Restore Languages</a>
-                                    <a href="{{route('recycle.deleteAllLanguages')}}" onclick="return confirm('Danger! This action is irreversible')" class="btn btn-danger">Delete all Languages</a>
+                                    <a href="{{route('recycle.restore.allLanguages')}}" class="btn btn-success">Restore Languages</a>
+                                    <a href="{{route('recycle.destroy.allLanguages')}}" onclick="return confirm('Danger! This action is irreversible')" class="btn btn-danger">Delete all Languages</a>
                                 </div>
                             </div>
                         </div>
@@ -123,8 +123,8 @@
                                         <td>{{$language->code}}</td>
                                         <td>
                                             <div class="btn-group">
-                                                <a href="{{route('recycle.languageRestore', ['id' => $language->id])}}" onclick="return confirm('Do you really want to delete it permanently')" class="btn btn-success">Restore</a>
-                                                <a href="{{route('recycle.languageRestore', ['id' => $language->id])}}" class="btn btn-danger">Delete</a>
+                                                <a href="{{route('recycle.restore.language', ['id' => $language->id])}}" onclick="return confirm('Do you really want to delete it permanently')" class="btn btn-success">Restore</a>
+                                                <a href="{{route('recycle.destroy.language', ['id' => $language->id])}}" class="btn btn-danger">Delete</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -143,8 +143,8 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="btn-group">
-                                    <a href="{{route('recycle.restoreAllPackages')}}" class="btn btn-success">Restore Packages</a>
-                                    <a href="{{route('recycle.deleteAllPackages')}}" onclick="return confirm('Danger! This action is irreversible')" class="btn btn-damger">Delete Packages</a>
+                                    <a href="{{route('recycle.restore.allPackages')}}" class="btn btn-success">Restore Packages</a>
+                                    <a href="{{route('recycle.destroy.allPackages')}}" onclick="return confirm('Danger! This action is irreversible')" class="btn btn-damger">Delete Packages</a>
                                 </div>
                             </div>
 
@@ -168,8 +168,8 @@
                                             <td>{{$package->name}}</td>
                                             <td>{!! $package->description !!}</td>
                                             <td>
-                                                <a href="{{route('recycle.packageDelete', ['id' => $package->id])}}" onclick="return confirm('Do you really want to delete it permanently')" class="btn btn-danger">Delete</a>
-                                                <a href="{{route('recycle.packageRestore', ['id' => $package->id])}}" class="btn btn-success">Restore</a>
+                                                <a href="{{route('recycle.destroy.package', ['id' => $package->id])}}" onclick="return confirm('Do you really want to delete it permanently')" class="btn btn-danger">Delete</a>
+                                                <a href="{{route('recycle.restore.package', ['id' => $package->id])}}" class="btn btn-success">Restore</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -219,12 +219,12 @@
                     <div class="card-head">
                         <div class="row justify-content-between">
                             <div class="col-md-2">
-                                <h4 class="text-left m-2">Packages</h4>
+                                <h4 class="text-left m-2">Images</h4>
                             </div>
                             <div class="col-md-3">
                                 <div class="btn-group">
-                                    <a href="{{route('recycle.restoreAllImages')}}" class="btn btn-success">Restore Images</a>
-                                    <a href="{{route('recycle.deleteAllImages')}}" onclick="return confirm('Danger! This action is irreversible')" class="btn btn-danger">Delete Images</a>
+                                    <a href="{{route('recycle.restore.allImages')}}" class="btn btn-success">Restore Images</a>
+                                    <a href="{{route('recycle.destroy.allImages')}}" onclick="return confirm('Danger! This action is irreversible')" class="btn btn-danger">Delete Images</a>
                                 </div>
                             </div>
 
@@ -250,8 +250,8 @@
                                         <td>{{$image->date}}</td>
                                         <td>{{$image->user->name}}</td>
                                         <td>
-                                            <a href="{{route('recycle.imageDelete', ['id' => $image->id])}}" onclick="return confirm('Do you really want to delete it permanently')" class="btn btn-danger">Delete</a>
-                                            <a href="{{route('recycle.imageRestore', ['id' => $image->id])}}" class="btn btn-success">Restore</a>
+                                            <a href="{{route('recycle.destroy.image', ['id' => $image->id])}}" onclick="return confirm('Do you really want to delete it permanently')" class="btn btn-danger">Delete</a>
+                                            <a href="{{route('recycle.restore.image', ['id' => $image->id])}}" class="btn btn-success">Restore</a>
                                         </td>
                                     </tr>
                                 @endforeach

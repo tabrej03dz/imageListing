@@ -187,8 +187,8 @@ Route::middleware(['auth'])->group(function(){
 
         Route::prefix('recycle')->name('recycle.')->group(function(){
             Route::get('/', [RecycleController::class, 'index'])->name('index');
-            Route::get('customerRestore/{id}', [RecycleController::class, 'customerRestore'])->name('customerRestore');
-            Route::get('customerDestroy/{id}', [RecycleController::class, 'customerDestroy'])->name('customerDestroy');
+//            Route::get('customerRestore/{id}', [RecycleController::class, 'customerRestore'])->name('customerRestore');
+//            Route::get('customerDestroy/{id}', [RecycleController::class, 'customerDestroy'])->name('customerDestroy');
             Route::get('categoryRestore/{id}', [RecycleController::class, 'categoryRestore'])->name('categoryRestore');
             Route::get('categoryDelete/{id}', [RecycleController::class, 'categoryDelete'])->name('categoryDelete');
             Route::get('languageRestore/{id}', [RecycleController::class, 'languageRestore'])->name('languageRestore');
@@ -209,6 +209,34 @@ Route::middleware(['auth'])->group(function(){
             Route::get('imageRestore/{id}', [RecycleController::class, 'imageRestore'])->name('imageRestore');
             Route::get('deleteAllImages', [RecycleController::class, 'deleteAllImages'])->name('deleteAllImages');
             Route::get('restoreAllImages', [RecycleController::class, 'restoreAllImages'])->name('restoreAllImages');
+
+            Route::prefix('restore')->name('restore.')->group(function (){
+                Route::get('customer/{id}', [RecycleController::class, 'customerRestore'])->name('customer');
+                Route::get('category/{id}', [RecycleController::class, 'categoryRestore'])->name('category');
+                Route::get('language/{id}', [RecycleController::class, 'languageRestore'])->name('language');
+                Route::get('package/{id}', [RecycleController::class, 'packageRestore'])->name('package');
+                Route::get('note/{id}', [RecycleController::class, 'noteRestore'])->name('note');
+                Route::get('image/{id}', [RecycleController::class, 'imageRestore'])->name('image');
+                Route::get('allCustomer', [RecycleController::class, 'restoreAllCustomer'])->name('allCustomer');
+                Route::get('allCategories', [RecycleController::class, 'restoreAllCategories'])->name('allCategories');
+                Route::get('allLanguages', [RecycleController::class, 'restoreAllLanguages'])->name('allLanguages');
+                Route::get('allPackages', [RecycleController::class, 'restoreAllPackages'])->name('allPackages');
+                Route::get('allImages', [RecycleController::class, 'restoreAllImages'])->name('allImages');
+            });
+
+            Route::prefix('destroy')->name('destroy.')->group(function (){
+                Route::get('customer/{id}', [RecycleController::class, 'customerDestroy'])->name('customer');
+                Route::get('category/{id}', [RecycleController::class, 'categoryDelete'])->name('category');
+                Route::get('language/{id}', [RecycleController::class, 'languageDelete'])->name('language');
+                Route::get('package/{id}', [RecycleController::class, 'packageDelete'])->name('package');
+                Route::get('note/{id}', [RecycleController::class, 'noteDelete'])->name('note');
+                Route::get('image/{id}', [RecycleController::class, 'imageDelete'])->name('image');
+                Route::get('allCustomer', [RecycleController::class, 'clearAllCustomer'])->name('allCustomer');
+                Route::get('allCategories', [RecycleController::class, 'clearAllCategories'])->name('allCategories');
+                Route::get('allLanguages', [RecycleController::class, 'deleteAllLanguages'])->name('allLanguages');
+                Route::get('allPackages', [RecycleController::class, 'deleteAllPackages'])->name('allPackages');
+                Route::get('allImages', [RecycleController::class, 'deleteAllImages'])->name('allImages');
+            });
         });
 
 
