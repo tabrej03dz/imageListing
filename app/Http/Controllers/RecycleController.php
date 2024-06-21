@@ -164,4 +164,26 @@ class RecycleController extends Controller
         $image->restore();
         return back()->with('success', 'Image restore successfully');
     }
+
+    public function deleteAllImages(){
+        $images = Image::onlyTrashed()->get();
+        foreach ($images as $image){
+            if($image->media){
+                $filePath = public_path('storage/'. $image->media);
+                if(file_exists($filePath)){
+                    unlink($filePath);
+                }
+            }
+            $image->forceDelete();
+        }
+        return back()->with('success', 'Deleted permanently');
+    }
+
+    public function restoreAllImages(){
+        $images = Image::onlyTrashed()->get();
+        foreach ($images as $image){
+            $image->restore();
+        }
+        return back()->with('success', 'Restored successfully');
+    }
 }

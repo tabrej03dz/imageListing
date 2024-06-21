@@ -207,6 +207,8 @@ Route::middleware(['auth'])->group(function(){
             Route::get('deleteAllPackages', [RecycleController::class, 'deleteAllPackages'])->name('deleteAllPackages');
             Route::get('imageDelete/{id}', [RecycleController::class, 'imageDelete'])->name('imageDelete');
             Route::get('imageRestore/{id}', [RecycleController::class, 'imageRestore'])->name('imageRestore');
+            Route::get('deleteAllImages', [RecycleController::class, 'deleteAllImages'])->name('deleteAllImages');
+            Route::get('restoreAllImages', [RecycleController::class, 'restoreAllImages'])->name('restoreAllImages');
         });
 
 

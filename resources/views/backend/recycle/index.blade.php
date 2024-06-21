@@ -144,7 +144,7 @@
                             <div class="col-md-3">
                                 <div class="btn-group">
                                     <a href="{{route('recycle.restoreAllPackages')}}" class="btn btn-success">Restore Packages</a>
-                                    <a href="{{route('recycle.deleteAllPackages')}}" onclick="return confirm('Danger! This action is irreversible')" class="btn btn-success">Delete Packages</a>
+                                    <a href="{{route('recycle.deleteAllPackages')}}" onclick="return confirm('Danger! This action is irreversible')" class="btn btn-damger">Delete Packages</a>
                                 </div>
                             </div>
 
@@ -217,8 +217,16 @@
 
                 <div class="card mt-4">
                     <div class="card-head">
-                        <div class="d-flex justify-content-between">
-                            <h4 class="text-left m-2">Images</h4>
+                        <div class="row justify-content-between">
+                            <div class="col-md-2">
+                                <h4 class="text-left m-2">Packages</h4>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="btn-group">
+                                    <a href="{{route('recycle.restoreAllImages')}}" class="btn btn-success">Restore Images</a>
+                                    <a href="{{route('recycle.deleteAllImages')}}" onclick="return confirm('Danger! This action is irreversible')" class="btn btn-danger">Delete Images</a>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
