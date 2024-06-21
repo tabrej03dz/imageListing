@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Language;
 use App\Models\Note;
 use App\Models\Package;
@@ -18,7 +19,8 @@ class RecycleController extends Controller
         $languages = Language::onlyTrashed()->get();
         $packages = Package::onlyTrashed()->get();
         $notes = Note::onlyTrashed()->get();
-        return view('backend.recycle.index', compact('customers', 'categories', 'languages', 'packages', 'notes'));
+        $images = Image::onlyTrashed()->get();
+        return view('backend.recycle.index', compact('customers', 'images', 'categories', 'languages', 'packages', 'notes'));
     }
 
     public function customerRestore($id){
@@ -143,5 +145,23 @@ class RecycleController extends Controller
             $package->forceDelete();
         }
         return back()->with('success', 'Clear all packages successfully');
+    }
+
+    public function imageDelete($id){
+        $image = Image::withTrashed()->find($id);
+        if($image->media){
+            $filePath = public_path('storage/'. $image->media);
+            if(file_exists($filePath)){
+                unlink($filePath);
+            }
+        }
+        $image->forceDelete();
+        return back()->with('success', 'Image deleted permanently');
+    }
+
+    public function imageRestore($id){
+        $image = Image::withTrashed()->find($id);
+        $image->restore();
+        return back()->with('success', 'Image restore successfully');
     }
 }

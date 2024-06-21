@@ -205,6 +205,8 @@ Route::middleware(['auth'])->group(function(){
             Route::get('deleteAllLanguages', [RecycleController::class, 'deleteAllLanguages'])->name('deleteAllLanguages');
             Route::get('restoreAllPackages', [RecycleController::class, 'restoreAllPackages'])->name('restoreAllPackages');
             Route::get('deleteAllPackages', [RecycleController::class, 'deleteAllPackages'])->name('deleteAllPackages');
+            Route::get('imageDelete/{id}', [RecycleController::class, 'imageDelete'])->name('imageDelete');
+            Route::get('imageRestore/{id}', [RecycleController::class, 'imageRestore'])->name('imageRestore');
         });
 
 

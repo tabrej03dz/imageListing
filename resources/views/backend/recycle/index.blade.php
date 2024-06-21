@@ -214,6 +214,44 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="card mt-4">
+                    <div class="card-head">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="text-left m-2">Images</h4>
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>S. No.</th>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th>User</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($images as $image)
+                                    <tr>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$image->title}}</td>
+                                        <td>{{$image->date}}</td>
+                                        <td>{{$image->user->name}}</td>
+                                        <td>
+                                            <a href="{{route('recycle.imageDelete', ['id' => $image->id])}}" onclick="return confirm('Do you really want to delete it permanently')" class="btn btn-danger">Delete</a>
+                                            <a href="{{route('recycle.imageRestore', ['id' => $image->id])}}" class="btn btn-success">Restore</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
