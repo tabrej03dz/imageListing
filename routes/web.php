@@ -55,7 +55,7 @@ Route::get('userImageDownload/{image}', [DashboardController::class, 'userImageD
 
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware('auth')->group(function(){
         Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
         Route::prefix('image')->name('image.')->group(function(){
             Route::get('/', [ImageController::class, 'index'])->name('index');
@@ -63,10 +63,10 @@ Route::middleware(['auth'])->group(function(){
             Route::post('store', [ImageController::class, 'store'])->name('store');
             Route::get('delete/{image}', [ImageController::class, 'destroy'])->name('destroy');
             Route::get('download/{image}', [ImageController::class, 'downloadImage'])->name('download');
-
             Route::post('search/{date}', [ImageController::class, 'imageShowByDate'])->name('search');
             Route::get('singleSend/{image}', [ImageController::class, 'singleImageSend'])->name('singleSend');
 
+            Route::get('show_all', [ImageController::class, 'showAllImages'])->name('show_all');
         });
 
 
@@ -75,6 +75,7 @@ Route::middleware(['auth'])->group(function(){
             Route::get('delete/{date}', [ImageController::class, 'imageDeleteByDate'])->name('delete');
             Route::get('show/{date}', [ImageController::class, 'imageShowByDate'])->name('show');
             Route::get('send/{date}', [ImageController::class, 'sendImage'])->name('send');
+            Route::get('sendImage/{date}', [ImageController::class, 'sendImageWithAjax'])->name('sendImage');
             Route::get('sentCount/{date}', [ImageController::class, 'sentCount'])->name('sentCount');
         });
 

@@ -101,7 +101,7 @@ class CustomerController extends Controller
 
         $customer->country = $request->country;
         if ($request->state){
-            $customer->sate = $request->state;
+            $customer->state = $request->state;
         }
         $customer->phone1 = $request->phone1;
         $customer->business_name = $request->business_name;

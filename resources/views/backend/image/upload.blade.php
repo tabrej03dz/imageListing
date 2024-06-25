@@ -86,6 +86,11 @@
             <label for="media" class="form-label">Choose Media:</label>
             <input type="file" id="media" name="media[]" multiple accept="image/*" required class="form-control">
         </div>
+
+        <div class="mb-3">
+            <input class="form-check-input ml-3" type="checkbox" id="replace" name="replace">
+            <label class="form-check-label ml-5" for="replace">Do you want to replace</label>
+        </div>
         <!-- Image preview container -->
         <div id="imagePreview" class="preview"></div>
         <div class="">

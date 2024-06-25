@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DownloadTrack;
 use App\Models\Image;
 use App\Models\Package;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -39,7 +40,12 @@ class DashboardController extends Controller
         ]);
         $user = User::where('phone', 'like', '%'.$request->search.'%')->first();
         if($user){
-            $images = Image::where('user_id', $user->id)->whereDate('date', '>=', Carbon::now()->subDay(2))->orderBy('date', 'desc')->get();
+            $setting = Setting::first();
+            if ($setting->show_all_images == '1'){
+                $images = Image::where('user_id', $user->id)->orderBy('date', 'desc')->get();
+            }else{
+                $images = Image::where('user_id', $user->id)->whereDate('date', '<=', Carbon::tomorrow())->orderBy('date', 'desc')->get();
+            }
         }else{
             return redirect()->back()->with('error', 'User not found! Please enter registered number!');
         }

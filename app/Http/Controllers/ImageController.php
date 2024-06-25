@@ -7,6 +7,7 @@ use App\Models\FailedCustomer;
 use App\Models\FailedCustomerImage;
 use App\Models\Image;
 use App\Models\MultipleSend;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -38,8 +39,9 @@ class ImageController extends Controller
                 });
             }
         }
-        $users = User::all();
-        return view('backend.image.index', compact('images', 'users', 'imagesByDate'));
+//        $users = User::all();
+        $setting = Setting::first();
+        return view('backend.image.index', compact('images', 'setting', 'imagesByDate'));
     }
 
     public function uploadImage(){
@@ -57,9 +59,7 @@ class ImageController extends Controller
         $uploadSuccess = [];
         $uploadedImagesCount = 0;
         foreach ($request->file('media') as $media){
-            //            $phoneNumber = substr($image->user->phone, -10);
-
-            $fileName = substr(pathinfo($media->getClientOriginalName(), PATHINFO_FILENAME), 0,12);
+            $fileName = substr(str_replace(' ', '', pathinfo($media->getClientOriginalName(), PATHINFO_FILENAME)), 0,12);
             $user = User::where('phone', 'like', '%'.$fileName.'%')->first();
             if ($user){
                 $multipleSend = MultipleSend::find(1);
@@ -69,16 +69,34 @@ class ImageController extends Controller
                     }
                 }
 
-                $image = new Image();
-                $image->date = $request->date ?? Carbon::tomorrow();
-                $image->title = $request->title;
-                $image->user_id = $user->id;
-                array_push($uploadSuccess, $media->getClientOriginalName());
+                if($request->replace != null){
+                    $oldImage = Image::where(['user_id' => $user->id, 'date' => $request->date ?? Carbon::tomorrow()])->first();
+                    if($oldImage->media){
+                        $filePath = public_path('storage/'. $oldImage->media);
+                        if(file_exists($filePath)){
+                            unlink($filePath);
+                        }
+                    }
+                    $file = $media->store('public/images');
+                    $oldImage->update([
+                        'date' => $request->date ?? Carbon::tomorrow(),
+                        'title' => $request->title ?? $oldImage->title,
+                        'media' => str_replace('public/', '', $file),
+                    ]);
+                    $uploadedImagesCount++;
+                }else{
+                    $image = new Image();
+                    $image->date = $request->date ?? Carbon::tomorrow();
+                    $image->title = $request->title;
+                    $image->user_id = $user->id;
+                    array_push($uploadSuccess, $media->getClientOriginalName());
 
-                $file = $media->store('public/images');
-                $image->media = str_replace('public/', '', $file);
-                // Increment the count of successfully uploaded images
-                $uploadedImagesCount++;
+                    $file = $media->store('public/images');
+                    $image->media = str_replace('public/', '', $file);
+                    // Increment the count of successfully uploaded images
+                    $uploadedImagesCount++;
+                    $image->save();
+                }
             } else {
                 $failedCustomer = FailedCustomer::where('phone', $fileName)->first();
                 if (!$failedCustomer){
@@ -95,7 +113,7 @@ class ImageController extends Controller
                 array_push($failed, $fileName);
                 continue;
             }
-            $image->save();
+//            $image->save();
         }
 
 //        Session::put('failedUserCollection', $collection);
@@ -136,12 +154,12 @@ class ImageController extends Controller
 
     public function sendImage($date){
         if(session('instance_id') != null && session('access_token') != null){
-            $images = Image::where(['date' => $date, 'sent' => '0'])->take(50)->get();
+            $images = Image::where(['date' => $date, 'sent' => '0'])->take(30)->get();
             foreach ($images as $image){
                 if ($image->user->status == '1'){
-                    $phoneNumber = substr($image->user->phone, 0, 12);
-                    $imageUrl = asset('storage/'. $image->media);
-                    $imageUrl = 'https://realvictorygroups.xyz/storage/images/yd9MT1LoVgkvxdgmPaABzuoB1zlvWzKuVdN5h996.jpg';
+                    $phoneNumber = substr(str_replace(' ', '', $image->user->phone), 0, 12);
+//                    $imageUrl = asset('storage/'. $image->media);
+                    $imageUrl = 'https://post.realvictorygroups.com/public/assets/logo.png';
                     $message = str_replace(' ', '+', $image->title);
                     $fileName = str_replace(' ', '+', $image->title);
 
@@ -150,9 +168,8 @@ class ImageController extends Controller
                     $message = json_decode($response->getBody()->getContents());
                     $image->sent = '1';
                     if($message->status == 'error'){
-
-//                        return redirect()->back()->with('error', $message);
                         $image->sent = '0';
+                        $image->save();
                     }
 
                     $image->save();
@@ -164,10 +181,7 @@ class ImageController extends Controller
         }else{
             return redirect()->back('error', 'Please Set the Instance Id and Access Token');
         }
-
 //        SendImageJob::dispatch($date);
-
-
     }
 
     public function singleImageSend(Image $image){
@@ -210,6 +224,51 @@ class ImageController extends Controller
         }
 
         return redirect()->back()->with('success', $enable->multiple_send_in_single_day == 1 ? 'enabled':'disabled'. ' successfully');
+    }
+
+    public function showAllImages(){
+        $setting = Setting::first();
+        if($setting->show_all_images == '0'){
+            $setting->show_all_images = '1';
+        }else{
+            $setting->show_all_images = '0';
+        }
+        $setting->save();
+        return back()->with('success', 'changes successfully');
+    }
+
+    public function sendImageWithAjax($date){
+        if(session('instance_id') != null && session('access_token') != null){
+            $image = Image::where(['date' => $date, 'sent' => '0'])->first();
+
+                if ($image->user->status == '1'){
+                    $phoneNumber = substr(str_replace(' ', '', $image->user->phone), 0, 12);
+                    $imageUrl = asset('storage/'. $image->media);
+//                    $imageUrl = 'https://post.realvictorygroups.com/public/assets/logo.png';
+                    $message = str_replace(' ', '+', $image->title);
+                    $fileName = str_replace(' ', '+', $image->title);
+
+                    $client = new Client(['verify' => false]);
+                    $response = $client->request('GET', 'https://rvgwp.in/api/send?number='.$phoneNumber.'&type=media&message='.$message.'&media_url='.$imageUrl.'&filename='.$fileName.'&instance_id='.session('instance_id').'&access_token='.session('access_token'));
+                    $message = json_decode($response->getBody()->getContents());
+                    $image->sent = '1';
+                    if($message->status == 'error'){
+                        $image->sent = '0';
+                        $image->save();
+                    }
+
+                    $image->save();
+                }
+            $count = Image::where(['date' => $date, 'sent' => '1'])->count();
+            return response()->json(['success' => true, 'message' => 'Images sent successfully', 'count' => $count]);
+        }else{
+            return response()->json(['success' => false, 'message' => 'Please set the Instance Id and Access Token']);
+        }
+    }
+
+    public function sentCount($date){
+        $notSent = Image::where(['date' => $date, 'sent' => '0'])->count();
+        return response()->json(['success' => true, 'count' => $notSent]);
     }
 
 }

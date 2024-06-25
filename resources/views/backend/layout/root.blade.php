@@ -284,6 +284,7 @@
                     </button>
                 </div>
             @endif
+
             @if(session('error'))
                 <div class="alert alert-danger alert-dismissible fade show right-0 top-0" role="alert" style="z-index: 999;">
                     <strong>Error!</strong> {{session('error')}}

@@ -62,17 +62,17 @@
     </div>
 </div>
 
-<div id="qrcode"></div>
-<script>
-    // Phone number to share with
-    var phoneNumber = "1234567890"; // Replace with actual phone number
 
-    // Create a new QR code element
-    var qrcode = new QRCode(document.getElementById("qrcode"), {
-        text: "wa.me/" + phoneNumber,
-        width: 128,
-        height: 128
-    });
-</script>
+{{--<script>--}}
+{{--    // Phone number to share with--}}
+{{--    var phoneNumber = "8423269465"; // Replace with actual phone number--}}
+
+{{--    // Create a new QR code element--}}
+{{--    var qrcode = new QRCode(document.getElementById("qrcode"), {--}}
+{{--        text: "wa.me/" + phoneNumber,--}}
+{{--        width: 128,--}}
+{{--        height: 128--}}
+{{--    });--}}
+{{--</script>--}}
 </body>
 </html>
