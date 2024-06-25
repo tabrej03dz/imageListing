@@ -72,7 +72,7 @@
                                         {{--    success: function(response) {--}}
                                         //         count = response.count;
                                                 var j = 1;
-                                                for (var i = 1; i<=5; i++){
+                                                for (var i = 1; i<=100; i++){
                                                     $.ajax({
                                                         url: '{{ route("images.sendImage", ['date' => $date]) }}',
                                                         method: 'GET',
