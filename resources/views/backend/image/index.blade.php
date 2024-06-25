@@ -73,7 +73,7 @@
                                         //         count = response.count;
                                                 var j = 1;
                                                 function sendAjaxRequest(i) {
-                                                    if (i > 5) {
+                                                    if (i > 50) {
                                                         return; // Stop when i exceeds 50
                                                     }
 
