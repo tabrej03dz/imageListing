@@ -72,21 +72,25 @@
                                         {{--    success: function(response) {--}}
                                         //         count = response.count;
                                                 var j = 1;
-                                                for (var i = 1; i<=50; i++){
+                                                function sendAjaxRequest(i) {
+                                                    if (i > 5) {
+                                                        return; // Stop when i exceeds 50
+                                                    }
+
                                                     $.ajax({
                                                         url: '{{ route("images.sendImage", ['date' => $date]) }}',
                                                         method: 'GET',
                                                         success: function(data) {
-                                                        // this.next().innerText = data.count;
-                                                        document.getElementById('messageBox').classList.add('show');
-                                                        document.getElementById('message').innerText = j++;
+                                                            document.getElementById('messageBox').classList.add('show');
+                                                            document.getElementById('message').innerText = j++;
+                                                            sendAjaxRequest(i + 1); // Recursively call the function with incremented i
                                                         },
                                                         error: function(error) {
                                                             console.log('Error:', error);
                                                         }
                                                     });
                                                 }
-                                                document.getElementById('messageBox').classList.add('show');
+                                                sendAjaxRequest(1);
                                         //     },
                                         //
                                         //     error: function(error) {
