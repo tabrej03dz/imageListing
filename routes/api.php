@@ -22,3 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('imageSearch', [HomeController::class, 'imageSearch'])->name('imageSearch');
 Route::get('imageDownload/{imageId}', [HomeController::class, 'imageDownload'])->name('imageDownload');
 
+Route::post('addCustomer', [HomeController::class, 'addCustomer'])->name('addCustomer');
+

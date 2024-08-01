@@ -8,6 +8,7 @@ use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Image;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
@@ -44,6 +45,15 @@ class HomeController extends Controller
         $image->user->save();
         return response()->download($path, $image->title.'.'.$extension);
 //        return response()->json(['image' => $image], 200);
+    }
+
+    public function addCustomer(Request $request){
+        $customer = User::create(['name' => $request->name, 'email' => $request->email, 'phone' => $request->phone, 'password' => Hash::make('password')]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Customer added successfully',
+            'data' => $customer, // Replace with your data
+        ]);
     }
 
 }

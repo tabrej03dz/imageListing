@@ -115,9 +115,9 @@
                 <div class="card mt-4">
                     <div class="card-head">
                         <h4 class="text-left m-2">Frame: {{$customer->frame}}</h4>
+                        <p class="text-left">Similar Frames</p>
                     </div>
                     <div class="card-body">
-                        <p>Similar Frames</p>
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
@@ -140,7 +140,7 @@
                                         <td>{{$frame->phone}}</td>
                                         <td>{{$frame->frame}}</td>
                                         <td>
-                                            <a href="{{route('customer.edit', ['customer' => $frame->id])}}" class="btn btn-danger">Delete</a>
+                                            <a href="{{route('customer.edit', ['customer' => $frame->id])}}" class="btn btn-danger">Edit</a>
                                         </td>
                                     </tr>
                                 @endforeach
