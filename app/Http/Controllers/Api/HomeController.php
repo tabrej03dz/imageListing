@@ -48,11 +48,10 @@ class HomeController extends Controller
     }
 
     public function addCustomer(Request $request){
-        $customer = User::create(['name' => $request->name, 'email' => $request->email, 'phone' => $request->phone, 'password' => Hash::make('password')]);
         return response()->json([
             'success' => true,
             'message' => 'Customer added successfully',
-            'data' => $customer, // Replace with your data
+            'data' => '' // Replace with your data
         ]);
     }
 
