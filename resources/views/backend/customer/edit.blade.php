@@ -1,6 +1,41 @@
 @extends('backend.layout.root', ['title' => 'Edit Customer'])
 
 @section('content')
+
+
+    @if (session('alreadyExistFrame'))
+        <div class="alert alert-warning alert-dismissible fade show position-relative" role="alert">
+            <a href="{{ route('customer.index') }}" class="btn btn-danger btn-sm position-absolute" style="top: 0; right: 0;">X</a>
+            <p>These frames already exist in the system:</p>
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Frame</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach(session('alreadyExistFrame') as $frame)
+                        <tr>
+                            <td>{{ $frame->name }}</td>
+                            <td>{{ $frame->phone }}</td>
+                            <td>{{ $frame->frame }}</td>
+                            <td>
+                                <a href="{{ route('customer.edit', ['customer' => $frame->id]) }}" class="btn btn-primary btn-sm">Edit</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    @endif
+
+
     @if($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -12,16 +47,6 @@
     @endif
 
     <h2 class="text-2xl font-semibold text-gray-800 mb-4">Edit Customer</h2>
-
-    @if($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
     <form action="{{ route('customer.update', ['customer' => $customer]) }}" method="post">
         @csrf
@@ -195,6 +220,19 @@
                 <div class="mb-3">
                     <label for="confirm-password" class="form-label">Confirm Password:</label>
                     <input type="password" id="confirm-password" name="confirm_password" class="form-control" placeholder="Confirm Password">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="frame" class="form-label">Frame:</label>
+                    <input type="text" id="frame" name="frame" placeholder="Frame" value="{{$customer->frame ?? ''}}" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="start_date" class="form-label">Start Date:</label>
+                    <input type="date" id="start_date" name="start_date" placeholder="Start Date" value="{{$customer->start_date}}" class="form-control">
                 </div>
             </div>
 

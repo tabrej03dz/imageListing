@@ -134,7 +134,19 @@
                         @endforeach
                     </select>
                 </div>
+            </div>
 
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="frame" class="form-label">Frame:</label>
+                    <input type="text" id="frame" name="frame" placeholder="Frame" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="start_date" class="form-label">Start Date:</label>
+                    <input type="date" id="start_date" name="start_date" placeholder="Start Date" class="form-control">
+                </div>
             </div>
 
             <div class="col-md-6">

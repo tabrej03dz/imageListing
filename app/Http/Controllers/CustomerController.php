@@ -40,6 +40,11 @@ class CustomerController extends Controller
 
     public function store(CustomerRequest $request){
 //        dd($request->all());
+        $frameExisting = User::where(['city' => $request->city, 'frame' => $request->frame])->get();
+        $alreadyExistFrame = null;
+        if ($frameExisting->count() > 0){
+            $alreadyExistFrame = $frameExisting;
+        }
         $customer = User::create($request->all() +
             [
                 'password' => Hash::make('password'),
@@ -53,6 +58,8 @@ class CustomerController extends Controller
         $customer->pin = $request->pin;
         $customer->address = $request->address;
         $customer->gst_number = $request->gst_number;
+        $customer->frame = $request->frame;
+        $customer->start_date = $request->start_date;
         $customer->save();
 
 
@@ -84,7 +91,10 @@ class CustomerController extends Controller
             'expiry_date' => today()->addDays($package->duration)->toDateString(),
         ]);
 
-        return redirect('customer');
+        if ($alreadyExistFrame){
+            return redirect()->route('customer.edit', ['customer' => $customer->id])->with('alreadyExistFrame', $alreadyExistFrame);
+        }
+        return redirect('customer')->with('success', 'customer added successfully');
     }
 
     public function edit(User $customer){
@@ -96,6 +106,12 @@ class CustomerController extends Controller
     }
 
     public function update(CustomerRequest $request, User $customer){
+
+        $frameExisting = User::where(['city' => $request->city, 'frame' => $request->frame])->get();
+        $alreadyExistFrame = null;
+        if ($frameExisting->count() > 0){
+            $alreadyExistFrame = $frameExisting;
+        }
 
         $customer->update($request->except(['password', 'languages']));
 
@@ -137,7 +153,10 @@ class CustomerController extends Controller
                 $userCategory->save();
             }
         }
-        return redirect('customer');
+        if ($alreadyExistFrame){
+            return redirect()->route('customer.edit', ['customer' => $customer->id])->with('alreadyExistFrame', $alreadyExistFrame);
+        }
+        return redirect('customer')->with('success', 'customer added successfully');
     }
 
     public function customerUpload(){

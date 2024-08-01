@@ -2,7 +2,7 @@
 @section('content')
     <script src="https://cdn.tailwindcss.com"></script>
 
-        <!-- DataTales Example -->
+    <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <div class="row">

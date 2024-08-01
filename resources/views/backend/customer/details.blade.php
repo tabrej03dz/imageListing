@@ -112,6 +112,43 @@
                     </div>
                 </div>
 
+                <div class="card mt-4">
+                    <div class="card-head">
+                        <h4 class="text-left m-2">Frame: {{$customer->frame}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Similar Frames</p>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>S. No.</th>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Frame</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @php
+                                    $similarFrames = \App\Models\User::where(['city' => $customer->city, 'frame' => $customer->frame])->get();
+                                @endphp
+                                @foreach($similarFrames as $frame)
+                                    <tr>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$frame->name}}</td>
+                                        <td>{{$frame->phone}}</td>
+                                        <td>{{$frame->frame}}</td>
+                                        <td>
+                                            <a href="{{route('customer.edit', ['customer' => $frame->id])}}" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="card mt-4">
                     <div class="card-head">

@@ -145,6 +145,7 @@ class ImageController extends Controller
     }
 
     public function imageDeleteByDate($date){
+
         $images = Image::where('date', $date)->get();
         foreach ($images as $image){
             $image->delete();
@@ -241,26 +242,24 @@ class ImageController extends Controller
         if(session('instance_id') != null && session('access_token') != null){
             $image = Image::where(['date' => $date, 'sent' => '0'])->first();
 
-                if ($image->user->status == '1'){
-                    $phoneNumber = substr(str_replace(' ', '', $image->user->phone), 0, 12);
-                    $imageUrl = asset('storage/'. $image->media);
-//                    $imageUrl = 'https://post.realvictorygroups.com/public/assets/logo.png';
-                    $message = str_replace(' ', '+', $image->title);
-                    $fileName = str_replace(' ', '+', $image->title);
+            $phoneNumber = substr(str_replace(' ', '', $image->user->phone), 0, 12);
+//                    $imageUrl = asset('storage/'. $image->media);
+            $imageUrl = 'https://post.realvictorygroups.com/public/assets/logo.png';
+            $message = str_replace(' ', '+', $image->title);
+            $fileName = str_replace(' ', '+', $image->title);
 
-                    $client = new Client(['verify' => false]);
-                    $response = $client->request('GET', 'https://rvgwp.in/api/send?number='.$phoneNumber.'&type=media&message='.$message.'&media_url='.$imageUrl.'&filename='.$fileName.'&instance_id='.session('instance_id').'&access_token='.session('access_token'));
-                    $message = json_decode($response->getBody()->getContents());
-                    $image->sent = '1';
-                    if($message->status == 'error'){
-                        $image->sent = '0';
-                        $image->save();
-                    }
-
-                    $image->save();
-                }
+            $client = new Client(['verify' => false]);
+            $response = $client->request('GET', 'https://rvgwp.in/api/send?number='.$phoneNumber.'&type=media&message='.$message.'&media_url='.$imageUrl.'&filename='.$fileName.'&instance_id='.session('instance_id').'&access_token='.session('access_token'));
+            $message = json_decode($response->getBody()->getContents());
+            $image->sent = '1';
+            if($message->status == 'error'){
+                $image->sent = '0';
+                $image->save();
+            }
+            $image->save();
             $count = Image::where(['date' => $date, 'sent' => '1'])->count();
             return response()->json(['success' => true, 'message' => 'Images sent successfully', 'count' => $count]);
+
         }else{
             return response()->json(['success' => false, 'message' => 'Please set the Instance Id and Access Token']);
         }
