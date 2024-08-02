@@ -51,6 +51,7 @@ class HomeController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Customer added successfully',
+            'date' => $request->all(),
         ]);
     }
 
