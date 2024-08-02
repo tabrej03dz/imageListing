@@ -20,35 +20,35 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="name" class="form-label">Name:</label>
-                    <input type="text" id="name" name="name" placeholder="Name" class="form-control">
+                    <input type="text" id="name" name="name" placeholder="Name" value="{{old('name')}}" class="form-control">
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email:</label>
-                    <input type="email" id="email" name="email" placeholder="Email" class="form-control">
+                    <input type="email" id="email" name="email" placeholder="Email" value="{{old('email')}}" class="form-control">
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="phone" class="form-label">Phone 1:</label>
-                    <input type="text" id="phone" name="phone" placeholder="Phone 1" class="form-control">
+                    <input type="text" id="phone" name="phone" placeholder="Phone 1"value="{{old('phone')}}"  class="form-control">
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="phone1" class="form-label">Phone 2:</label>
-                    <input type="text" id="phone1" name="phone1" placeholder="Phone 2 optional" class="form-control">
+                    <input type="text" id="phone1" name="phone1" placeholder="Phone 2 optional" value="{{old('phone1')}}" class="form-control">
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="business_name" class="form-label">Business Name:</label>
-                    <input type="text" id="business_name" name="business_name" placeholder="Business Name" class="form-control">
+                    <input type="text" id="business_name" name="business_name" value="{{old('business_name')}}" placeholder="Business Name" class="form-control">
                 </div>
             </div>
 
@@ -83,21 +83,21 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="address" class="form-label">Address:</label>
-                    <input type="text" id="address" name="address" placeholder="Address" class="form-control">
+                    <input type="text" id="address" name="address" value="{{old('address')}}" placeholder="Address" class="form-control">
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="pin" class="form-label">Pin Code:</label>
-                    <input type="number" id="pin" name="pin" placeholder="Pin Code" class="form-control">
+                    <input type="number" id="pin" name="pin" value="{{old('pin')}}" placeholder="Pin Code" class="form-control">
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="gst_number" class="form-label">GST Number:</label>
-                    <input type="text" id="gst_number" name="gst_number" placeholder="GST Number" class="form-control">
+                    <input type="text" id="gst_number" name="gst_number" value="{{old('gst_number')}}" placeholder="GST Number" class="form-control">
                 </div>
             </div>
 
@@ -139,13 +139,13 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="frame" class="form-label">Frame:</label>
-                    <input type="text" id="frame" name="frame" placeholder="Frame" class="form-control">
+                    <input type="text" id="frame" name="frame" value="{{old('frame')}}" placeholder="Frame" class="form-control">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="start_date" class="form-label">Start Date:</label>
-                    <input type="date" id="start_date" name="start_date" placeholder="Start Date" class="form-control">
+                    <input type="date" id="start_date" name="start_date" value="{{old('start_date')}}" placeholder="Start Date" class="form-control">
                 </div>
             </div>
 
