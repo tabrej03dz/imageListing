@@ -51,7 +51,6 @@ class HomeController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Customer added successfully',
-            'data' => '' // Replace with your data
         ]);
     }
 
