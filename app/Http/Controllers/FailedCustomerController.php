@@ -19,6 +19,9 @@ class FailedCustomerController extends Controller
 
     public function add($id){
         $failedCustomer = FailedCustomer::find($id);
+        if (strlen($failedCustomer->phone) > 12){
+            return back()->with('error', 'Inactive customer');
+        }
         $user = User::create([
             'name' => $failedCustomer->phone,
             'email' => $failedCustomer->phone.'@gmail.com',

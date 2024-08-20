@@ -18,17 +18,24 @@ class CustomerImport implements ToModel, WithHeadingRow
     /**
     * @param Collection $collection
     */
-    public function collection(Collection $collection)
-    {
-        foreach ($collection as $row){
-//            dd($row);
-            User::create($row);
-        }
-    }
+//    public function collection(Collection $collection)
+//    {
+//        foreach ($collection as $row){
+////            dd($row);
+//            User::create($row);
+//        }
+//    }
 
     public function model(array $row)
     {
         // TODO: Implement model() method.
-        User::create($row + ['password' => Hash::make('password'), 'role' => 'user']);
+
+        $record = User::where('phone', $row['phone'])->first();
+        if ($record){
+            $record->update($row);
+        }else{
+            User::create($row + ['password' => Hash::make('password'), 'role' => 'user']);
+        }
+
     }
 }

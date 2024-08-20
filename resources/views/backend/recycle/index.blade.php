@@ -248,7 +248,7 @@
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$image->title}}</td>
                                         <td>{{$image->date}}</td>
-                                        <td>{{$image->user->name}}</td>
+                                        <td>{{$image->user?->name}}</td>
                                         <td>
                                             <a href="{{route('recycle.destroy.image', ['id' => $image->id])}}" onclick="return confirm('Do you really want to delete it permanently')" class="btn btn-danger">Delete</a>
                                             <a href="{{route('recycle.restore.image', ['id' => $image->id])}}" class="btn btn-success">Restore</a>

@@ -61,7 +61,7 @@ class ImageController extends Controller
         foreach ($request->file('media') as $media){
             $fileName = substr(str_replace(' ', '', pathinfo($media->getClientOriginalName(), PATHINFO_FILENAME)), 0,12);
             $user = User::where('phone', 'like', '%'.$fileName.'%')->first();
-            if ($user){
+            if ($user && $user->status == '1'){
                 $multipleSend = MultipleSend::find(1);
                 if ($multipleSend->multiple_send_in_single_day == '0'){
                     if (Image::where(['date' => $request->date ?? Carbon::tomorrow(), 'user_id' => $user->id])->exists()){
@@ -100,7 +100,11 @@ class ImageController extends Controller
             } else {
                 $failedCustomer = FailedCustomer::where('phone', $fileName)->first();
                 if (!$failedCustomer){
-                    $failedCustomer = FailedCustomer::create(['phone' => $fileName]);
+                    if ($user){
+                        $failedCustomer = FailedCustomer::create(['phone' => $fileName.' -Inactive User']);
+                    }else{
+                        $failedCustomer = FailedCustomer::create(['phone' => $fileName]);
+                    }
                 }
                 $failedCustomerImage = new FailedCustomerImage();
                 $failedCustomerImage->title = $request->title;
@@ -110,7 +114,11 @@ class ImageController extends Controller
                 $file = $media->store('public/images');
                 $failedCustomerImage->media = str_replace('public/', '', $file);
                 $failedCustomerImage->save();
-                array_push($failed, $fileName);
+                if ($user){
+                    array_push($failed, $fileName.' Inactive Customer');
+                }else{
+                    array_push($failed, $fileName);
+                }
                 continue;
             }
 //            $image->save();
