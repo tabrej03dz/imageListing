@@ -15,12 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-//        $this->call(UserSeeder::class);
-        $adminRole = Role::create(['name' => 'admin']);
-        $userRole = Role::create(['name' => 'user']);
+        $this->call(UserSeeder::class);
+//        $adminRole = Role::create(['name' => 'admin']);
+//        $userRole = Role::create(['name' => 'user']);
 
         $user = User::find(1);
-        $user->roles()->attach($adminRole->id);
+//        $user->roles()->attach($adminRole->id);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
