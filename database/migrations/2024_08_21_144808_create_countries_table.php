@@ -38,11 +38,6 @@ return new class extends Migration
             $table->tinyInteger('flag')->default(1);
             $table->string('wikiDataId')->nullable()->charset('utf8mb4')->collation('utf8mb4_unicode_ci')->comment('Rapid API GeoDB Cities');
 
-            $table->foreign('region_id')->references('id')->on('regions');
-            $table->foreign('subregion_id')->references('id')->on('subregions');
-
-            $table->index('region_id', 'country_continent');
-            $table->index('subregion_id', 'country_subregion');
             $table->timestamps();
         });
     }
