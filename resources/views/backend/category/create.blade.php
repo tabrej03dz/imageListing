@@ -30,7 +30,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="description" class="form-label">Description:</label>
+            <label for="category_description_editor" class="form-label">Description:</label>
             <textarea name="description" id="category_description_editor" cols="30" rows="5" class="form-control">
 
             </textarea>
