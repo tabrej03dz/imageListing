@@ -14,22 +14,17 @@ return new class extends Migration
         Schema::create('states', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255)->charset('utf8mb4')->collation('utf8mb4_unicode_ci');
-            $table->mediumInteger('country_id')->unsigned();
+            $table->foreignId('country_id')->constrained('countries')->cascadeOnDelete();
             $table->char('country_code', 2)->charset('utf8mb4')->collation('utf8mb4_unicode_ci');
             $table->string('fips_code', 255)->charset('utf8mb4')->collation('utf8mb4_unicode_ci')->nullable();
             $table->string('iso2', 255)->charset('utf8mb4')->collation('utf8mb4_unicode_ci')->nullable();
             $table->string('type', 191)->charset('utf8mb4')->collation('utf8mb4_unicode_ci')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
+
             $table->boolean('flag')->default(1);
             $table->string('wikiDataId', 255)->charset('utf8mb4')->collation('utf8mb4_unicode_ci')->nullable()->comment('Rapid API GeoDB Cities');
 
-            $table->primary('id');
-            $table->index('country_id', 'country_region');
-            $table->foreign('country_id', 'country_region_final')
-                ->references('id')
-                ->on('countries')
-                ->onDelete('cascade');
             $table->timestamps();
         });
     }
