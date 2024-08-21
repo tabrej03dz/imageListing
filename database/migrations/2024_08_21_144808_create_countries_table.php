@@ -35,8 +35,6 @@ return new class extends Migration
             $table->decimal('longitude', 11, 8)->nullable();
             $table->string('emoji', 191)->nullable()->charset('utf8mb4')->collation('utf8mb4_unicode_ci');
             $table->string('emojiU', 191)->nullable()->charset('utf8mb4')->collation('utf8mb4_unicode_ci');
-            $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->tinyInteger('flag')->default(1);
             $table->string('wikiDataId')->nullable()->charset('utf8mb4')->collation('utf8mb4_unicode_ci')->comment('Rapid API GeoDB Cities');
 

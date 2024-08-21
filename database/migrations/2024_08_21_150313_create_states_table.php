@@ -21,8 +21,6 @@ return new class extends Migration
             $table->string('type', 191)->charset('utf8mb4')->collation('utf8mb4_unicode_ci')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
-            $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->boolean('flag')->default(1);
             $table->string('wikiDataId', 255)->charset('utf8mb4')->collation('utf8mb4_unicode_ci')->nullable()->comment('Rapid API GeoDB Cities');
 
