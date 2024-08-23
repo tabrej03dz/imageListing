@@ -128,6 +128,8 @@ Route::middleware('auth')->group(function(){
             Route::get('language/delete/{language}/{customer}', [LanguageController::class, 'customerLanguageDelete'])->name('language.delete');
 
             Route::get('export', [CustomerController::class, 'customerExport'])->name('export');
+
+            Route::post('frame/update/{customer}', [CustomerController::class, 'updateFrame'])->name('frame.update');
         });
 
         Route::prefix('user')->name('user.')->group(function(){

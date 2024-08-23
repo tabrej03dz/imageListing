@@ -96,16 +96,16 @@ class DashboardController extends Controller
 //        2024-05-22
 
         $customers = User::where('role', '!=', 'admin')->get();
-        $packageId = Package::first()->id;
+        $package = Package::first();
         foreach($customers as $customer){
-            if(UserPackage::where(['user_id' => $customer->id, 'package_id' => $packageId])->exists()){
+            if(UserPackage::where(['user_id' => $customer->id, 'package_id' => $package->id])->exists()){
                 continue;
             }
             UserPackage::create([
                 'user_id' => $customer->id,
-                'package_id' => $packageId,
-                'start_date' => '2024-05-22',
-                'expiry_date' => '2025-05-22',
+                'package_id' => $package->id,
+                'start_date' => $customer->start_date ?? today()->toDateString(),
+                'expiry_date' => $customer->start_date->days($package->duration),
             ]);
             $customer->update(['status' => '1']);
         }

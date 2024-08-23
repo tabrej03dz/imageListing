@@ -25,7 +25,7 @@ class CategoryController extends Controller
             'category_id' => '',
         ]);
 
-        Category::create($request->all());
+        Category::create($request->except(['description']) + ['description' => $request->description ?? 'null']);
         return redirect('category')->with('success', 'Category created successfully');
     }
 

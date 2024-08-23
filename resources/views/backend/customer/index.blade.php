@@ -71,6 +71,7 @@
                             <th>Phone</th>
                             <th>Status</th>
                             <th>Action</th>
+                            <th>Frame</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -90,17 +91,31 @@
                             </td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Customer Actions">
-                                    <a href="{{ route('customer.edit', ['customer' => $customer]) }}" class="btn btn-success">
+                                    <a href="{{ route('customer.edit', ['customer' => $customer]) }}" class="btn btn-success btn-sm">
                                         Edit
                                     </a>
-                                    <a href="{{ route('customer.images', ['customer' => $customer]) }}" class="btn btn-primary">
+                                    <a href="{{ route('customer.images', ['customer' => $customer]) }}" class="btn btn-primary btn-sm">
                                         Images
                                     </a>
-                                    <a href="{{ route('customer.destroy', ['customer' => $customer]) }}" onclick="return confirm('Are you sure to delete ?')" class="btn btn-danger">
+                                    <a href="{{ route('customer.destroy', ['customer' => $customer]) }}" onclick="return confirm('Are you sure to delete ?')" class="btn btn-danger btn-sm">
                                         Delete
                                     </a>
-                                    <a href="{{route('customer.details', ['customer' => $customer])}}" class="btn btn-warning">Details</a>
+                                    <a href="{{route('customer.details', ['customer' => $customer])}}" class="btn btn-warning btn-sm">Details</a>
                                 </div>
+                            </td>
+                            <td>
+                                @php
+                                    $similarFrames = \App\Models\User::where(['city' => $customer->city, 'frame' => $customer->frame])->get();
+                                @endphp
+                                <form action="{{route('customer.frame.update', ['customer' => $customer->id])}}" method="post" class="d-flex align-items-center">
+                                    @csrf
+                                    <input type="text" name="frame" class="form-control me-2" value="{{$customer->frame}}" style="width: 100px;">
+                                    <input type="submit" value="save" class="btn btn-primary btn-sm me-2">
+                                    <a href="#" class="btn btn-danger btn-sm">{{$similarFrames->count()}}</a>
+                                </form>
+
+
+
                             </td>
                         </tr>
                         @endforeach

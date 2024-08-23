@@ -237,4 +237,10 @@ class CustomerController extends Controller
         return view('backend.customer.details', compact('customer'));
     }
 
+    public function updateFrame(Request $request, User $customer){
+        $customer->update(['frame' => $request->frame]);
+        return back()->with('success', 'Frame updated successfully');
+    }
+
+
 }
