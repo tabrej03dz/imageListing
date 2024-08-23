@@ -105,7 +105,7 @@ class DashboardController extends Controller
                 'user_id' => $customer->id,
                 'package_id' => $package->id,
                 'start_date' => $customer->start_date ?? today()->toDateString(),
-                'expiry_date' => $customer->start_date->days($package->duration),
+                'expiry_date' => Carbon::parse($customer->start_date)->days($package->duration),
             ]);
             $customer->update(['status' => '1']);
         }
