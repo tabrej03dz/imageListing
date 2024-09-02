@@ -85,7 +85,7 @@
                         @foreach($customers as $customer)
                             @php
                                 $expiryDate = $customer->userPackages()->orderBy('expiry_date', 'desc')->first()->expiry_date;
-                                $expiryDate = Carbon::parse($expiryDate);
+                                $expiryDate = Carbon\Carbon::parse($expiryDate);
                     //            dd($expiryDate->lessThan(Carbon::now()));
                                 if ($expiryDate->lessThan(Carbon\Carbon::now())){
                                     $customer->update(['status' => '0']);
