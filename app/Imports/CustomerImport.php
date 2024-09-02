@@ -121,11 +121,13 @@ class CustomerImport implements ToModel, WithHeadingRow
                     if ($expiryDate < today()){
 //                        dd($expiryDate);
                         $record->status = '0';
+                        $record->save();
+
                     }else{
 //                        dd($expiryDate < today());
                         $record->status = '1';
+                        $record->save();
                     }
-                    $record->save();
                     Payment::create(['user_package_id' => $userPackage->id, 'amount' => $row['selling_price'], 'payment_method' => 'online']);
                 }
 
