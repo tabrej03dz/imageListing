@@ -17,8 +17,10 @@ class HomeController extends Controller
     public function __construct(){
         $users = User::where('role', '!=', 'admin')->get();
         foreach ($users as $user){
-            $expiryDate = $user->userPackages->max('expiry_date');
+//            $expiryDate = $user->userPackages->max('expiry_date');
+            $expiryDate = $user->userPackages()->orderBy('expiry_date', 'desc')->first()->expiry_date;
             $expiryDate = Carbon::parse($expiryDate);
+//            dd($expiryDate->lessThan(Carbon::now()));
             if ($expiryDate->lessThan(Carbon::now())){
                 $user->update(['status' => '0']);
             }

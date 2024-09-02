@@ -5,17 +5,22 @@
     <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <div class="row">
-                    <div class="col-md-1">
+                <div class="d-flex justify-content-between">
+
                         <h6 class="m-0 font-weight-bold text-primary">Customers</h6>
-                    </div>
-                    <div class="col-md-2">
+
+
                         <form action="{{route('customer.search')}}" method="get"
                             class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                             @csrf
                             <div class="input-group">
                                 <input type="text" name="search" class="form-control bg-light border-1 small" placeholder="Search for..."
                                        aria-label="Search" aria-describedby="basic-addon2">
+                                <select name="status" id="">
+                                    <option value="">select status</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="active">Active</option>
+                                </select>
                                 <div class="input-group-append">
                                     <button class="btn btn-primary" type="submit">
                                         <i class="fas fa-search fa-sm"></i>
@@ -38,6 +43,10 @@
                                         <input type="text" name="search" class="form-control bg-light border-0 small"
                                                placeholder="Search for..." aria-label="Search"
                                                aria-describedby="basic-addon2">
+                                        <select name="status" id="">
+                                            <option value="0">Inactive</option>
+                                            <option value="1">Active</option>
+                                        </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="submit">
                                                 <i class="fas fa-search fa-sm"></i>
@@ -48,15 +57,13 @@
                             </div>
                         </li>
 
-                    </div>
-                    <div class="col-md-9">
                         <div class="d-flex justify-content-end">
-                            <a href="{{ route('customer.create') }}" class="btn btn-primary mr-2">Add Customer</a>
-                            <a href="{{ route('customer.upload') }}" class="btn btn-primary mr-2">Customer Upload</a>
-                            <a href="{{ route('customer.export') }}" class="btn btn-primary mr-2">Customer Export</a>
-                            <a href="{{route('packageAssignToAllCustomer')}}" class="btn btn-primary">Package Assign to all customer</a>
+                            <a href="{{ route('customer.create') }}" class="btn btn-primary btn-sm mr-2">Add Customer</a>
+                            <a href="{{ route('customer.upload') }}" class="btn btn-primary btn-sm mr-2">Customer Upload</a>
+                            <a href="{{ route('customer.export') }}" class="btn btn-primary btn-sm mr-2">Customer Export</a>
+                            <a href="{{route('packageAssignToAllCustomer')}}" class="btn btn-primary btn-sm">Package Assign to all customer</a>
                         </div>
-                    </div>
+
                 </div>
 
             </div>

@@ -80,6 +80,7 @@ class InformationController extends Controller
                 $phoneNumber = substr($user->phone, 0, 12);
 //                $imageUrl = $information->image ? asset('storage/'. $information->image) : asset('assets/logo.png');
                 $imageUrl = 'https://realvictorygroups.xyz/assets/logo.png';
+                dd($imageUrl);
                 $message = str_replace(' ', '+', $information->description);
                 $fileName = str_replace(' ', '+', $information->title);
 

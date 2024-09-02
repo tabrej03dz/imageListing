@@ -23,11 +23,32 @@ use Maatwebsite\Excel\Facades\Excel;
 class CustomerController extends Controller
 {
     public function index(Request $request){
+        $query = User::query();
+        $query = $query->where('role', 'user');
+
         if($request->search){
-            $customers = User::where('role', 'user')->where('phone','like', '%'.$request->search.'%')->orWhere('name', 'like', '%'.$request->search.'%')->orWhere('email', 'like', '%'.$request->search.'%')->orWhere('phone1', 'like', '%'.$request->search.'%')->orWhere('business_name', 'like', '%'.$request->search.'%')->orWhere('city', 'like', '%'.$request->search.'%')->orWhere('pin', 'like', '%'.$request->search.'%')->orWhere('address', 'like', '%'.$request->search.'%')->orWhere('gst_number', 'like', '%'.$request->search.'%')->paginate(100);
-        }else{
-            $customers = User::where('role', 'user')->paginate(100);
+            $query = $query->where(function($q) use ($request) {
+                $q->where('phone','like', '%'.$request->search.'%')
+                    ->orWhere('name', 'like', '%'.$request->search.'%')
+                    ->orWhere('email', 'like', '%'.$request->search.'%')
+                    ->orWhere('phone1', 'like', '%'.$request->search.'%')
+                    ->orWhere('business_name', 'like', '%'.$request->search.'%')
+                    ->orWhere('city', 'like', '%'.$request->search.'%')
+                    ->orWhere('pin', 'like', '%'.$request->search.'%')
+                    ->orWhere('address', 'like', '%'.$request->search.'%')
+                    ->orWhere('gst_number', 'like', '%'.$request->search.'%');
+            });
         }
+
+        if ($request->status){
+
+            $query = $query->where('status', $request->status == 'active' ? '1': '0');
+        }
+
+        // Use paginate instead of get
+        $customers = $query->paginate(100);
+
+
         return view('backend.customer.index', compact('customers'));
     }
 

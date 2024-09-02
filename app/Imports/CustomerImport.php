@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Language;
 use App\Models\Note;
 use App\Models\Package;
+use App\Models\Payment;
 use App\Models\UserCategory;
 use App\Models\UserLanguage;
 use App\Models\UserPackage;
@@ -74,13 +75,14 @@ class CustomerImport implements ToModel, WithHeadingRow
                 if ($package){
                     $packageStartDate = Carbon::parse($row['package_start_date'])->toDateString();
                     $expiryDate = Carbon::parse($row['package_start_date'])->addDays($package->duration);
-                    UserPackage::create(['user_id' => $record->id, 'package_id' => $package->id, 'start_date' => $packageStartDate, 'expiry_date' => $expiryDate->toDateString(), 'status' => $expiryDate < today() ? '0' : '1', 'selling_price' => $row['selling_price']]);
+                    $userPackage = UserPackage::create(['user_id' => $record->id, 'package_id' => $package->id, 'start_date' => $packageStartDate, 'expiry_date' => $expiryDate->toDateString(), 'status' => $expiryDate < today() ? '0' : '1', 'selling_price' => $row['selling_price']]);
                     if ($expiryDate < today()){
                         $record->status = '0';
                     }else{
                         $record->status = '1';
                     }
                     $record->save();
+                    Payment::create(['user_package_id' => $userPackage->id, 'amount' => $row['selling_price'], 'payment_method' => 'online']);
                 }
             }
         }else{
@@ -108,20 +110,23 @@ class CustomerImport implements ToModel, WithHeadingRow
             foreach ($languages as $language){
                 UserLanguage::create(['user_id' => $record->id, 'language_id' => $language->id]);
             }
+
             if($row['plan']){
                 $package = Package::where('price', $row['plan'])->first();
 //                dd($package);
                 if ($package){
                     $packageStartDate = Carbon::parse($row['package_start_date'])->toDateString();
                     $expiryDate = Carbon::parse($row['package_start_date'])->addDays($package->duration);
-                    UserPackage::create(['user_id' => $record->id, 'package_id' => $package->id, 'start_date' => $packageStartDate , 'expiry_date' => $expiryDate->toDateString(), 'status' => $expiryDate < today() ? '0' : '1', 'selling_price' => $row['selling_price']]);
+                    $userPackage = UserPackage::create(['user_id' => $record->id, 'package_id' => $package->id, 'start_date' => $packageStartDate , 'expiry_date' => $expiryDate->toDateString(), 'status' => $expiryDate < today() ? '0' : '1', 'selling_price' => $row['selling_price']]);
                     if ($expiryDate < today()){
                         $record->status = '0';
                     }else{
                         $record->status = '1';
                     }
                     $record->save();
+                    Payment::create(['user_package_id' => $userPackage->id, 'amount' => $row['selling_price'], 'payment_method' => 'online']);
                 }
+
             }
 
         }
