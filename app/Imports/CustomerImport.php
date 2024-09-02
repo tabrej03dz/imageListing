@@ -72,7 +72,7 @@ class CustomerImport implements ToModel, WithHeadingRow
                 UserLanguage::create(['user_id' => $record->id, 'language_id' => $language->id]);
             }
             if($row['plan']){
-                $package = Package::where('price', $row['plan'])->first();
+                $package = Package::where('price', $row['plan'])->where('name', $row['package_name'])->first();
                 if ($package){
                     $packageStartDate = Carbon::parse($row['package_start_date'])->toDateString();
                     $expiryDate = Carbon::parse($row['package_start_date'])->addDays($package->duration);
@@ -113,7 +113,7 @@ class CustomerImport implements ToModel, WithHeadingRow
             }
 
             if($row['plan']){
-                $package = Package::where('price', $row['plan'])->first();
+                $package = Package::where('price', $row['plan'])->where('name', $row['package_name'])->first();
 //                dd($package);
                 if ($package){
                     $packageStartDate = Carbon::parse($row['package_start_date'])->toDateString();
@@ -127,7 +127,6 @@ class CustomerImport implements ToModel, WithHeadingRow
                         $record->update(['status' => '1']);
                     }
                 }
-
             }
         }
     }
