@@ -50,6 +50,7 @@ class CustomerImport implements ToModel, WithHeadingRow
             $record->save();
             $record->phone = str_replace('hello', '', $record->phone);
             $record->phone1 = str_replace('hello', '', $record->phone1);
+//            $record->status = 1;
             $record->save();
             if($row['note']){
                 Note::create(['name' => $record->name, 'user_id' => $record->id, 'description' => $row['note']]);
@@ -77,9 +78,9 @@ class CustomerImport implements ToModel, WithHeadingRow
                     $expiryDate = Carbon::parse($row['package_start_date'])->addDays($package->duration);
                     $userPackage = UserPackage::create(['user_id' => $record->id, 'package_id' => $package->id, 'start_date' => $packageStartDate, 'expiry_date' => $expiryDate->toDateString(), 'status' => $expiryDate < today() ? '0' : '1', 'selling_price' => $row['selling_price']]);
                     if ($expiryDate < today()){
-                        $record->update(['status' => '0']);
+                        $record->update(['status' => 0]);
                     }else{
-                        $record->update(['status' => '1']);
+                        $record->update(['status' => 1]);
                     }
                     Payment::create(['user_package_id' => $userPackage->id, 'amount' => $row['selling_price'], 'payment_method' => 'online']);
                 }
