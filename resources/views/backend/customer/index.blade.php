@@ -83,6 +83,16 @@
                         </thead>
                         <tbody>
                         @foreach($customers as $customer)
+                            @php
+                                $expiryDate = $user->userPackages()->orderBy('expiry_date', 'desc')->first()->expiry_date;
+                                $expiryDate = Carbon::parse($expiryDate);
+                    //            dd($expiryDate->lessThan(Carbon::now()));
+                                if ($expiryDate->lessThan(Carbon::now())){
+                                    $user->update(['status' => '0']);
+                                }else{
+                                    $user->update(['status' => '1']);
+                                }
+                            @endphp
                         <tr>
                             <td>{{$loop->iteration}}</td>
 

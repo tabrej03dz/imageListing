@@ -50,7 +50,7 @@ class CustomerImport implements ToModel, WithHeadingRow
             $record->save();
             $record->phone = str_replace('hello', '', $record->phone);
             $record->phone1 = str_replace('hello', '', $record->phone1);
-//            $record->status = 1;
+            $record->status = 1;
             $record->save();
             if($row['note']){
                 Note::create(['name' => $record->name, 'user_id' => $record->id, 'description' => $row['note']]);
