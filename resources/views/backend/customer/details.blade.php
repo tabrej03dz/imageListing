@@ -72,6 +72,7 @@
                                     <th>Name</th>
 {{--                                    <th>Duration (days)</th>--}}
                                     <th>Price</th>
+                                    <th>Selling Price</th>
                                     <th>Start Date</th>
                                     <th>Expiry Date</th>
                                     <th>Expire In</th>
@@ -93,8 +94,8 @@
                                         @php
                                             $paid = $package->payments->sum('amount');
                                         @endphp
-                                        <td class="bg-{{$package->package->price == $paid ? 'success' : 'warning'}}">{{$paid}}</td>
-                                        <td class="bg-{{$package->package->price == $paid ? 'warning' : 'danger'}}">{{$package->package->price - $paid}}</td>
+                                        <td class="bg-{{$package->selling_price == $paid ? 'success' : 'warning'}}">{{$paid}}</td>
+                                        <td class="bg-{{$package->selling_price == $paid ? 'warning' : 'danger'}}">{{$package->selling_price - $paid}}</td>
                                         <td>
                                             <div class="btn-group">
 {{--                                                @dd($package->status)--}}

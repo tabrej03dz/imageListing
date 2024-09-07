@@ -72,7 +72,7 @@ class CustomerImport implements ToModel, WithHeadingRow
                 UserLanguage::create(['user_id' => $record->id, 'language_id' => $language->id]);
             }
             if($row['plan']){
-                $package = Package::where('price', $row['plan'])->where('name', $row['package_name'])->first();
+                $package = Package::where('price', $row['plan'])->where(['package_name'])->first();
                 if ($package){
                     $packageStartDate = Carbon::parse($row['package_start_date'])->toDateString();
                     $expiryDate = Carbon::parse($row['package_start_date'])->addDays($package->duration);

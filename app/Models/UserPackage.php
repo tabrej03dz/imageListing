@@ -15,6 +15,7 @@ class UserPackage extends Model
         'start_date',
         'expiry_date',
         'status',
+        'selling_price',
     ];
 
     public function customer(){
