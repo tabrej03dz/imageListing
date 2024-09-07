@@ -87,7 +87,7 @@ class CustomerImport implements ToModel, WithHeadingRow
             }
         }else{
             unset($row['phone']);
-            $record = User::create(['name' => $row['name'], 'email' => $row['email'], 'business_name' => $row['business_name'], 'country' => $row['country'], 'state' => $row['state'], 'city' => $row['city'], 'pin' => $row['pin'], 'address' => $row['address'], 'gst_number' => $row['gst_number'], 'status' => $row['status'] ?? '1' , 'start_date' => Carbon::parse($row['start_date'])->toDateString(), 'frame' => $row['frame'], 'plan' => $row['plan']] + ['phone' =>$phone.'hello', 'phone1' => $phone1.'hello', 'password' => Hash::make('password'), 'role' => 'user']);
+            $record = User::create(['name' => $row['name'], 'email' => $row['email'], 'business_name' => $row['business_name'], 'country' => $row['country'], 'state' => $row['state'], 'city' => $row['city'], 'pin' => $row['pin'], 'address' => $row['address'], 'gst_number' => $row['gst_number'], 'start_date' => Carbon::parse($row['start_date'])->toDateString(), 'frame' => $row['frame'], 'plan' => $row['plan']] + ['phone' =>$phone.'hello', 'phone1' => $phone1.'hello', 'password' => Hash::make('password'), 'role' => 'user']);
             $record->phone = str_replace('hello', '', $record->phone);
             $record->phone1 = str_replace('hello', '', $record->phone1);
             $record->save();
