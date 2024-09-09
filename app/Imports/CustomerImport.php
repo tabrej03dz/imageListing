@@ -146,7 +146,7 @@ class CustomerImport implements ToModel, WithHeadingRow
                         // You can log the error if needed:
                         // \Log::error($e->getMessage());
                     }
-                    Payment::create(['user_package_id' => $userPackage->id, 'amount' => $row['selling_price'], 'payment_method' => 'online']);
+//                    Payment::create(['user_package_id' => $userPackage->id, 'amount' => $row['selling_price'], 'payment_method' => 'online']);
                 }
             }
         }
