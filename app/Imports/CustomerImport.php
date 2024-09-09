@@ -18,6 +18,7 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use App\Models\User;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 
 
@@ -74,8 +75,8 @@ class CustomerImport implements ToModel, WithHeadingRow
             if($row['plan']){
                 $package = Package::where('price', $row['plan'])->where(['package_name'])->first();
                 if ($package){
-                    $packageStartDate = Carbon::parse($row['package_start_date'])->toDateString();
-                    $expiryDate = Carbon::parse($row['package_start_date'])->addDays($package->duration);
+                    $packageStartDate = Date::excelToDateTimeObject($row['package_start_date'])->format('Y-m-d');
+                    $expiryDate = Carbon::parse($packageStartDate)->addDays($package->duration);
                     $userPackage = UserPackage::create(['user_id' => $record->id, 'package_id' => $package->id, 'start_date' => $packageStartDate, 'expiry_date' => $expiryDate->toDateString(), 'status' => $expiryDate < today() ? '0' : '1', 'selling_price' => $row['selling_price']]);
                     if ($expiryDate < today()){
                         $record->update(['status' => 0]);
@@ -116,8 +117,9 @@ class CustomerImport implements ToModel, WithHeadingRow
                 $package = Package::where('price', $row['plan'])->where('name', $row['package_name'])->first();
 //                dd($package);
                 if ($package){
-                    $packageStartDate = Carbon::parse($row['package_start_date'])->toDateString();
-                    $expiryDate = Carbon::parse($row['package_start_date'])->addDays($package->duration);
+
+                    $packageStartDate = Date::excelToDateTimeObject($row['package_start_date'])->format('Y-m-d');
+                    $expiryDate = Carbon::parse($packageStartDate)->addDays($package->duration);
                     $userPackage = UserPackage::create(['user_id' => $record->id, 'package_id' => $package->id, 'start_date' => $packageStartDate , 'expiry_date' => $expiryDate->toDateString(), 'status' => $expiryDate < today() ? '0' : '1', 'selling_price' => $row['selling_price']]);
 
                     Payment::create(['user_package_id' => $userPackage->id, 'amount' => $row['selling_price'], 'payment_method' => 'online']);
