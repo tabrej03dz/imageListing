@@ -80,9 +80,9 @@ class CustomerImport implements ToModel, WithHeadingRow
                     $expiryDate = Carbon::parse($packageStartDate)->addDays($package->duration)->toDateString();
                     $userPackage = UserPackage::create(['user_id' => $record->id, 'package_id' => $package->id, 'start_date' => $packageStartDate, 'expiry_date' => $expiryDate, 'status' => $expiryDate < today() ? '0' : '1', 'selling_price' => $row['selling_price']]);
                     if ($expiryDate < today()){
-                        $record->update(['status' => 0]);
+                        $record->update(['status' => '0']);
                     }else{
-                        $record->update(['status' => 1]);
+                        $record->update(['status' => '1']);
                     }
                     try {
                         Payment::create([
