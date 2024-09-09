@@ -73,7 +73,7 @@ class CustomerImport implements ToModel, WithHeadingRow
                 UserLanguage::create(['user_id' => $record->id, 'language_id' => $language->id]);
             }
             if($row['plan']){
-                $package = Package::where('price', $row['plan'])->where(['package_name'])->first();
+                $package = Package::where('price', $row['plan'])->where('name', 'LIKE', $row['package_name'])->first();
                 if ($package){
                     $packageStartDate = Date::excelToDateTimeObject($row['package_start_date'])->format('Y-m-d');
                     $expiryDate = Carbon::parse($packageStartDate)->addDays($package->duration)->toDateString();
@@ -83,7 +83,17 @@ class CustomerImport implements ToModel, WithHeadingRow
                     }else{
                         $record->update(['status' => 1]);
                     }
-                    Payment::create(['user_package_id' => $userPackage->id, 'amount' => $row['selling_price'], 'payment_method' => 'online']);
+                    try {
+                        Payment::create([
+                            'user_package_id' => $userPackage->id,
+                            'amount' => $row['selling_price'],
+                            'payment_method' => 'online',
+                        ]);
+                    } catch (\Exception $e) {
+                        // Handle the error (e.g., log the error or skip)
+                        // You can log the error if needed:
+                        // \Log::error($e->getMessage());
+                    }
                 }
             }
         }else{
@@ -114,11 +124,7 @@ class CustomerImport implements ToModel, WithHeadingRow
             }
 
             if($row['plan']){
-                $package = Package::where('price', $row['plan'])
-                    ->when(!empty($row['package_name']), function ($query) use ($row) {
-                        return $query->where('name', $row['package_name']);
-                    })
-                    ->first();
+                $package = Package::where('price', $row['plan'])->where('name', 'LIKE', $row['package_name'])->first();
 //                dd($package);
                 if ($package){
                     $packageStartDate = Date::excelToDateTimeObject($row['package_start_date'])->format('Y-m-d');
@@ -126,12 +132,18 @@ class CustomerImport implements ToModel, WithHeadingRow
 
                     $userPackage = UserPackage::create(['user_id' => $record->id, 'package_id' => $package->id, 'start_date' => $packageStartDate , 'expiry_date' => $expiryDate, 'status' => $expiryDate < today() ? '0' : '1', 'selling_price' => $row['selling_price']]);
 
-                    Payment::create(['user_package_id' => $userPackage->id, 'amount' => $row['selling_price'], 'payment_method' => 'online']);
-                    if ($expiryDate < today()){
-                        $record->update(['status' => '0']);
-                    }else{
-                        $record->update(['status' => '1']);
+                    try {
+                        Payment::create([
+                            'user_package_id' => $userPackage->id,
+                            'amount' => $row['selling_price'],
+                            'payment_method' => 'online',
+                        ]);
+                    } catch (\Exception $e) {
+                        // Handle the error (e.g., log the error or skip)
+                        // You can log the error if needed:
+                        // \Log::error($e->getMessage());
                     }
+                    Payment::create(['user_package_id' => $userPackage->id, 'amount' => $row['selling_price'], 'payment_method' => 'online']);
                 }
             }
         }
