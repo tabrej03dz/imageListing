@@ -45,7 +45,7 @@ class CustomerImport implements ToModel, WithHeadingRow
         $record = User::where('phone', $phone)->first();
         if ($record){
 
-            $record->update(['name' => $row['name'], 'email' => $row['email'], 'phone' => $phone, 'phone1' => $phone1, 'business_name' => $row['business_name'], 'country' => $row['country'], 'state' => $row['state'], 'city' => $row['city'], 'pin' => $row['pin'], 'address' => $row['address'], 'gst_number' => $row['gst_number'], 'status' => $row['status'] ?? '1' , 'start_date' => Carbon::parse($row['start_date'])->toDateString(), 'frame' => $row['frame'], 'plan' => $row['plan']]);
+            $record->update(['name' => $row['name'], 'email' => $row['email'], 'phone' => $phone, 'phone1' => $phone1, 'business_name' => $row['business_name'], 'country' => $row['country'], 'state' => $row['state'], 'city' => $row['city'], 'pin' => $row['pin'], 'address' => $row['address'], 'gst_number' => $row['gst_number'], 'start_date' => Carbon::parse($row['start_date'])->toDateString(), 'frame' => $row['frame'], 'plan' => $row['plan']]);
 
             $record->phone = $phone.'hello';
             $record->save();
