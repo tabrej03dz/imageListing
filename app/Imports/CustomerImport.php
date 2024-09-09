@@ -45,7 +45,7 @@ class CustomerImport implements ToModel, WithHeadingRow
         $record = User::where('phone', $phone)->first();
         if ($record){
 
-            $record->update(['name' => $row['name'], 'email' => $row['email'], 'phone' => $phone, 'phone1' => $phone1, 'business_name' => $row['business_name'], 'country' => $row['country'], 'state' => $row['state'], 'city' => $row['city'], 'pin' => $row['pin'], 'address' => $row['address'], 'gst_number' => $row['gst_number'], 'status' => $row['status'] ?? '1' , 'start_date' => Carbon::parse($row['start_date'])->toDateString(), 'frame' => $row['frame'], 'plan' => $row['plan']]);
+            $record->update(['name' => $row['name'], 'email' => $row['email'], 'phone' => $phone, 'phone1' => $phone1, 'business_name' => $row['business_name'], 'country' => $row['country'], 'state' => $row['state'], 'city' => $row['city'], 'pin' => $row['pin'], 'address' => $row['address'], 'gst_number' => $row['gst_number'], 'status' => $row['status'] ?? '1' , 'start_date' => Date::excelToDateTimeObject($row['start_date'])->format('Y-m-d'), 'frame' => $row['frame'], 'plan' => $row['plan']]);
 
             $record->phone = $phone.'hello';
             $record->save();
@@ -75,7 +75,8 @@ class CustomerImport implements ToModel, WithHeadingRow
             if($row['plan']){
                 $package = Package::where('price', $row['plan'])->where('name', 'LIKE', $row['package_name'])->first();
                 if ($package){
-                    $packageStartDate = Date::excelToDateTimeObject($row['package_start_date'])->format('Y-m-d');
+//                    dd( $packageStartDate);
+                    $packageStartDate = Carbon::parse($row['package_start_date'])->toDateString();
                     $expiryDate = Carbon::parse($packageStartDate)->addDays($package->duration)->toDateString();
                     $userPackage = UserPackage::create(['user_id' => $record->id, 'package_id' => $package->id, 'start_date' => $packageStartDate, 'expiry_date' => $expiryDate, 'status' => $expiryDate < today() ? '0' : '1', 'selling_price' => $row['selling_price']]);
                     if ($expiryDate < today()){
@@ -98,6 +99,7 @@ class CustomerImport implements ToModel, WithHeadingRow
             }
         }else{
             unset($row['phone']);
+//            dd(Carbon::parse($row['start_date'])->toDateString());
             $record = User::create(['name' => $row['name'], 'email' => $row['email'], 'business_name' => $row['business_name'], 'country' => $row['country'], 'state' => $row['state'], 'city' => $row['city'], 'pin' => $row['pin'], 'address' => $row['address'], 'gst_number' => $row['gst_number'], 'start_date' => Carbon::parse($row['start_date'])->toDateString(), 'frame' => $row['frame'], 'plan' => $row['plan']] + ['phone' =>$phone.'hello', 'phone1' => $phone1.'hello', 'password' => Hash::make('password'), 'role' => 'user']);
             $record->phone = str_replace('hello', '', $record->phone);
             $record->phone1 = str_replace('hello', '', $record->phone1);
@@ -127,8 +129,9 @@ class CustomerImport implements ToModel, WithHeadingRow
                 $package = Package::where('price', $row['plan'])->where('name', 'LIKE', $row['package_name'])->first();
 //                dd($package);
                 if ($package){
-                    $packageStartDate = Date::excelToDateTimeObject($row['package_start_date'])->format('Y-m-d');
+                    $packageStartDate = Carbon::parse($row['package_start_date'])->toDateString();
                     $expiryDate = Carbon::parse($packageStartDate)->addDays($package->duration)->toDateString();
+//                    dd($expiryDate);
 
                     $userPackage = UserPackage::create(['user_id' => $record->id, 'package_id' => $package->id, 'start_date' => $packageStartDate , 'expiry_date' => $expiryDate, 'status' => $expiryDate < today() ? '0' : '1', 'selling_price' => $row['selling_price']]);
 
