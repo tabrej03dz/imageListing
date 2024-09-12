@@ -66,7 +66,7 @@ class InformationController extends Controller
 
             if ($request->phone){
                 $users = User::where('phone', 'like', '%'.$request->phone.'%')->get();
-                if (!$users){
+                if ($users == null){
                     return back()->with('error', 'User not found');
                 }
             }else{
