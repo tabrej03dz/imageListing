@@ -24,8 +24,8 @@ class InformationController extends Controller
     public function store(InformationRequest $request){
         $information = Information::create($request->except('image'));
         if($request->file('image')){
-            $file = $request->file('image')->store('public/information');
-            $information->image = str_replace('public/', '', $file);
+            $file = $request->file('image')->store('public');
+            $information->image = str_replace('public', '', $file);
             $information->save();
         }
         return redirect('information')->with('success', 'information created successfully');
@@ -41,8 +41,8 @@ class InformationController extends Controller
             if($information->image){
                 unlink('storage/'. $information->image);
             }
-            $file = $request->file('image')->store('public/information');
-            $information->image = str_replace('public/', '', $file);
+            $file = $request->file('image')->store('public');
+            $information->image = str_replace('public', '', $file);
             $information->save();
         }
         return redirect('information')->with('success', 'Updated successfully');
