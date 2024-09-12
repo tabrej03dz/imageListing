@@ -66,7 +66,8 @@ class InformationController extends Controller
 
             if ($request->phone){
                 $users = User::where('phone', 'like', '%'.$request->phone.'%')->get();
-                if ($users == null){
+
+                if ($users->isEmpty()){
                     return back()->with('error', 'User not found');
                 }
             }else{
@@ -78,10 +79,10 @@ class InformationController extends Controller
                     $users = User::where(['status' => $request->status, 'role' => 'user'])->whereNotIn('id', $sentIds)->get();
                 }
             }
-//            dd($users);
             foreach ($users as $user){
                 $phoneNumber = substr($user->phone, 0, 12);
-                $imageUrl = $information->image ? asset('storage/'. $information->image) : asset('assets/logo.png');
+                $imageUrl = asset('storage/'. $information->image);
+//                dd($imageUrl);
 //                $imageUrl = 'https://realvictorygroups.xyz/assets/logo.png';
                 $message = str_replace(' ', '+', $information->description);
                 $fileName = str_replace(' ', '+', $information->title);
