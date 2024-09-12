@@ -82,7 +82,7 @@ class InformationController extends Controller
             foreach ($users as $user){
                 $phoneNumber = substr($user->phone, 0, 12);
                 $imageUrl = asset('storage/'. $information->image);
-                dd($imageUrl);
+//                dd($imageUrl);
 //                $imageUrl = 'https://realvictorygroups.xyz/assets/logo.png';
                 $message = str_replace(' ', '+', $information->description);
                 $fileName = str_replace(' ', '+', $information->title);
