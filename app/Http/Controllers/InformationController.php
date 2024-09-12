@@ -66,6 +66,9 @@ class InformationController extends Controller
 
             if ($request->phone){
                 $users = User::where('phone', 'like', '%'.$request->phone.'%')->get();
+                if (!$users){
+                    return back()->with('error', 'User not found');
+                }
             }else{
                 $sentIds = $information->userSents->pluck('user_id');
 //                dd($sentIds);
