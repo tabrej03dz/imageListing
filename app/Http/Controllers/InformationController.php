@@ -56,7 +56,8 @@ class InformationController extends Controller
         return back()->with('success', 'Deleted successfully');
     }
 
-    public function informationSendToUser(Request $request, Information $information){
+    public function informationSendToUser(Request $request){
+        $information = Information::find($request->information_id);
         $request->validate([
             'phone' => 'required_without:status',
             'status' => 'required_without:phone',
@@ -72,16 +73,14 @@ class InformationController extends Controller
                 }
             }else{
                 $sentIds = $information->userSents->pluck('user_id');
-//                dd($sentIds);
                 if($sentIds->count() == 0){
-                    $users = User::where(['status' => $request->status, 'role' => 'user'])->get();
+                    $users = User::where(['status' => $request->status, 'role' => 'user'])->take(1)->get();
                 }else{
-                    $users = User::where(['status' => $request->status, 'role' => 'user'])->whereNotIn('id', $sentIds)->get();
+                    $users = User::where(['status' => $request->status, 'role' => 'user'])->whereNotIn('id', $sentIds)->take(1)->get();
                 }
             }
             foreach ($users as $user){
                 $phoneNumber = substr($user->phone, 0, 12);
-                //                dd($imageUrl);
 //                $imageUrl = 'https://realvictorygroups.xyz/assets/logo.png';
                 $message = str_replace(' ', '+', $information->description);
                 $fileName = str_replace(' ', '+', $information->title);

@@ -185,7 +185,7 @@ Route::middleware('auth')->group(function(){
            Route::get('edit/{information}', [InformationController::class, 'edit'])->name('edit');
            Route::post('update/{information}', [InformationController::class, 'update'])->name('update');
            Route::get('delete/{information}', [InformationController::class, 'delete'])->name('delete');
-           Route::post('send/{information}', [InformationController::class, 'informationSendToUser'])->name('send');
+           Route::post('send', [InformationController::class, 'informationSendToUser'])->name('send');
         });
 
         Route::prefix('recycle')->name('recycle.')->group(function(){
