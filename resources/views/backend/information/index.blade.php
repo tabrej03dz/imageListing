@@ -174,31 +174,47 @@
                 var form = $(this);
                 var phoneNumber = form.find('input[name="phone"]').val().trim();
                 var formData = form.serialize(); // Get the form data
+                var maxAttempts = phoneNumber != '' ? 1 : 100;
 
-                for (let i = 0; i <= (phoneNumber != '' ? 1 : 100); i++) { // Loop 10 times
+                // Recursive function to send requests one by one
+                function sendRequest(attempt) {
+                    if (attempt > maxAttempts) {
+                        // All attempts have been made
+                        alert(`Information sent to ${attempt - 1} customers successfully!`);
+                        return;
+                    }
+
                     $.ajax({
                         type: 'POST',
                         url: '{{ route('information.send') }}', // Use a common route for AJAX
                         data: formData,
                         success: function(response) {
-                            // Handle success for each request - display a message or update the UI
-                            console.log("Information sent successfully - Attempt " + (i + 1));
+                            // Handle success for each request
+                            console.log("Information sent successfully - Attempt " + attempt);
 
                             document.getElementById('messageBox').classList.add('show');
-                            document.getElementById('message').innerText = i;
+                            document.getElementById('message').innerText = attempt;
 
                             // Update the 'Sent' column with the new count on the last request
-                            if (i === 100) {
-                                alert(`Information sent to ${i} customers successfully!`);
+                            if (attempt === maxAttempts) {
                                 form.closest('tr').find('td:last').text(response.sentCount);
                             }
+
+                            // Call the next request
+                            sendRequest(attempt + 1);
                         },
                         error: function(xhr) {
                             // Handle error for each request
-                            alert("An error occurred on attempt " + (i + 1) + ". Please try again.");
+                            alert("An error occurred on attempt " + attempt + ". Please try again.");
+
+                            // Optionally, you can retry the same request or stop the process
+                            // sendRequest(attempt); // Retry the same attempt
                         }
                     });
                 }
+
+                // Start sending requests
+                sendRequest(1);
             });
         });
     </script>
