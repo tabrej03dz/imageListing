@@ -66,7 +66,8 @@ class InformationController extends Controller
         if(session('instance_id') != null && session('access_token') != null){
 
             if ($request->phone){
-                $users = User::where('phone', 'like', '%'.$request->phone.'%')->get();
+                $sentIds = $information->userSents->pluck('user_id');
+                $users = User::where('phone', 'like', '%'.$request->phone.'%')->whereNotIn('id', $sentIds)->take(1);
 
                 if ($users->isEmpty()){
                     return back()->with('error', 'User not found');
