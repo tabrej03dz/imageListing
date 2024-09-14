@@ -251,7 +251,7 @@ class ImageController extends Controller
             $image = Image::where(['date' => $date, 'sent' => '0'])->first();
 
             $phoneNumber = substr(str_replace(' ', '', $image->user->phone), 0, 12);
-//                    $imageUrl = asset('storage/'. $image->media);
+                    $imageUrl = asset('storage/'. $image->media);
 //            $imageUrl = 'https://post.realvictorygroups.com/public/assets/logo.png';
             $message = str_replace(' ', '+', $image->title);
             $fileName = str_replace(' ', '+', $image->title);
