@@ -172,9 +172,10 @@
             $('.sendForm').submit(function(e) {
                 e.preventDefault(); // Prevent the form from submitting the normal way
                 var form = $(this);
+                var phoneNumber = form.find('input[name="phone"]').val().trim();
                 var formData = form.serialize(); // Get the form data
 
-                for (let i = 0; i <= 100; i++) { // Loop 10 times
+                for (let i = 0; i <= (phoneNumber != '' ? 1 : 100); i++) { // Loop 10 times
                     $.ajax({
                         type: 'POST',
                         url: '{{ route('information.send') }}', // Use a common route for AJAX
