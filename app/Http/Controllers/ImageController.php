@@ -77,7 +77,7 @@ class ImageController extends Controller
                             unlink($filePath);
                         }
                     }
-                    $file = $media->store('public/images');
+                    $file = $media->store('public/');
                     $oldImage->update([
                         'date' => $request->date ?? Carbon::tomorrow(),
                         'title' => $request->title ?? $oldImage->title,
@@ -91,7 +91,7 @@ class ImageController extends Controller
                     $image->user_id = $user->id;
                     array_push($uploadSuccess, $media->getClientOriginalName());
 
-                    $file = $media->store('public/images');
+                    $file = $media->store('public/');
                     $image->media = str_replace('public/', '', $file);
                     // Increment the count of successfully uploaded images
                     $uploadedImagesCount++;
@@ -111,7 +111,7 @@ class ImageController extends Controller
                 $failedCustomerImage->date = $request->date ?? Carbon::tomorrow();
                 $failedCustomerImage->failed_customer_id = $failedCustomer->id;
 
-                $file = $media->store('public/images');
+                $file = $media->store('public/');
                 $failedCustomerImage->media = str_replace('public/', '', $file);
                 $failedCustomerImage->save();
                 if ($user){
