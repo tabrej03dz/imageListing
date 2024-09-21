@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AddressController extends Controller
 {
-    public function getState(Request $request){
+    public function getState(Request $request, $id){
+        $customer = User::find($id);
         $cid = $request->post('cid');
         $states = DB::table('states')->where('country_id', $cid)->orderBy('name', 'asc')->get('*');
 
         $html = '<option value="">Select State</option>';
 
         foreach ($states as $state){
-            $html .= '<option value="'. $state->id. '">'.$state->name.'</option>';
+            $selected = $customer->state == $state->id ? 'selected': '';
+            $html .= '<option value="'. $state->id. '" '.$selected.'>'.$state->name.'</option>';
         }
 
         echo $html;
-
     }
 
     public function getCity(Request $request){

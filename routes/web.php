@@ -34,7 +34,7 @@ Route::get('welcome', function(){
     return view('welcome1');
 });
 
-Route::post('getState', [\App\Http\Controllers\AddressController::class, 'getState']);
+Route::post('getState/{id}', [\App\Http\Controllers\AddressController::class, 'getState']);
 Route::post('getCity', [\App\Http\Controllers\AddressController::class, 'getCity']);
 
 Route::get('packageAssignToAllCustomer', [DashboardController::class, 'packageAssignToAllCustomer'])->name('packageAssignToAllCustomer');

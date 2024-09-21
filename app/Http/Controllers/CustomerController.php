@@ -127,6 +127,7 @@ class CustomerController extends Controller
     }
 
     public function update(CustomerRequest $request, User $customer){
+//        dd($request->state);
 
         $frameExisting = User::where(['city' => $request->city, 'frame' => $request->frame])->get();
         $alreadyExistFrame = null;

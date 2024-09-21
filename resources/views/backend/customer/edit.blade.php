@@ -261,7 +261,7 @@
                 let cid = jQuery('#country').val();
                 if (cid) {
                     jQuery.ajax({
-                        url: '/getState',
+                        url: '/getState/{{$customer->id}}',
                         type: 'post',
                         data: {
                             cid: cid,

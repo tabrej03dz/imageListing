@@ -26,6 +26,10 @@
                         </select>
                     </div>
                     <div class="mb-3">
+                        <label for="selling_price" class="form-label">Selling Price:</label>
+                        <input type="number" id="selling_price" name="selling_price" value="{{$customerPackage->selling_price}}" placeholder="Selling Price" class="form-control">
+                    </div>
+                    <div class="mb-3">
                         <label for="start_date" class="form-label">Package start from:</label>
                         <input type="date" id="start_date" name="start_date" value="{{$customerPackage->start_date}}" placeholder="Package start from" class="form-control">
                     </div>

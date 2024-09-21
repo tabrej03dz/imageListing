@@ -51,6 +51,7 @@ class PackageController extends Controller
             $userPackage = UserPackage::create([
                 'user_id' => $customer->id,
                 'package_id' => $package->id,
+                'selling_price' => $request->selling_price ?? $package->price,
                 'start_date' => $request->start_date ?? Carbon::today(),
                 'expiry_date' => $request->start_date ? Carbon::createFromFormat('Y-m-d', $request->input('start_date'))->addDays($package->duration)->toDateString() : Carbon::today()->addDays($package->duration)->toDateString(),
             ]);
@@ -94,6 +95,7 @@ class PackageController extends Controller
     public function customerPackageUpdate(Request $request, UserPackage $customerPackage){
         $customerPackage->update([
             'start_date' => $request->start_date ?? Carbon::today(),
+            'selling_price' => $request->selling_price ?? $customerPackage->package->price,
             'expiry_date' => $request->start_date ? Carbon::createFromFormat('Y-m-d', $request->input('start_date'))->addDays($customerPackage->package->duration)->toDateString() : Carbon::today()->addDays($customerPackage->package->duration)->toDateString(),
         ]);
 
